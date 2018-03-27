@@ -233,4 +233,22 @@
     <allow-navigation href="http://169.254.131.0:8100" />
     <allow-navigation href="http://169.254.2.86:8100" />
     <allow-navigation href="http://169.254.81.204:8100" />
+    <allow-navigation href="http://169.254.127.43:8100" />
+    <allow-navigation href="http://169.254.33.87:8100" />
+    <allow-navigation href="http://169.254.101.225:8100" />
+    <allow-navigation href="http://169.254.106.164:8100" />
+    <allow-navigation href="http://169.254.146.135:8100" />
+    <allow-navigation href="http://169.254.130.59:8101" />
+    <allow-navigation href="http://169.254.98.40:8100" />
+    <allow-navigation href="http://169.254.195.124:8100" />
+    <allow-navigation href="http://169.254.105.152:8100" />
+    <allow-navigation href="http://169.254.151.127:8100" />
+    <allow-navigation href="http://169.254.77.170:8100" />
+    <allow-navigation href="http://169.254.189.247:8100" />
+    <allow-navigation href="http://169.254.248.199:8100" />
+    <allow-navigation href="http://169.254.238.81:8100" />
+    <allow-navigation href="http://169.254.223.175:8100" />
+    <allow-navigation href="http://169.254.106.197:8100" />
+    <allow-navigation href="http://169.254.66.139:8100" />
+    <allow-navigation href="http://192.168.8.110:8100" />
 </widget>

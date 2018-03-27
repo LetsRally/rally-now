@@ -1,27 +1,34 @@
-page-alerts {
-
-    ion-header {
-        text-align: center;
-    }
-    ion-content{
-    top: 45px;
-}
+page-public-followers {
     .toolbar-background {
-        background-color: #4a90e2;
+        background-color: #f4512c !important;
         color: #fff;
     }
-    
+
     p.white {
         color: #f2f2f2;
         margin: 0;
     }
-    .item-block {
-        border-bottom: 1px solid #c8c7cc;
-        .item-inner {
-            border: none !important;
+    ion-content {
+        p {
+            font-size: 12px;
+            text-align: center;
+            color: #7b7878;
+        }
+        img {
+            border-radius: 50%;
+            height: 70px;
+            width: 70px;
+        }
+        ion-list {
+            margin-bottom: 0 !important;
         }
     }
 
+    .searchbar-input{
+        box-shadow: none !important;
+        background: #e8e7e7 !important;
+        border-radius: 7px !important;
+    }
     .action-btn {
         // height: auto;
         background: #fff;
@@ -30,10 +37,12 @@ page-alerts {
         font-size: 14px;
         text-transform: uppercase;
         letter-spacing: -0.36px;
-        padding: 5px !important;
+        padding: 10px !important;
         // min-width: 80px;
         box-shadow: none;
         border-radius: 6px;
+        height: 3.6rem !important;
+
         .button-inner{
             width: 100px !important;
             font-family:'Conv_SanFranciscoDisplay-Semibold',Sans-Serif !important;
@@ -41,13 +50,4 @@ page-alerts {
     
         }
     }
-
-    .btn-follow{
-        background: #296fb7 !important;
-        color: #f2f2f2 !important;
-        border-color: #296fb7 !important;
-        height: 3.5rem !important;
-
-    }
 }
-

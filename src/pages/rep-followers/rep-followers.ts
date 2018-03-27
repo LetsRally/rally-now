@@ -83,11 +83,9 @@ export class RepFollowersPage {
         $event.srcElement.innerText = "FOLLOW";
 
       }else{
-        //this.followFriend(friendID);
-        this.getDeviceID(friendID);
-        this.presentToast('Follow user successfully');
-        $event.srcElement.innerHTML = "Unfollow";
-        $event.srcElement.innerText = "UNFOLLOW";
+        this.followFriend(friendID, $event);
+        // this.getDeviceID(friendID);
+        
       }
     });
    }
@@ -97,8 +95,9 @@ export class RepFollowersPage {
     //Reemplazar por parametro despues
     this.httpProvider.getJsonData(this.notificationsEndpoint+'?user_id='+user_id)
       .subscribe(result => {
-          console.log(result[0].id);
           this.saveNotification(user_id, result[0].id, this.myRallyID);
+          this.sendPushNotification(result[0].registration_id);
+
       }, err => {
         console.error("Error: " +err);
       }, () => {
@@ -109,13 +108,29 @@ export class RepFollowersPage {
   saveNotification(user_id, registration_id, sender_id){
     this.httpProvider.returnRallyUserId().then(user => {
      this.httpProvider.saveNotification(user_id, registration_id, user.displayName + " wants to follow you",  this.alertsEndpoint, sender_id);
-    this.followFriend(user_id);
     });
     //this.httpProvider.sendNotification(registration_id, msg);
   }
 
-   followFriend(friendID){
-    this.httpProvider.followFriend(this.followEndpoint, this.myRallyID, friendID );
+  sendPushNotification(device){
+    this.httpProvider.sendPushNotification(device, 'New Follow Request')
+      .subscribe(result =>{
+        console.log("Noti", result);
+      });
+}
+
+   followFriend(friendID, $event){
+    this.httpProvider.followFriend(this.followEndpoint, this.myRallyID, friendID, true ).subscribe(data => {
+      console.log(data);
+      this.httpProvider.saveFollowRecordID(data.following_id, data.id, 'follow');
+      this.getDeviceID(friendID);
+      this.presentToast('Follow user successfully');
+      $event.srcElement.innerHTML = "Unfollow";
+      $event.srcElement.innerText = "UNFOLLOW";
+    }, error => {
+      console.log("Error", error);
+    });;
+   
   }
 
 

@@ -23,6 +23,7 @@ export class UsersProvider{
   civilApiSenate:any = 'https://api.civil.services/v1/senate/?apikey=FA7D0F9C-3879-F284-9D4A-BD9E595BC89B&latitude=';
   rallyToken:any;
   firebaseAdmin:any = 'http://165.227.125.190:8081/users/';
+  notiApi:any = 'https://noti.provethisconcept.com/notification/single/';
   constructor(public http: Http, public storage: Storage, public af:AngularFireDatabase, requestOptions: RequestOptions) {
     //super(connectionBackend, requestOptions);
     //this.getToken();
@@ -48,6 +49,15 @@ export class UsersProvider{
   getToken(){
     return localStorage.getItem('token');
   }
+
+  sendPushNotification(device, message){
+    var headers = new Headers();
+    headers.append('Content-Type', 'application/json' );
+    let options = new RequestOptions({ headers: headers });
+    return this.http.get(this.notiApi + device + '/' + message, options).map(res => res.json())
+
+
+  }
   	getJsonData(endpoint){
       let token = this.getToken();
       var headers = new Headers();
@@ -59,8 +69,6 @@ export class UsersProvider{
       headers.append('Authorization', `${this.getToken()}`);
   
       let options = new RequestOptions({ headers: headers });
-
-      console.log(options);
     
       return this.http.get(this.base + endpoint, options).map(res => res.json())
   }
@@ -125,7 +133,7 @@ export class UsersProvider{
   }
 
 
-	saveNewUser(endpoint, data):void{
+	saveNewUser(endpoint, data){
 		var headers = new Headers();
     	headers.append('Content-Type', 'application/json' );
     	headers.append('Access-Control-Allow-Origin', '*');
@@ -136,15 +144,9 @@ export class UsersProvider{
     	let options = new RequestOptions({ headers: headers });
 		let userData = JSON.stringify({fname: data.displayName, photo_url: encodeURI(data.photoURL), searchable: data.searchable, hide_activity: data.hide_activity, facebook_id: data.facebook_id, username: data.username});
 		console.log(this.base + endpoint, userData, options);
-		this.http.post(this.base + endpoint, userData, options)
+		return this.http.post(this.base + endpoint, userData, options)
 			.map(res => res.json())
-			.subscribe(data => {
-				console.log("Nuevo Usuario", data);
-				this.storage.set('APIRALLYID', data.id);
-				this.saveApiRallyID(data.id);
-			}, error => { 
-				console.log("Error", error);
-			});
+			
 	}
 
 	updateUser(endpoint, data):void{
@@ -262,7 +264,7 @@ export class UsersProvider{
   }
 
 
-	followFriend(endpoint, currentUserRallyID, friendRallyID):void{
+	followFriend(endpoint, currentUserRallyID, friendRallyID, status){
     var headers = new Headers();
       headers.append('Content-Type', 'application/json' );
       headers.append('Access-Control-Allow-Origin', '*');
@@ -272,16 +274,11 @@ export class UsersProvider{
       headers.append('Authorization', `${this.getToken()}`);
 
       let options = new RequestOptions({ headers: headers });
-    let actionData = JSON.stringify({follower_id: currentUserRallyID, following_id: friendRallyID, approved: false});
+    let actionData = JSON.stringify({follower_id: currentUserRallyID, following_id: friendRallyID, approved: status});
     console.log(this.base + endpoint, actionData, options);
-    this.http.post(encodeURI(this.base + endpoint), actionData, options)
+    return this.http.post(encodeURI(this.base + endpoint), actionData, options)
       .map(res => res.json())
-      .subscribe(data => {
-        console.log(data);
-        this.saveFollowRecordID(data.following_id, data.id, 'follow');
-      }, error => {
-        console.log("Error", error);
-      });
+      
   }
 
   followRep(endpoint, currentUserRallyID, repID){
@@ -622,7 +619,6 @@ removeItem(endpoint, recordID){
    
 }
 
-
 getNotifications(endpoint): Observable<NotiModel[]>{
   var headers = new Headers();
   headers.append('Content-Type', 'application/json' );
@@ -665,7 +661,5 @@ removeRallyUserReference(userid){
   return this.http.get('https://api.letsrally.us/rallyapi/user/delete/' + userid, options)
     .map(res => res.json())
 }
-
-
 
 }

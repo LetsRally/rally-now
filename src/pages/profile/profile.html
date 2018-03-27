@@ -20,7 +20,7 @@
     <ion-row padding style="padding-bottom: 0;">
         <ion-col col-4 class="profile-headshot">
             <ion-avatar item-start class="profile-img">
-                <button ion-button transparent icon-only (click)="showPhotoViewer(user.photoURL)" style="background: transparent; height: auto;">
+                <button ion-button transparent icon-only (click)="showPhotoViewer()" style="background: transparent; height: auto;">
           <img src="{{user.photoURL}}">
       </button>
             </ion-avatar>
@@ -121,9 +121,15 @@
                              </ion-item>
                        <ion-card-content>
                           
-                            <p class="content-heading">{{transform(activity.action)}}ed  <strong (click)="goToRepProfile(activity.representative_id)">{{activity.representative}}</strong>
+                            <p *ngIf="activity.action !== 'sign' && activity.action !== 'donat'" class="content-heading">{{transform(activity.action)}}ed  <strong (click)="goToRepProfile(activity.representative_id)">{{activity.representative}}</strong>
                                for <strong (click)="goToOrganizationProfile(activity.objective_organization_id)">{{activity.organization}}</strong>'s campaign <strong (click)="goToActionPage(activity.objective_id, activity.goal_type, activity.goal_source_link, activity.goal_id, activity.rep_id)">"{{activity.objective}}"</strong>.</p>
-                       </ion-card-content>
+                            
+                               <p style="font-size: 20px;" *ngIf="activity.action === 'donat'">
+                                {{transform(activity.action)}}ed  to <strong (click)="goToOrganizationProfile(activity.objective_organization_id)">{{activity.organization}}</strong>'s campaign <strong (click)="goToActionPage(activity.objective_id, activity.goal_type, activity.goal_source_link, activity.goal_id, activity.rep_id)">"{{activity.objective}}"</strong>.
+                            </p>
+                            <p style="font-size: 20px;" *ngIf="activity.action === 'sign'">
+                                {{transform(activity.action)}}ed  <strong (click)="goToOrganizationProfile(activity.objective_organization_id)">{{activity.organization}}</strong>'s petition <strong (click)="goToActionPage(activity.objective_id, activity.goal_type, activity.goal_source_link, activity.goal_id, activity.rep_id)">"{{activity.objective}}"</strong>.
+                            </p>                       </ion-card-content>
               
        
                <ion-fab right bottom style="bottom: 50px;

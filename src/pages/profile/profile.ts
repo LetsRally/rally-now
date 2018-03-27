@@ -25,6 +25,7 @@ import { SignFeedBackPage } from '../sign-feed-back/sign-feed-back';
 import { OrganizationActionPage } from '../organization-action/organization-action';
 import { OrganizationProfilePage } from '../organization-profile/organization-profile';
 import { RepresentativeProfilePage } from '../representative-profile/representative-profile';
+import { Facebook } from '@ionic-native/facebook';
 
 
 
@@ -91,6 +92,7 @@ export class ProfilePage {
     public toastCtrl: ToastController,
     public actionSheetCtrl: ActionSheetController,
     private shareProvider:SocialShareProvider,
+    private facebook: Facebook
     ) {}
 
 
@@ -163,6 +165,7 @@ export class ProfilePage {
             this.user.id = result[0].id;
             this.getArray(result[0].Objectives_Actions);
             this.getArray(result[0].Direct_Actions);
+            this.getArray(result[0].Contact_Actions);
           }
         );
      }
@@ -230,8 +233,12 @@ export class ProfilePage {
        this.navCtrl.push(MyFriendsPage, {animate:true,animation:'transition',duration:500,direction:'forward'});
      }
 
-     showPhotoViewer(path){
-  this.photoViewer.show(path);
+     showPhotoViewer(){
+       this.facebook.api('me?fields=picture.width(900)', ['public_profile']).then(data => {
+         console.log(data);
+        this.photoViewer.show(data.picture.data.url);
+
+       });
 }
 
 

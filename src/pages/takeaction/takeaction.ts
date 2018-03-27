@@ -27,7 +27,7 @@ import { DonateFeedBackPage } from '../donate-feed-back/donate-feed-back';
 })
 export class TakeactionPage {
 
-  endpoint:string = 'objectives/take_action';
+  endpoint:string = 'objectives/take_action/';
   objectives:any;
   myrallyID:any;
   favEndpoint:any = 'actions';
@@ -172,7 +172,7 @@ export class TakeactionPage {
 
 
       getdata(){
-  this.orgProvider.getJsonData(this.endpoint).subscribe(
+  this.orgProvider.getJsonData(this.endpoint+ this.myrallyID ).subscribe(
     result => {
       this.objectives=result;
       //this.loading.dismiss();
@@ -198,11 +198,11 @@ goToOrganizationProfile(organizationID){
 }
 
 
-     goToActionPage(objectiveID, goal_type, source, goalID, repID){ 
+     goToActionPage(objectiveID, goal_type, source, goalID, repID){  
       if(goal_type === "contact"){
        this.navCtrl.push(OrganizationActionPage, {
          objectiveID: objectiveID,
-         pageName: 'Action'
+         pageName: 'Take Action'
      }, {animate:true,animation:'transition',duration:500,direction:'forward'});
       } else if(goal_type === 'sign'){
        this.navCtrl.push(SignFeedBackPage, {iframeUrl: source, repID:repID, goalID:goalID}, {animate:true,animation:'transition',duration:500,direction:'forward'});

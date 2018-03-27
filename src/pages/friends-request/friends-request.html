@@ -53,13 +53,13 @@
            </ion-item>
        
         <ion-item *ngFor="let item of items, let i = index">
-            <ion-avatar item-start (click)="goToProfile(item.id)">
+            <ion-avatar item-start (click)="goToPublicProfile(item.id)">
                 <!-- <img [src]="getPhoto(item.id)"> -->
                 <img src="{{item.photo_url}}" alt="" style="border:2px solid #ada8a8;">
             </ion-avatar>
-            <h2 (click)="goToProfile(item.id)">{{item.name}}</h2>
+            <h2 (click)="goToPublicProfile(item.id)">{{item.name}}</h2>
             <p class="text-wrap">Friends on Facebook</p>
-            <ion-row item-end text-right  >
+            <ion-row item-end text-right  *ngIf="item.hide_activity == '0' && item.searchable == '1'">
                 <ion-col col-12 style="padding: 0;">
                     <button ion-button color="dark" class="action-btn btn-friend" (click)="addFollowRecordFirebase(item.id, $event)">Follow</button>
                 </ion-col>
@@ -75,19 +75,19 @@
             <p class="list-title">Suggested Friends</p>
         </ion-item>
         <ion-item *ngFor="let user of records, let i = index" >
-            <ion-avatar item-start>
+            <ion-avatar item-start (click)="goToPublicProfile(user.id)">
                 <img src="{{user.photo_url}}" style="border:2px solid #ada8a8;">
             </ion-avatar>
-            <h2>{{user.name}}</h2> 
+            <h2 (click)="goToPublicProfile(user.id)">{{user.name}}</h2> 
             <p class="text-wrap">{{user.name}} is following you</p>
 
-            <ion-row item-end text-right >
+            <ion-row item-end text-right *ngIf="user.hide_activity == '0' && user.searchable == '1'">
                 <ion-col col-12 style="padding: 0;">
                     <button ion-button color="dark" class="action-btn btn-friend" (click)="addFollowRecordFirebase(user.id. $event)">FOLLOW</button>
                 </ion-col>
 
             </ion-row>
-        </ion-item> 
+        </ion-item>  
 
     </ion-list>
     <ion-list >
@@ -95,14 +95,14 @@
             <p class="list-title">Suggested Organizations</p>
         </ion-item>
         <ion-item *ngFor="let org of orgs" >
-            <ion-avatar item-start (click)="goToOrganizationProfile(org.id)">
-                <img [src]="org.image_url ? org.image_url : 'assets/img/org_icon.svg'" style="border:2px solid #ada8a8;">
+            <ion-avatar item-start (click)="goToOrganizationProfile(org[0])">
+                <img [src]="org[2] ? org[2] : 'assets/img/org_icon.svg'" style="border:2px solid #ada8a8;">
             </ion-avatar>
-            <h2 text-wrap (click)="goToOrganizationProfile(org.id)">{{org.name}}</h2>
+            <h2 text-wrap (click)="goToOrganizationProfile(org[0])">{{org[1]}}</h2>
 
             <ion-row item-end text-right >
                 <ion-col col-12 style="padding: 0;">
-                    <button ion-button color="dark" class="action-btn btn-friend" (click)="addOrg(org.id, $event)">FOLLOW</button>
+                    <button ion-button color="dark" class="action-btn btn-friend" (click)="addOrg(org[0], $event)">FOLLOW</button>
                 </ion-col>
 
             </ion-row>

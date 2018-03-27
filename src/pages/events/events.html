@@ -93,19 +93,17 @@
       <ion-card class="Card events-card has-footer" *ngFor="let event of events">
         <ion-item>
             <ion-fab>
-                <button ion-fab color="light" (click)="eventEllipsisController(event.organization[0].name, event.organization_id, event.organization[0].followers, event.organization[0].notify)"><ion-icon name="ios-more"></ion-icon></button>
+                <button ion-fab color="light" (click)="eventEllipsisController(event.organization.name, event.organization_id, event.organization.followers, event.organization.notify)"><ion-icon name="ios-more"></ion-icon></button>
                 <!-- <ion-fab-list side="left">
 
                     <button ion-fab><ion-icon name="md-done-all"></ion-icon></button>
                 </ion-fab-list> -->
             </ion-fab>
             <ion-avatar item-start>
-                <img [src]="event.organization[0].image_url ? event.organization[0].image_url : testPhoto" (click)="goToOrganizationProfile(event.organization_id)">
+                <img [src]="event.organization.image_url ? event.organization.image_url : testPhoto" (click)="goToOrganizationProfile(event.organization_id)">
             </ion-avatar>
-            <div class="item-heading" (click)="goToOrganizationProfile(event.organization_id)">
-                <h2 text-wrap> <small>via</small> {{event.organization[0].name}}</h2>
-            </div>
-            <p><small>Event Location: {{event.city ? event.city : 'Unlisted'}}</small></p>
+                <h2 text-wrap style="text-align: left; "> <small>via</small> {{event.organization.name}}</h2>
+            </button>            <p><small>Event Location: {{event.city ? event.city : 'Unlisted'}}</small></p>
         </ion-item>
         <div class="events-bg" (click)="goToEventDetail(event.id)" [ngStyle]="{'background-image': 'url(' + event.image_url + ')'}">
             <div class="events-filter"></div>

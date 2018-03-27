@@ -235,17 +235,18 @@
             <ion-card class="events-card Card has-footer" *ngIf="record.card_type === 'events'">
                     <ion-item>
                         <ion-fab>
-                            <button ion-fab color="light" (click)="eventEllipsisController(record.organization[0].name, record.organization_id, record.title, record.organization[0].followers, record.organization[0].notify)" ><ion-icon name="ios-more"></ion-icon></button>
+                            <<button ion-fab color="light" (click)="eventEllipsisController(record.organization.name, record.organization_id, record.title, record.organization[0].followers, record.organization.notify)" ><ion-icon name="ios-more"></ion-icon></button>
                             <!-- <ion-fab-list side="left">
 
                                <button ion-fab><ion-icon name="md-done-all"></ion-icon></button>
                            </ion-fab-list> -->
                         </ion-fab>
                         <ion-avatar item-start>
-                            <img [src]="record.organization[0].image_url ? record.organization[0].image_url : 'assets/img/org_icon.svg'" (click)="goToOrganizationProfile(record.organization_id)">
+                            <img [src]="record.organization.image_url ? record.organization.image_url : 'assets/img/org_icon.svg'" (click)="goToOrganizationProfile(record.organization_id)">
                         </ion-avatar>
+                            <h2 text-wrap style="text-align: left; "> <small>via</small> {{record.organization.name}}</h2>
                         <div class="item-heading" (click)="goToOrganizationProfile(record.organization_id)">
-                            <h2 text-wrap> <small>via</small> {{record.organization[0].name}}</h2>
+                            <h2 text-wrap> <small>via</small> {{record.organization.name}}</h2>
                         </div>
                         <p><small>Event Location: {{record.city ? record.city : 'Unlisted   '}}</small></p>
                     </ion-item>

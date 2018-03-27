@@ -9,6 +9,8 @@ import { OrganizationProfilePage } from '../organization-profile/organization-pr
 import { OrganizationActionPage } from '../organization-action/organization-action';
 import { SignFeedBackPage } from '../sign-feed-back/sign-feed-back';
 import { RepresentativeProfilePage } from '../representative-profile/representative-profile';
+import { PublicFollowersPage } from '../public-followers/public-followers';
+import { PublicFollowingPage } from '../public-following/public-following';
 
 
 @IonicPage()
@@ -44,6 +46,8 @@ export class PublicProfilePage {
   shareAction:any = '875b4997-f4e0-4014-a808-2403e0cf24f0';
   username:any;
   public records:any = [];
+  status:boolean;
+  amifollowing:boolean;
 
   constructor(
     public navCtrl: NavController, 
@@ -62,6 +66,7 @@ export class PublicProfilePage {
       this.myRallyID = user.apiRallyID;
       this.getdata();
       this.checkUserStatus();
+      this.amIaFollower();
     });
   
   }
@@ -73,6 +78,19 @@ export class PublicProfilePage {
   ionViewWillEnter(){
    
     this.viewCtrl.setBackButtonText(this.profilePageName);
+  }
+
+  amIaFollower(){
+    this.httpProvider.getJsonData(this.followEndpoint+'?follower_id='+this.myRallyID+'&following_id='+this.parameter + '&approved=true').subscribe(
+      result => {
+        console.log("amIaFollower: "+ result);
+        if(result != ''){
+          this.amifollowing = true;
+        }else{
+          this.amifollowing = false;
+
+        }
+      });
   }
 
   checkUserStatus(){
@@ -109,8 +127,15 @@ export class PublicProfilePage {
       this.id = result.id;
       this.getArray(result.Objectives_Actions);
       this.getArray(result.Direct_Actions);
+      this.getArray(result.Contact_Actions);
       this.username = result.username;
       console.log("Success : "+ result);
+      if(result.hide_activity === '0'){
+        this.status = true;
+      }else {
+        this.status = false;
+      }
+      console.log(this.status);
     },
     err =>{
       console.error("Error : "+err);
@@ -149,23 +174,25 @@ presentToast(message) {
      followRef.once('value', snapshot=>{
        if (snapshot.hasChildren()) {
          console.log('You already follow this user');
-         this.unFollowActionSheet();
+         this.unFollowActionSheet(); 
          //this.presentToast('You are not following this user anymore');
 
        }else{
          //this.followFriend(friendID);
-         this.getDeviceID(friendID);
+         this.followFriend(friendID);
          this.presentToast('Follow user successfully');
        }
      });
     }
 
     getDeviceID(user_id){
+      console.log("Friend ID", user_id);
       //Reemplazar por parametro despues
       this.httpProvider.getJsonData(this.notificationsEndpoint+'?user_id='+user_id)
         .subscribe(result => {
-            console.log(result[0].id);
+            console.log("Devices", result);
             this.saveNotification(user_id, result[0].id, this.myRallyID);
+            this.sendPushNotification(result[0].registration_id);
         }, err => {
           console.error("Error: " +err);
         }, () => {
@@ -176,13 +203,25 @@ presentToast(message) {
     saveNotification(user_id, registration_id, sender_id){
       this.httpProvider.returnRallyUserId().then(user => {
        this.httpProvider.saveNotification(user_id, registration_id, user.displayName + " wants to follow you",  this.alertsEndpoint, sender_id);
-      this.followFriend(user_id);
       });
       //this.httpProvider.sendNotification(registration_id, msg);
     }
 
+    sendPushNotification(device){
+        this.httpProvider.sendPushNotification(device, 'New Follow Request')
+          .subscribe(result =>{
+            console.log("Noti", result);
+          });
+    }
+
      followFriend(friendID){
-      this.httpProvider.followFriend(this.followEndpoint, this.myRallyID, friendID );
+      this.httpProvider.followFriend(this.followEndpoint, this.myRallyID, friendID, this.status).subscribe(data => {
+        console.log(data);
+        this.httpProvider.saveFollowRecordID(data.following_id, data.id, 'follow');
+        this.getDeviceID(friendID);
+      }, error => {
+        console.log("Error", error);
+      });
     }
 
 
@@ -197,9 +236,7 @@ presentToast(message) {
   } ,
   () => {
     console.log('getData completed');
-  }
-
-  );
+  });
   }
 
     unFollowFriend(recordID){
@@ -457,6 +494,23 @@ transform(value: any) {
     return value.charAt(0).toUpperCase() + value.slice(1);
 }
 return value;
+}
+
+goToFollowers(){
+  if(this.hidden == '0' || this.amifollowing){
+    this.navCtrl.push(PublicFollowersPage,  {
+      profileID: this.id
+    }, {animate:true,animation:'transition',duration:500,direction:'forward'});
+  }
+ 
+}
+
+goToFollowing(){
+  if(this.hidden == '0' || this.amifollowing){
+  this.navCtrl.push(PublicFollowingPage,  {
+    profileID: this.id
+  }, {animate:true,animation:'transition',duration:500,direction:'forward'});
+}
 }
 
 }

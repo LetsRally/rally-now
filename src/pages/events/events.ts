@@ -138,7 +138,7 @@ export class EventsPage {
       //   this.loading.present();
       this.loader = true;
       this.getdata(this.eventStart, this.eventEnd, this.filterBy, this.zipcode, this.distance);
-      this.eventFiltered = false;
+      // this.eventFiltered = false;
     
         setTimeout(() => {
           console.log('Async operation has ended');
@@ -149,9 +149,9 @@ export class EventsPage {
        getdata(startDate?, endDate?, filterBy?, zipcode?, distance?){
          if(startDate != null){
            if(filterBy === 'all'){
-            this.getAllEvents();
+            this.getFilteredEvents(startDate, endDate, zipcode, distance);
 
-           }else{
+           }else if(filterBy !== 'all'){
             this.getFollowedEvents(startDate, endDate, zipcode, distance);
            }
            this.eventFiltered = true;
@@ -168,12 +168,7 @@ export class EventsPage {
         return new Promise(resolve => {
           this.orgProvider.load(this.endpointOld + '/' + this.myrallyID + '/' + zipcode + '/' + startDate + '/' + endDate + '/' + distance + '/', this.start)
             .then(data => {
-              this.events = data['Events'];
-              //this.loading.dismiss(); 
-              this.enablePlaceholder = false;
-              this.loader = false;
-
-             
+              this.getArray(data['Events']);
               resolve(true);
             });
         });
@@ -202,25 +197,17 @@ getArray(array){
 
 }
 
-getFilteredEvents(startDate, endDate){
-  this.httpProvider.getJsonData(this.endpointOld + '/' + this.myrallyID + '/' + startDate + '/' + endDate).subscribe(
-    result => {
-      console.log(result);
-     this.events = result.Events;
-     //this.loading.dismiss(); 
-     this.enablePlaceholder = false;
-     this.loader = false;
+getFilteredEvents(startDate, endDate, zipcode, distance){
+  return new Promise(resolve => {
+    this.orgProvider.load(this.endpointOld + '/' + zipcode + '/' + startDate + '/' + endDate + '/' + distance + '/', this.start).then(
+      result => {
+        console.log(result);
+       this.getArray(result['events']);
+       resolve(true);
 
-    //  this.storage.set('EVENTS', result);
-
-     //this.filterItems(this.searchTerm); 
-    },
-    err =>{
-      console.error("Error : "+err);
-    } ,
-    () => {
-      console.log('getData completed');
-    });
+      });
+  });
+  
 }
 
 doInfinite(infiniteScroll:any) {
@@ -233,6 +220,12 @@ doInfinite(infiniteScroll:any) {
       infiniteScroll.complete();
 
     });
+  }else if(this.filterBy === 'all'){
+    this.getFilteredEvents(this.eventStart, this.eventEnd, this.zipcode, this.distance).then(()=>{
+      infiniteScroll.complete();
+
+    });
+
   }else{
     this.getAllEvents().then(()=>{
       infiniteScroll.complete();
