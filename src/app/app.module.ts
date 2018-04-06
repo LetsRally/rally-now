@@ -110,6 +110,7 @@ import { FCM } from '@ionic-native/fcm';
 import { NewsPage } from '../pages/news/news';
 import { PublicFollowersPage } from '../pages/public-followers/public-followers';
 import { PublicFollowingPage } from '../pages/public-following/public-following';
+import { ButtonComponent } from '../components/main-button/main-button';
 
 
 //import { FCM } from '@ionic-native/fcm';
@@ -226,7 +227,8 @@ firebase.initializeApp(config);
         CallRepPage,
         NewsPage,
         PublicFollowersPage,
-        PublicFollowingPage
+        PublicFollowingPage,
+        ButtonComponent
     ],
     imports: [
         BrowserModule,

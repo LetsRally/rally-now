@@ -406,10 +406,10 @@ export class FriendsRequestPage {
         }else{
           this.followOrg(organizationID);
           $event.srcElement.innerText = 'Following';
-          $event.srcElement.style.backgroundColor = '#fff';
-          $event.srcElement.offsetParent.style.backgroundColor = '#fff';
-          $event.srcElement.parentNode.style.backgroundColor = '#fff';
-          $event.srcElement.style.color = '#6D6D72';
+          // $event.srcElement.style.backgroundColor = '#fff';
+          // $event.srcElement.offsetParent.style.backgroundColor = '#fff';
+          // $event.srcElement.parentNode.style.backgroundColor = '#fff';
+          // $event.srcElement.style.color = '#6D6D72';
           
           this.presentToast('Follow Organization successfully');
         }

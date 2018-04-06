@@ -4,13 +4,15 @@ import { FilterHeaderComponent } from './filter-header/filter-header';
 import { RallyFooterComponent } from './rally-footer/rally-footer';
 import { RallyOrangeHeaderComponent } from './rally-orange-header/rally-orange-header';
 import { RallyNameHeaderComponent } from './rally-name-header/rally-name-header';
+import { ButtonComponent } from './main-button/main-button';
 @NgModule({
 	declarations: [
     HeaderComponent,
     FilterHeaderComponent,
     RallyFooterComponent,
     RallyOrangeHeaderComponent,
-    RallyNameHeaderComponent
+    RallyNameHeaderComponent,
+    ButtonComponent
     ],
 	imports: [
         
@@ -20,7 +22,8 @@ import { RallyNameHeaderComponent } from './rally-name-header/rally-name-header'
     FilterHeaderComponent,
     RallyFooterComponent,
     RallyOrangeHeaderComponent,
-    RallyNameHeaderComponent
+    RallyNameHeaderComponent,
+    ButtonComponent
     ],
    
 })

@@ -61,7 +61,7 @@
             <p class="text-wrap">Friends on Facebook</p>
             <ion-row item-end text-right  *ngIf="item.hide_activity == '0' && item.searchable == '1'">
                 <ion-col col-12 style="padding: 0;">
-                    <button ion-button color="dark" class="action-btn btn-friend" (click)="addFollowRecordFirebase(item.id, $event)">Follow</button>
+                    <main-button class="blue" (click)="addFollowRecordFirebase(item.id, $event)" btnText="Follow"></main-button>
                 </ion-col>
               
             </ion-row>
@@ -83,7 +83,7 @@
 
             <ion-row item-end text-right *ngIf="user.hide_activity == '0' && user.searchable == '1'">
                 <ion-col col-12 style="padding: 0;">
-                    <button ion-button color="dark" class="action-btn btn-friend" (click)="addFollowRecordFirebase(user.id. $event)">FOLLOW</button>
+                    <main-button class="blue" (click)="addFollowRecordFirebase(item.id, $event)" btnText="Follow"></main-button>
                 </ion-col>
 
             </ion-row>
@@ -102,7 +102,7 @@
 
             <ion-row item-end text-right >
                 <ion-col col-12 style="padding: 0;">
-                    <button ion-button color="dark" class="action-btn btn-friend" (click)="addOrg(org[0], $event)">FOLLOW</button>
+                    <main-button class="blue btn-friend" (click)="addOrg(org[0], $event)" btnText="Follow"></main-button>
                 </ion-col>
 
             </ion-row>

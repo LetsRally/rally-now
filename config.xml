@@ -227,7 +227,6 @@
         <variable name="APP_NAME" value="Rally" />
     </plugin>
     <engine name="android" spec="~6.1.2" />
-    <engine name="ios" spec="~4.3.1" />
     <allow-navigation href="http://169.254.116.166:8100" />
     <allow-navigation href="http://169.254.189.190:8100" />
     <allow-navigation href="http://169.254.131.0:8100" />
@@ -251,4 +250,6 @@
     <allow-navigation href="http://169.254.106.197:8100" />
     <allow-navigation href="http://169.254.66.139:8100" />
     <allow-navigation href="http://192.168.8.110:8100" />
+    <engine name="ios" spec="~4.3.1" />
+    <allow-navigation href="http://10.100.35.27:8101" />
 </widget>

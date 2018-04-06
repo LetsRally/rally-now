@@ -231,7 +231,7 @@ getArray(array){
   for(let person of array) {
     // console.log(person);
     this.records.push(person);
-    // console.log("Records", this.records);
+    console.log("Records", this.records);
   }
 
 }

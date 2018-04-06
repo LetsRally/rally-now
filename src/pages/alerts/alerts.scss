@@ -49,5 +49,14 @@ page-alerts {
         height: 3.5rem !important;
 
     }
+
+    main-button{
+        margin: 0.4rem 0.2rem;
+        display: inline-block;
+        button{
+            height: 3.5rem !important;
+            padding: 5px !important;
+        }
+    }
 }
 

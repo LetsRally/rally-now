@@ -24,8 +24,8 @@
                 </ion-col>
                
             </ion-row>
-            <ion-row> 
-                <button class="follow-btn" *ngIf="login" ion-button color="light" full outline (click)="addFollowRecordFirebase(dataID)">{{buttonFollowTest}}</button>
+            <ion-row>
+                <main-button *ngIf="login" class="grey" (click)="addFollowRecordFirebase(dataID)" btnText={{buttonFollowTest}} full outline></main-button>
             </ion-row>
 
         </ion-col>
@@ -77,17 +77,17 @@
             <div class="railled-excerpt" *ngIf="objective.rallies > 0">
                 <p class="white"><strong>{{objective.rallies}}</strong><br> Rallied</p>
                 <div class="btn-objectives-contact">
-                    <button ion-button *ngIf="objective?.goals[0]?.goal_type !== 'sign'">Contact</button>
-                    <button ion-button *ngIf="objective?.goals[0]?.goal_type === 'sign'">Sign</button>
+                    <main-button  *ngIf="objective?.goals[0]?.goal_type !== 'sign'" class="red" btnText="Contact"></main-button>
+                    <main-button  *ngIf="objective?.goals[0]?.goal_type !== 'sign'" class="red" btnTex="Sign"></main-button>
                 </div>
             </div>
             <div class="bottom-excerpt">
                 <p class="white">{{objective?.title}}</p>
             </div>
             <div class="btn-objectives-contact">
-                <button ion-button *ngIf="objective?.goals[0]?.goal_type === 'contact'">Contact</button>
-                <button ion-button *ngIf="objective?.goals[0]?.goal_type === 'sign'">Sign</button>
-                <button ion-button *ngIf="objective?.goals[0]?.goal_type === 'donate'">Donate</button>
+                <main-button  *ngIf="objective?.goals[0]?.goal_type === 'contact'" class="red" btnTex="Contact"></main-button>
+                <main-button  *ngIf="objective?.goals[0]?.goal_type === 'sign'" class="red" btnTex="Sign"></main-button>
+                <main-button  *ngIf="objective?.goals[0]?.goal_type === 'donate'" class="red" btnTex="Donate"></main-button>
               </div>
         </div>
 

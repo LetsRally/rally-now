@@ -144,8 +144,8 @@
                         <div class="railled-excerpt" *ngIf="record.rallies > 0">
                             <p class="white"><strong>{{record.rallies}}</strong><br> Rallied</p>
                             <div class="btn-objectives-contact">
-                                <button ion-button *ngIf="record?.goals[0]?.goal_type !== 'sign'">Contact</button>
-                                <button ion-button *ngIf="record?.goals[0]?.goal_type === 'sign'">Sign</button>
+                                <main-button *ngIf="record?.goals[0]?.goal_type !== 'sign'" class="red" btnText="Contact"></main-button>
+                                <main-button *ngIf="record?.goals[0]?.goal_type !== 'sign'" class="red" btnText="Sign"></main-button>
                             </div>
                         </div>
                        <div class="bottom-excerpt">

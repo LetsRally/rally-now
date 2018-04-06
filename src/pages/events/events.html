@@ -103,7 +103,7 @@
                 <img [src]="event.organization.image_url ? event.organization.image_url : testPhoto" (click)="goToOrganizationProfile(event.organization_id)">
             </ion-avatar>
                 <h2 text-wrap style="text-align: left; "> <small>via</small> {{event.organization.name}}</h2>
-            </button>            <p><small>Event Location: {{event.city ? event.city : 'Unlisted'}}</small></p>
+                     <p><small>Event Location: {{event.city ? event.city : 'Unlisted'}}</small></p>
         </ion-item>
         <div class="events-bg" (click)="goToEventDetail(event.id)" [ngStyle]="{'background-image': 'url(' + event.image_url + ')'}">
             <div class="events-filter"></div>

@@ -79,7 +79,8 @@
             <h2 text-wrap (click)="hideNotification(alert.id, i)"><strong>{{alert.fname}}</strong> </h2>
             <p text-wrap>wants to follow you</p>
             
-        <button item-end ion-button color="dark" class="action-btn btn-follow" (click)="approveRequest(alert.id, i)">Approve</button>
+
+            <main-button item-end class="blue" (click)="approveRequest(alert.id, i)" btnText="Approve"></main-button>
                
         </ion-item>
     </ion-list>

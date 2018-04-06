@@ -412,6 +412,13 @@ page-organization-profile {
         //    padding-left: 0 !important;
         //}
     }
+    main-button{
+        margin: 10px auto 0;
+        width: 100%;
+        button{
+            width: 100%;
+        }
+    }
 }
 
 .title-img .action-sheet-title::before {
