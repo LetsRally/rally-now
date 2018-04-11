@@ -29,11 +29,6 @@ export class InviteFriendsPage {
     console.log('ionViewDidLoad InviteFriendsPage');
   }
 
-  ionViewWillEnter(){
-   
-    this.viewCtrl.setBackButtonText("Sync Contacts");
-  }
-
   cargarListaContactos(){
     this.contacts.find(["*"])
     .then(res => {

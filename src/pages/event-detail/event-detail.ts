@@ -86,14 +86,6 @@ export class EventDetailPage {
     console.log('ionViewDidLoad EventDetailPage');
   }
 
-  ionViewWillEnter(){
-   
-    this.viewCtrl.setBackButtonText(this.eventPageName);
-  }
-
- 
-
-
      getdata(){
   this.httpProvider.getJsonData(this.endpoint + this.eventID).subscribe(
     result => {

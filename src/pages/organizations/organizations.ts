@@ -98,13 +98,6 @@ export class OrganizationsPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad OrganizationsPage');
   }
-
-  ionViewWillEnter(){
-   
-    this.viewCtrl.setBackButtonText("My Feeds");
-  }
-
-  
   
  goToHome(){
     this.navCtrl.setRoot(FeedPage);

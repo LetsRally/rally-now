@@ -94,11 +94,6 @@ export class EventsPage {
 
   }
 
-  ionViewWillEnter(){
-   
-    this.viewCtrl.setBackButtonText("My Feeds");
-  }
-
   // ionViewDidLoad() {
   //   console.log('ionViewDidLoad EventsPage');
   //    this.searchControl.valueChanges.debounceTime(700).subscribe(search => {

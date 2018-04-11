@@ -63,11 +63,6 @@ export class MyRepresentativesPage {
     console.log('ionViewDidLoad MyRepresentativesPage');
   }
 
-  ionViewWillEnter(){
-   
-    this.viewCtrl.setBackButtonText("My Profile");
-  }
-
   getReps(){
     this.storage.get('representatives').then((val) => {
       console.log(val);

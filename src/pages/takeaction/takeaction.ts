@@ -85,12 +85,6 @@ export class TakeactionPage {
       });
   }
 
-  
-    ionViewWillEnter(){
-   
-      this.viewCtrl.setBackButtonText("My Feeds");
-    }
-
     doRefresh(refresher) {
       this.objectives = [];
       // this.loading = this.loadingCtrl.create({

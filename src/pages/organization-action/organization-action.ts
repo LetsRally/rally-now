@@ -101,15 +101,6 @@ export class OrganizationActionPage {
 
   }
 
-  
-
-  ionViewWillEnter(){
-   
-    this.viewCtrl.setBackButtonText(this.pageName);
-  }
-
-  
-
   presentActionSheet(rep, fax, twitter, email, repID, offices) {
     let actionSheet = this.actionSheetCtrl.create({
       title: 'Contact ' + rep.name,

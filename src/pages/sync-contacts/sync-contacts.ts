@@ -20,11 +20,6 @@ export class SyncContactsPage {
     console.log('ionViewDidLoad SyncContactsPage');
   }
 
-  ionViewWillEnter(){
-   
-    this.viewCtrl.setBackButtonText("Discover");
-  }
-
   sync(){
     this.navCtrl.push(InviteFriendsPage);
   }
