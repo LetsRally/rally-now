@@ -1181,3 +1181,11 @@ html:hover [class^="ss-"] {
 .item-md, .item-ios{
     color: #2b2b2b;
 }
+
+.timeline-item.short {
+    min-height: 0;
+    height: auto;
+    .animated-background {
+        height: 40px;
+    }
+}

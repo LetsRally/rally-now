@@ -1,10 +1,9 @@
-
 <ion-header>
     <ion-navbar>
         <ion-title>
             <p class="white">Discover</p>
         </ion-title>
-      
+
     </ion-navbar>
 </ion-header>
 
@@ -19,39 +18,58 @@
         <ion-spinner></ion-spinner>
     </div> -->
 
-    <ion-list class="top-list"> 
+    <ion-list class="top-list">
         <ion-item (click)="goToListOrganizations()">
             <div item-start>
-             <img src="assets/img/Org.svg" alt="" style="width:20px; height:20px; margin-top:10px; margin-right:10px;">
-                    
+                <img src="assets/img/Org.svg" alt=""
+                     style="width:20px; height:20px; margin-top:10px; margin-right:10px;">
+
             </div>
             See All Organizations
-          <ion-icon name="ios-arrow-forward" item-end></ion-icon>
+            <ion-icon name="ios-arrow-forward" item-end></ion-icon>
         </ion-item>
         <ion-item (click)="goToListReps()">
-                <div item-start>
-                 <img src="assets/img/Representatives.svg" alt="" style="width:20px; height:20px; margin-top:10px; margin-right:10px;">
-                        
+            <div item-start>
+                <img src="assets/img/Representatives.svg" alt=""
+                     style="width:20px; height:20px; margin-top:10px; margin-right:10px;">
+
+            </div>
+            See All Representatives
+            <ion-icon name="ios-arrow-forward" item-end></ion-icon>
+        </ion-item>
+        <ion-item (click)="invite()">
+            <div item-start>
+                <img src="assets/img/Community.svg" alt=""
+                     style="width:20px; height:20px; margin-top:10px; margin-right:10px;">
+
+            </div>
+            Invite friends to Rally
+            <ion-icon name="ios-arrow-forward" item-end></ion-icon>
+        </ion-item>
+
+
+        <div class="timeline-wrapper" *ngIf="enablePlaceholder">
+            <div class="timeline-item short" *ngFor="let item of [1,2,3,4,5]">
+                <div class="animated-background">
+                    <div class="background-masker header-top"></div>
+                    <div class="background-masker header-left"></div>
+                    <div class="background-masker header-right"></div>
+                    <div class="background-masker header-bottom"></div>
+                    <div class="background-masker subheader-left"></div>
+                    <div class="background-masker subheader-right"></div>
+                    <div class="background-masker subheader-bottom"></div>
                 </div>
-                See All Representatives
-              <ion-icon name="ios-arrow-forward" item-end></ion-icon>
-            </ion-item>
-            <ion-item (click)="invite()">
-                    <div item-start>
-                     <img src="assets/img/Community.svg" alt="" style="width:20px; height:20px; margin-top:10px; margin-right:10px;">
-                            
-                    </div>
-                    Invite friends to Rally
-                  <ion-icon name="ios-arrow-forward" item-end></ion-icon>
-                </ion-item>
-      </ion-list>
-      
+            </div>
+        </div>
+
+    </ion-list>
+
     <ion-list style="margin-top: 30px;" *ngIf="items.length > 0">
-           <ion-item>
+        <ion-item>
             <p class="list-title">Facebook Friends</p>
 
-           </ion-item>
-       
+        </ion-item>
+
         <ion-item *ngFor="let item of items, let i = index">
             <ion-avatar item-start (click)="goToPublicProfile(item.id)">
                 <!-- <img [src]="getPhoto(item.id)"> -->
@@ -59,54 +77,58 @@
             </ion-avatar>
             <h2 (click)="goToPublicProfile(item.id)">{{item.name}}</h2>
             <p class="text-wrap">Friends on Facebook</p>
-            <ion-row item-end text-right  *ngIf="item.hide_activity == '0' && item.searchable == '1'">
+            <ion-row item-end text-right *ngIf="item.hide_activity == '0' && item.searchable == '1'">
                 <ion-col col-12 style="padding: 0;">
-                    <main-button class="blue" (click)="addFollowRecordFirebase(item.id, $event)" btnText="Follow"></main-button>
+                    <main-button class="blue" (click)="addFollowRecordFirebase(item.id, $event)"
+                                 btnText="Follow"></main-button>
                 </ion-col>
-              
+
             </ion-row>
         </ion-item>
 
 
-    </ion-list> 
+    </ion-list>
 
     <ion-list *ngIf="records.length > 0">
         <ion-item>
             <p class="list-title">Suggested Friends</p>
         </ion-item>
-        <ion-item *ngFor="let user of records, let i = index" >
+        <ion-item *ngFor="let user of records, let i = index">
             <ion-avatar item-start (click)="goToPublicProfile(user.id)">
                 <img src="{{user.photo_url}}" style="border:2px solid #ada8a8;">
             </ion-avatar>
-            <h2 (click)="goToPublicProfile(user.id)">{{user.name}}</h2> 
+            <h2 (click)="goToPublicProfile(user.id)">{{user.name}}</h2>
             <p class="text-wrap">{{user.name}} is following you</p>
 
             <ion-row item-end text-right *ngIf="user.hide_activity == '0' && user.searchable == '1'">
                 <ion-col col-12 style="padding: 0;">
-                    <main-button class="blue" (click)="addFollowRecordFirebase(item.id, $event)" btnText="Follow"></main-button>
+                    <main-button class="blue" (click)="addFollowRecordFirebase(item.id, $event)"
+                                 btnText="Follow"></main-button>
                 </ion-col>
 
             </ion-row>
-        </ion-item>  
+        </ion-item>
 
     </ion-list>
-    <ion-list >
+    <ion-list>
         <ion-item>
             <p class="list-title">Suggested Organizations</p>
         </ion-item>
-        <ion-item *ngFor="let org of orgs" >
+
+        <ion-item *ngFor="let org of orgs">
             <ion-avatar item-start (click)="goToOrganizationProfile(org[0])">
                 <img [src]="org[2] ? org[2] : 'assets/img/org_icon.svg'" style="border:2px solid #ada8a8;">
             </ion-avatar>
             <h2 text-wrap (click)="goToOrganizationProfile(org[0])">{{org[1]}}</h2>
 
-            <ion-row item-end text-right >
+            <ion-row item-end text-right>
                 <ion-col col-12 style="padding: 0;">
-                    <main-button class="blue btn-friend" (click)="addOrg(org[0], $event)" btnText="Follow"></main-button>
+                    <main-button class="blue btn-friend" (click)="addOrg(org[0], $event)"
+                                 btnText="Follow"></main-button>
                 </ion-col>
 
             </ion-row>
-        </ion-item> 
+        </ion-item>
 
     </ion-list>
 
