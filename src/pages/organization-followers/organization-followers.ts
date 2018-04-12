@@ -14,11 +14,13 @@ export class OrganizationFollowersPage {
   endpoint:any = 'organization/';
   followers:any;
   items:any;
+  public enablePlaceholder = false;
 
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
     private httpProvider: OrganizationsProvider) {
+    this.enablePlaceholder = true;
       this.getFollowers(navParams.get('orgID'));
   }
 
@@ -30,6 +32,7 @@ export class OrganizationFollowersPage {
     this.httpProvider.getJsonData(this.endpoint + orgID).subscribe(result => {
       this.followers = result['organization'][0].followers;
       this.initializeItems();
+      this.enablePlaceholder = false;
       console.log(result['organization'][0].followers);
     }); 
   }

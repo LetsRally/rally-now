@@ -22,6 +22,7 @@ export class RepFollowersPage {
   followEndpoint:string= 'following_users';
   notificationsEndpoint:any = 'devices';
   alertsEndpoint:any = 'ux_events';
+  public enablePlaceholder = false;
 
   constructor(
     public navCtrl: NavController, 
@@ -30,6 +31,7 @@ export class RepFollowersPage {
     private httpProvider: UsersProvider,
     private db: AngularFireDatabase,
     public toastCtrl: ToastController) {
+    this.enablePlaceholder = true;
       this.repID = navParams.get('repID');
       this.httpProvider.returnRallyUserId().then(user => {
         this.myRallyID = user.apiRallyID;
@@ -44,6 +46,7 @@ export class RepFollowersPage {
   getFollowers(){
     this.orgProvider.getJsonData(this.endpoint + this.repID + '/followers/' + this.myRallyID)
       .subscribe(result => {
+        this.enablePlaceholder = false;
           this.items = result;
       });
 
