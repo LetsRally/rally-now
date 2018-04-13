@@ -251,11 +251,6 @@
     <allow-navigation href="http://169.254.66.139:8100" />
     <allow-navigation href="http://192.168.8.110:8100" />
     <allow-navigation href="http://10.100.35.27:8101" />
-    <allow-navigation href="http://192.168.0.102:8100" />
-    <allow-navigation href="http://192.168.0.102:8101" />
-    <allow-navigation href="http://10.100.35.213:8101" />
-    <allow-navigation href="http://10.100.35.213:8100" />
-    <allow-navigation href="http://192.168.0.100:8100" />
     <engine name="ios" spec="~4.3.1" />
     <allow-navigation href="http://192.168.14.157:8100" />
 </widget>
