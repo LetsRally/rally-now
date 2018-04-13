@@ -959,11 +959,25 @@ orgStatus(orgID){
       openWebpage(username, tweetID) {
         var url:string = 'https://twitter.com/' + username + '/status/' + tweetID;
         const options: InAppBrowserOptions = {
-          zoom: 'no'
+          zoom: 'no',
+          toolbarposition: 'top',
+          location: 'no'
         }
     
         // Opening a URL and returning an InAppBrowserObject
         const browser = this.inAppBrowser.create(url, '_blank', options);
+
+        // Add styles for browser page
+        browser.on("loadstop")
+            .subscribe(
+            () => {
+                browser.insertCSS({
+                    code: "header .rn-ipm5af{top: 16px !important; margin-top: 0 !important;} main{overflow:hidden}"
+                })
+            },
+            err => {
+                console.log("InAppBrowser Loadstop Event Error: " + err);
+            });
     
        // Inject scripts, css and more with browser.X
       }

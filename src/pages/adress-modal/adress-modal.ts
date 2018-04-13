@@ -104,8 +104,5 @@ export class AdressModalPage {
     //this.address = item.description;
     this.searchTerm = item.description;
   }
-
- 
-
   
 } 

@@ -18,6 +18,9 @@ import { ThanksPage } from '../thanks/thanks';
 import { DomSanitizer } from '@angular/platform-browser';
 import { OrganizationsProvider } from '../../providers/organizations/organizations';
 import { DonateFeedBackPage } from '../donate-feed-back/donate-feed-back';
+import { FriendsRequestPage } from '../friends-request/friends-request';
+import { FilterEventsPage } from '../filter-events/filter-events';
+import { Storage } from '@ionic/storage';
 
 
 @IonicPage()
@@ -27,6 +30,7 @@ import { DonateFeedBackPage } from '../donate-feed-back/donate-feed-back';
 })
 export class TakeactionPage {
 
+  all: string = "all";
   endpoint:string = 'objectives/take_action/';
   objectives:any;
   myrallyID:any;
@@ -42,6 +46,16 @@ export class TakeactionPage {
   loading:any;
   loader:boolean = false;
   enablePlaceholder:boolean = true;
+  enable:boolean = true;
+  eventFiltered:boolean = false;
+  newEndpoint:any = 'homefeed_pagination/';
+  eventStart:any;
+  eventEnd:any;
+  private start:number=1;
+  public records:any = [];
+  zipcode:any;
+  distance:any; 
+  filterBy:any; 
 
 
 
@@ -58,7 +72,8 @@ export class TakeactionPage {
     public modalCtrl: ModalController,
     public loadingCtrl: LoadingController,
     private sanitizer: DomSanitizer,
-    public orgProvider: OrganizationsProvider
+    public orgProvider: OrganizationsProvider,
+    private storage: Storage
     ) {
     //   let svg = `<div id="Rallycontainer">
     //   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><title>Loading</title>
@@ -75,16 +90,141 @@ export class TakeactionPage {
     //     content: this.safeSvg,  
     //   }); 
     //   this.loading.present();
+    this.all = "all";
+    this.enable = false;
     this.enablePlaceholder = true;
      this.httpProvider.returnRallyUserId()
       .then(user => {
         console.log(" Usuario",user);
         this.myrallyID = user.apiRallyID;
         this.getdata();
+        this.saveLog();
 
       });
   }
 
+
+//   getdata(startDate?, endDate?, zipcode?, distance?, filterBy?){
+    
+//     if(startDate != null){
+//       console.log(filterBy);
+//       if(filterBy !== 'all'){
+//         var url = this.endpoint + this.myrallyID + '/' + startDate + '/' + endDate + '/' + zipcode + '/' + distance + '/';
+//       }else{
+//         var url = this.endpoint + 'all-events/' + this.myrallyID + '/' + startDate + '/' + endDate + '/' + zipcode + '/' + distance + '/';
+
+//       }
+//       this.eventFiltered = true;
+//     } else{
+//       var url = this.newEndpoint + this.myrallyID + '/';
+//     }
+ 
+//     console.log("This url =>", url);
+  
+
+//   return new Promise(resolve => {
+//     this.httpProvider.loadHome(url, this.start)
+//       .then(data => {
+//         console.log("Full Data", data);
+//         this.getArray(data);
+        
+
+//         //this.organizations = data;
+          
+//         resolve(true);
+//         //this.loading.dismiss(); 
+//         this.enablePlaceholder = false;
+//         this.loader = false;
+
+//       });
+//   });
+// } 
+
+  segmentChanged(){
+    console.log(this.enable);
+    this.enable = !this.enable;
+  }
+
+
+    goToRequests(){
+      this.navCtrl.push(FriendsRequestPage,  {}, {animate:true,animation:'transition',duration:500,direction:'forward'});
+    } 
+
+    goToEventFilter(){
+      // this.navCtrl.push(FilterEventsPage,  {}, {animate:true,animation:'ios-transition',duration:500,direction:'forward'});
+      let modal = this.modalCtrl.create(FilterEventsPage, {location: 'home'});
+      modal.onDidDismiss((data) => {
+        if(data === 'back'){
+          console.log("No refresh");
+        }else{
+          this.getStartDate(); 
+
+        }
+        
+      });
+      modal.present();
+      
+    }
+
+
+     getStartDate(){
+      this.storage.get('startDate').then((val) => {
+        this.eventStart = val;
+        this.getEndDate();
+
+      });
+    }
+
+    getEndDate(){
+      this.storage.get('endDate').then((val) => {
+        this.eventEnd = val; 
+        this.getZipcode();
+      });
+    }
+
+    getZipcode(){
+      this.storage.get('homeZipcode').then((val) => {
+        this.zipcode = val;
+        this.getDistance();
+      });
+    }
+
+    getDistance(){
+      this.storage.get('homeDistance').then((val) => {
+        this.distance = val;
+        this.getFilterType();
+      });
+
+    }
+
+
+    getFilterType(){
+      this.storage.get('filterBy').then((val) => {
+        this.filterBy = val;
+        this.start = 1;
+        // this.getdata(this.eventStart, this.eventEnd, this.zipcode, this.distance, this.filterBy);
+        this.records = [];
+        // this.loading = this.loadingCtrl.create({
+        //   spinner: 'hide',
+        //  content: this.safeSvg,
+        // }); 
+        //   this.loading.present();
+          this.enablePlaceholder = true;
+
+      });
+
+    } 
+
+  saveLog(){
+    // console.log(this.myrallyID, 66666)
+    this.httpProvider.addItem('log', JSON.stringify({
+      user_id: this.myrallyID,
+      screen: 'Homefeed',
+      message: 'Visited'
+    })).subscribe(data =>{
+      console.log("Log", data);
+    });
+  }
   
     ionViewWillEnter(){
    
@@ -98,8 +238,8 @@ export class TakeactionPage {
       //   content: this.safeSvg,
       //   }); 
       //   this.loading.present();
+      this.getdata(this.eventStart, this.eventEnd, this.zipcode, this.distance, this.filterBy);
       this.loader = true;
-      this.getdata();
     
         setTimeout(() => {
           console.log('Async operation has ended');
@@ -171,23 +311,24 @@ export class TakeactionPage {
      }
 
 
-      getdata(){
-  this.orgProvider.getJsonData(this.endpoint+ this.myrallyID ).subscribe(
-    result => {
-      this.objectives=result;
-      //this.loading.dismiss();
-      this.enablePlaceholder = false;
-      this.loader = false;
-      console.log("Objectives", JSON.stringify(result));
-    },
-    err =>{
-      console.error("Error : "+err);
-    } ,
-    () => {
-      console.log('getData completed');
-    }
-  );
-}
+  getdata(startDate?, endDate?, zipcode?, distance?, filterBy?){
+    console.log(startDate, endDate, zipcode, distance, filterBy)
+    this.orgProvider.getJsonData(this.endpoint+ this.myrallyID ).subscribe(
+      result => {
+        this.objectives=result;
+        //this.loading.dismiss();
+        this.enablePlaceholder = false;
+        this.loader = false;
+        console.log("Objectives", JSON.stringify(result));
+      },
+      err =>{
+        console.error("Error : "+err);
+      } ,
+      () => {
+        console.log('getData completed');
+      }
+    );
+  }
 
 
 goToOrganizationProfile(organizationID){

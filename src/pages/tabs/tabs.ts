@@ -5,6 +5,7 @@ import { AlertsPage } from '../alerts/alerts';
 import { ProfilePage } from '../profile/profile';
 import { OverlayPage } from '../overlay/overlay';
 import { SearchPage } from '../search/search';
+import { TakeactionPage } from '../takeaction/takeaction';
 import { UsersProvider } from '../../providers/users/users';
 import { NotiModel } from '../../models/notifications';
 import { Storage } from '@ionic/storage';
@@ -24,6 +25,7 @@ export class TabsPage {
   tab3Root = ProfilePage;
   tab4Root = OverlayPage;
   tab5Root = SearchPage;
+  tab6Root = TakeactionPage;
   endpoint:any = 'ux_events';
   myRallyID:any;
   badgeCount:any;

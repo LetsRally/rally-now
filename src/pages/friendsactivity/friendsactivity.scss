@@ -14,7 +14,7 @@ page-friendsactivity {
     
     ion-content {
        background: #d8d8d8 !important;
-        top:46px;
+        top:90px;
     }
     .toolbar-background {
         background-color: #4a90e2;
@@ -29,7 +29,12 @@ page-friendsactivity {
     }
 
     .rally-segment{
+        background: #d8d8d8 !important;
         padding: 10px !important;
+        position: fixed;
+        top: 45px;
+        left: 0;
+        z-index: 9999;
         .segment-button{
             background: #fff;
         }
@@ -102,7 +107,6 @@ page-friendsactivity {
         .right-border {
             border-right: 1px solid #f2f2f2;
         }
-
     
 }
 

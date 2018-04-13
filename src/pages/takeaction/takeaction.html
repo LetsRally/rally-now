@@ -1,6 +1,31 @@
-<rally-name-header name="Take Action"></rally-name-header>
-
-
+<ion-header>
+    <ion-navbar>
+        <ion-title>
+            <p class="white" text-wrap>Take Action</p>
+        </ion-title>
+        <ion-buttons start style="order:1;">
+            <button ion-button icon-only (click)="goToRequests()">
+       <img src="assets/img/add.svg" alt="" style="height: 20px; width:20px;">
+      </button>
+        </ion-buttons>
+        <ion-buttons end>
+            <button ion-button icon-only (click)="goToEventFilter()" *ngIf="!eventFiltered">
+                <img src="assets/img/Filter.svg" alt="" style="height: 20px; width:20px;">
+            </button>
+            <button ion-button icon-only (click)="goToEventFilter()" *ngIf="eventFiltered">
+                    <img src="assets/img/filter-selected.svg" alt="" style="height: 20px; width:20px;">
+                </button>
+        </ion-buttons>
+    </ion-navbar>
+</ion-header>
+<ion-segment [(ngModel)]="all" (ionChange)="segmentChanged()" class="rally-segment">
+    <ion-segment-button value="all" >
+      All 
+    </ion-segment-button>
+    <ion-segment-button value="friends" >
+      Following
+    </ion-segment-button>
+</ion-segment>
 <ion-content> 
         <ion-spinner *ngIf="loader"></ion-spinner>
 
