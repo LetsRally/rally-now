@@ -135,7 +135,8 @@
 
     </ion-card>
 
-    <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+    <ion-infinite-scroll (ionInfinite)="doInfinite($event)"
+                         threshold="500px">
             <ion-infinite-scroll-content 
             loadingSpinner="bubbles"
             loadingText="Loading more..."></ion-infinite-scroll-content>

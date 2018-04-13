@@ -22,15 +22,15 @@ export class MyApp {
 
 
     constructor(
-    	public platform: Platform, 
-    	statusBar: StatusBar, 
-    	public splashScreen: SplashScreen, 
-    	public alertCtrl: AlertController,
-    	public userData: UserData,
-      public storage:Storage,
-      private httpProvider:UsersProvider
-    	) {
-       this.userData.hasLoggedIn().then((hasLoggedIn) => {
+    	public platform: Platform,
+    statusBar: StatusBar,
+    public splashScreen: SplashScreen,
+    public alertCtrl: AlertController,
+    public userData: UserData,
+    public storage:Storage,
+    private httpProvider:UsersProvider
+) {
+        this.userData.hasLoggedIn().then((hasLoggedIn) => {
       
                 if(hasLoggedIn){
                   this.rootPage = TabsPage;

@@ -14,6 +14,21 @@
       <ion-list-header>
         All Representatives
       </ion-list-header>
+
+      <div class="timeline-wrapper" *ngIf="enablePlaceholder">
+          <div class="timeline-item short" *ngFor="let item of [1,2,3,4,5]">
+              <div class="animated-background">
+                  <div class="background-masker header-top"></div>
+                  <div class="background-masker header-left"></div>
+                  <div class="background-masker header-right"></div>
+                  <div class="background-masker header-bottom"></div>
+                  <div class="background-masker subheader-left"></div>
+                  <div class="background-masker subheader-right"></div>
+                  <div class="background-masker subheader-bottom"></div>
+              </div>
+          </div>
+      </div>
+
       <div *ngFor="let rep of items, let i = index"> 
       <ion-item *ngIf="rep.openstate != true">
           <ion-avatar item-start (click)="goToRepProfile(rep.id)">
@@ -27,7 +42,8 @@
       </div>
     </ion-list>
     
-    <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+    <ion-infinite-scroll (ionInfinite)="doInfinite($event)"
+                         threshold="500px">
         <ion-infinite-scroll-content 
         loadingSpinner="bubbles"
         loadingText="Loading more..."></ion-infinite-scroll-content>

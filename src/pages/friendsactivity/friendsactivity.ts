@@ -96,12 +96,6 @@ export class FriendsactivityPage {
 
   }
 
-  
-    ionViewWillEnter(){
-   
-      this.viewCtrl.setBackButtonText("My Feeds");
-    }
-
   ionViewDidLoad() {
     console.log('ionViewDidLoad FriendsactivityPage');
   }

@@ -232,7 +232,9 @@ firebase.initializeApp(config);
     ],
     imports: [
         BrowserModule,
-        IonicModule.forRoot(MyApp),
+        IonicModule.forRoot(MyApp, {
+            backButtonText: 'Back'
+        }),
         AngularFireModule.initializeApp(config),
         IonicStorageModule.forRoot(),
         HttpModule,

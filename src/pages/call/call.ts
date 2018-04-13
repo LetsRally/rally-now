@@ -58,10 +58,7 @@ export class CallPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad CallPage');
   } 
-  ionViewWillEnter(){
-   
-    this.viewCtrl.setBackButtonText("Contact");
-  }
+
     presentPopover() {
        let popover = this.popoverCtrl.create(OverlayPage);
        popover.present();

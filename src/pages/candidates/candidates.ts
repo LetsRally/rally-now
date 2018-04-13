@@ -63,11 +63,6 @@ export class CandidatesPage {
     console.log('ionViewDidLoad CandidatesPage');
   }
 
-  ionViewWillEnter(){
-   
-    this.viewCtrl.setBackButtonText("My Feeds");
-  }
-
   getdata(){
     
   

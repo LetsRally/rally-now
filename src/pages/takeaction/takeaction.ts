@@ -103,7 +103,6 @@ export class TakeactionPage {
       });
   }
 
-
 //   getdata(startDate?, endDate?, zipcode?, distance?, filterBy?){
     
 //     if(startDate != null){

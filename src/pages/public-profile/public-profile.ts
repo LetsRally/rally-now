@@ -75,11 +75,6 @@ export class PublicProfilePage {
     console.log('ionViewDidLoad PublicProfilePage');
   }
 
-  ionViewWillEnter(){
-   
-    this.viewCtrl.setBackButtonText(this.profilePageName);
-  }
-
   amIaFollower(){
     this.httpProvider.getJsonData(this.followEndpoint+'?follower_id='+this.myRallyID+'&following_id='+this.parameter + '&approved=true').subscribe(
       result => {

@@ -78,11 +78,6 @@ export class OrganizationProfilePage {
     console.log('ionViewDidLoad OrganizationProfilePage');
   }
 
-  ionViewWillEnter(){
-   
-    this.viewCtrl.setBackButtonText(this.OrgPageName);
-  }
-
   getdata(){
   this.orgProvider.getJsonData(this.endpoint + this.organizationID).subscribe(
     result => {
