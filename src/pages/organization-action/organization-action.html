@@ -44,7 +44,7 @@
                 </div>
 
                 <div *ngIf="isGroupShown(i)" class="hidden-div">
-                    <p>{{d.description}}</p>
+                    <p [innerHTML]="d.description"></p>
                 </div>
             </ion-item>
         </ion-list>

@@ -18,6 +18,8 @@ page-organization-action {
     small {
             color: #868686;
             font-weight: normal;
+            text-overflow: initial !important;
+            white-space: normal;
         }
 
         .toggle-header{
@@ -185,5 +187,8 @@ page-organization-action {
                 letter-spacing: -0.36px;
             }
         }
+    }
+    .button-ios-dark.activated{
+        background-color: #f4512c !important;
     }
 }
