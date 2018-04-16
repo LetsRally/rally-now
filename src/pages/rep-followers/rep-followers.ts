@@ -128,8 +128,8 @@ export class RepFollowersPage {
       this.httpProvider.saveFollowRecordID(data.following_id, data.id, 'follow');
       this.getDeviceID(friendID);
       this.presentToast('Follow user successfully');
-      $event.srcElement.innerHTML = "Unfollow";
-      $event.srcElement.innerText = "UNFOLLOW";
+      $event.srcElement.innerHTML = "Following";
+      $event.srcElement.innerText = "FOLLOWING";
     }, error => {
       console.log("Error", error);
     });;

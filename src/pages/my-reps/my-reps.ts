@@ -141,8 +141,8 @@ export class MyRepsPage {
               $event.srcElement.innerText = "FOLLOW";
             } else{
               this.saveRepInApi(repID);
-              $event.srcElement.innerHTML = "Unfollow";
-              $event.srcElement.innerText = "UNFOLLOW";
+              $event.srcElement.innerHTML = "Following";
+              $event.srcElement.innerText = "FOLLOWING";
             }
           },
       err =>{

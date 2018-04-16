@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {IonicPage, NavController, NavParams, LoadingController, ToastController, Platform} from 'ionic-angular';
+import {IonicPage, NavController, NavParams, LoadingController, ToastController, Platform, ActionSheetController} from 'ionic-angular';
 import {UsersProvider} from '../../providers/users/users';
 import {Storage} from '@ionic/storage';
 import {RepresentativeProfilePage} from '../representative-profile/representative-profile';
@@ -37,6 +37,7 @@ export class RepresentivesListPage {
                 private storage: Storage,
                 private platform: Platform,
                 private orgProvider: OrganizationsProvider,
+                public actionSheetCtrl: ActionSheetController,
                 private sanitizer: DomSanitizer) {
         this.searchControl = new FormControl();
         this.platform.ready().then(() => {
@@ -136,7 +137,7 @@ export class RepresentivesListPage {
                 return 'Follow';
 
             } else {
-                return 'Unfollow';
+                return 'Following';
 
             }
         }
@@ -156,13 +157,11 @@ export class RepresentivesListPage {
                 result => {
 
                     if (result != "") {
-                        this.unFollowRep(result[0].id);
-                        $event.srcElement.innerHTML = "Follow";
-                        $event.srcElement.innerText = "FOLLOW";
+                        this.unFollowActionSheet(result[0].id, $event)
                     } else {
                         this.saveRepInApi(repID);
-                        $event.srcElement.innerHTML = "Unfollow";
-                        $event.srcElement.innerText = "UNFOLLOW";
+                        $event.srcElement.innerHTML = "Following";
+                        $event.srcElement.innerText = "FOLLOWING";
                     }
                 },
                 err => {
@@ -172,6 +171,35 @@ export class RepresentivesListPage {
                     console.log('getData completed');
                 }
             );
+    }
+
+
+      unFollowActionSheet(representativeID, el) {
+        
+      let actionSheet = this.actionSheetCtrl.create({
+        title: 'Unfollow this representative?' ,
+        cssClass: 'title-img',      
+        buttons: [
+          {
+            text: 'Unfollow',
+            role: 'destructive',
+            handler: () => {
+              console.log('Destructive clicked');
+              this.unFollowRep(representativeID);
+              el.srcElement.innerHTML = "Follow";
+              el.srcElement.innerText = "FOLLOW";
+              
+            }
+          },{
+            text: 'Cancel',
+            role: 'cancel',
+            handler: () => {
+              console.log('Cancel clicked');
+            }
+          }
+        ]
+      });
+      actionSheet.present();
     }
 
     saveRepInApi(repID) {

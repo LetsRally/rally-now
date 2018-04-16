@@ -510,7 +510,7 @@ getFollowStatus(actions){
       return 'Follow';
       
     }else{
-      return 'Unfollow';
+      return 'Following';
       
     }
   }

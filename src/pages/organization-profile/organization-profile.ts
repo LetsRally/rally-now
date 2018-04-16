@@ -138,7 +138,7 @@ getShortDate(day){
     orgRef.on('value', snapshot=>{
       if (snapshot.hasChildren()) {
        console.log('Unfollow');
-       this.buttonFollowTest = 'Unfollow';
+       this.buttonFollowTest = 'Following';
        
       } else{
         console.log('Follow');
@@ -208,7 +208,7 @@ presentToast(message) {
       cssClass: 'title-img',      
       buttons: [
         {
-          text: 'Unfollow',
+          text: 'Following',
           role: 'destructive',
           handler: () => {
             console.log('Destructive clicked');
@@ -584,7 +584,7 @@ goToActionPage(objectiveID, goal_type, source, goalID, repID){
           return 'Follow';
           
         }else{
-          return 'Unfollow';
+          return 'Following';
           
         }
       }

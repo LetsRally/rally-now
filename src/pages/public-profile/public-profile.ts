@@ -75,6 +75,11 @@ export class PublicProfilePage {
     console.log('ionViewDidLoad PublicProfilePage');
   }
 
+  ionViewWillEnter(){
+   
+    this.viewCtrl.setBackButtonText(this.profilePageName);
+  }
+
   amIaFollower(){
     this.httpProvider.getJsonData(this.followEndpoint+'?follower_id='+this.myRallyID+'&following_id='+this.parameter + '&approved=true').subscribe(
       result => {
@@ -95,7 +100,7 @@ export class PublicProfilePage {
         orgRef.on('value', snapshot=>{
       if (snapshot.hasChildren()) {
        console.log('Unfollow');
-       this.buttonFollowTest = 'Unfollow';
+       this.buttonFollowTest = 'Following';
        
       } else{
         console.log('Follow');
@@ -246,7 +251,7 @@ presentToast(message) {
       cssClass: 'title-img',      
       buttons: [
         {
-          text: 'Unfollow',
+          text: 'Following',
           role: 'destructive',
           handler: () => {
             console.log('Destructive clicked');

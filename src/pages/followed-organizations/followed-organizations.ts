@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController , ActionSheetController} from 'ionic-angular';
 import { FeedPage } from '../feed/feed';
 import { AlertsPage } from '../alerts/alerts';
 import { ProfilePage } from '../profile/profile';
@@ -41,6 +41,7 @@ export class FollowedOrganizationsPage {
     private httpProvider: UsersProvider,
     public loadingCtrl: LoadingController,
     private orgProvider: OrganizationsProvider,
+    public actionSheetCtrl: ActionSheetController,
     private sanitizer: DomSanitizer) {
 
    
@@ -135,24 +136,49 @@ export class FollowedOrganizationsPage {
 
     getOrganizationFollowRecordID(orgID, $event){
       this.httpProvider.getJsonData(this.organizationEndpoint+'?follower_id='+this.currentApiID +'&organization_id='+orgID).subscribe(
-  result => {
-    console.log("Delete ID : "+ result[0].id);
-    this.unfollow(result[0].id, orgID);
-    $event.srcElement.innerText = 'Follow';
+        result => {
+            console.log("Delete ID : "+ result[0].id);
+            this.unFollowActionSheet(result[0].id, orgID, $event);
 
-  },
-  err =>{
-    console.error("Error : "+err);
-  } ,
-  () => {
-    console.log('getData completed');
-  });
+        },
+        err =>{
+          console.error("Error : "+err);
+        } ,
+        () => {
+          console.log('getData completed');
+        });
   }
 
   unfollow(recordID, orgID){
 
     this.httpProvider.unfollowOrganization(this.organizationEndpoint, recordID);
     this.httpProvider.removeFollowRecordID(orgID, 'organizations');
+  }
+
+  unFollowActionSheet(id, orgID, el) {
+    
+    let actionSheet = this.actionSheetCtrl.create({
+      title: 'Unfollow this organization?' ,
+      cssClass: 'title-img',      
+      buttons: [
+        {
+          text: 'Unfollow',
+          role: 'destructive',
+          handler: () => {
+            this.unfollow(id, orgID);
+            el.srcElement.innerText = 'Follow';
+            
+          }
+        },{
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        }
+      ]
+    });
+    actionSheet.present();
   }
 
 
@@ -170,8 +196,8 @@ export class FollowedOrganizationsPage {
             $event.srcElement.innerText = "FOLLOW";
           } else{
             this.saveRepInApi(repID);
-            $event.srcElement.innerHTML = "Unfollow";
-            $event.srcElement.innerText = "UNFOLLOW";
+            $event.srcElement.innerHTML = "Following";
+            $event.srcElement.innerText = "FOLLOWING";
           }
         },
     err =>{

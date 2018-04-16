@@ -675,7 +675,7 @@ hideItem(objective_id, index){
         return 'Follow';
         
       }else{
-        return 'Unfollow';
+        return 'Following';
         
       }
     }

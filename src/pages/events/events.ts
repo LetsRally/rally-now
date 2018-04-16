@@ -614,7 +614,7 @@ goToEventDetail(eventID){
           return 'Follow';
           
         }else{
-          return 'Unfollow';
+          return 'Following';
           
         }
       }

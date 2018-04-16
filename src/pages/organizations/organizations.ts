@@ -699,7 +699,7 @@ orgStatus(orgID){
               return 'Follow';
               
             }else{
-              return 'Unfollow';
+              return 'Following';
               
             }
           }
