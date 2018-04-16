@@ -1,0 +1,16 @@
+<div class="modal-window">
+    <div class="modal-title">
+        <h2>{{title}}</h2>
+    </div>
+    <div class="modal-body">
+        <p>{{text}}</p>
+    </div>
+    <ion-buttons class="modal-buttons">
+        <button ion-button
+                class="cancel-modal-button"
+                (click)="closeModal()">{{buttonsNames[0]}}</button>
+        <button ion-button
+                class="continue-modal-button"
+                (click)="continueStep()">{{buttonsNames[1]}}</button>
+    </ion-buttons>
+</div>

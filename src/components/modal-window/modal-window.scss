@@ -1,0 +1,65 @@
+.modal-window {
+  width: 90%;
+  min-height: 100px;
+  max-width: 350px;
+  position: absolute;
+  background-color: #fff;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%)!important;
+  padding-bottom: 50px;
+  border-radius: 15px;
+  border: 1px solid #999;
+  overflow: hidden;
+  &.accept {
+    height: auto;
+    .button {
+      width: 100%;
+      background-color: #bbe172;
+      color: white;
+    }
+    .modal-body {
+      padding: 0;
+    }
+  }
+}
+.modal-buttons {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  border-top: 1px solid #999;
+  margin: 0!important;
+  .button {
+    width: 50%;
+    background-color: transparent;
+    color: #999;
+    height: 50px;
+    margin: 0;
+  }
+}
+.modal-wrapper {
+  background-color: rgba(0, 0, 0, 0.4);
+  .ion-page.show-page {
+    background-color: transparent!important;
+  }
+}
+.modal-icon-cover {
+  color: #4a67ad;
+  margin: 0;
+  font-size: 36px;
+}
+.modal-title {
+  text-align: center;
+  margin-top: 30px;
+  padding: 0 15px;
+}
+.modal-body {
+  padding: 0 15px;
+  text-align: center;
+  font-size: 18px;
+  color: #8e8e93;
+  max-height: 124px;
+  overflow-y: auto;
+}
