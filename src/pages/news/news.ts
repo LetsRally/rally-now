@@ -420,7 +420,7 @@ if (actions != null){
     return 'Follow';
     
   }else{
-    return 'Unfollow';
+    return 'Following';
     
   }
 }

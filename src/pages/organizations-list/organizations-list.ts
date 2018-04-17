@@ -163,7 +163,7 @@ export class OrganizationsListPage {
         return 'Follow';
         
       }else{
-        return 'Unfollow';
+        return 'Following';
         
       }
     }
@@ -183,25 +183,24 @@ export class OrganizationsListPage {
     followRef.once('value', snapshot=>{
       if (snapshot.hasChildren()) {
         console.log('You already follow this org');
-        this.unFollowActionSheet(organizationID);
-        $event.srcElement.innerText = 'Follow';
+        this.unFollowActionSheet(organizationID, $event);
         
         //this.presentToast('You are not following this organization anymore');
 
       }else{
-        this.followOrg(organizationID);
-        $event.srcElement.innerText = 'Unfollow';
+        this.followOrg(organizationID, $event);
         
         this.presentToast('Follow Organization successfully');
       }
     });
    }
 
-   followOrg(organizationID){ 
+   followOrg(organizationID, el){ 
     this.httpProvider.followOrganization(this.organizationEndpoint, this.currentRallyID, organizationID );
+    el.srcElement.innerText = 'Following';
   }
 
-  unFollowActionSheet(organizationID) {
+  unFollowActionSheet(organizationID, el) {
     
   let actionSheet = this.actionSheetCtrl.create({
     title: 'Unfollow this organization?' ,
@@ -213,6 +212,7 @@ export class OrganizationsListPage {
         handler: () => {
           console.log('Destructive clicked');
           this.getOrganizationFollowRecordID(organizationID);
+          el.srcElement.innerText = 'Follow';
           
         }
       },{

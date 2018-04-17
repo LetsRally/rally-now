@@ -577,21 +577,21 @@ export class EventsPage {
             });
     }
 
-    getOrganizationFollowStatus(actions) {
-        if (actions != null) {
-            var found = actions.some(el => {
-                return el.id == this.myrallyID;
-
-            });
-
-            if (!found) {
-                return 'Follow';
-
-            } else {
-                return 'Unfollow';
-
-            }
+    getOrganizationFollowStatus(actions){
+      if (actions != null){
+        var found = actions.some(el => { 
+            return el.id == this.myrallyID;
+          
+        });
+        
+        if (!found){
+          return 'Follow';
+          
+        }else{
+          return 'Following';
+          
         }
+      }
     }
 
 

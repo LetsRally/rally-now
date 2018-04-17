@@ -804,7 +804,7 @@ findInLoopTweet(actions){
       return 'Follow';
       
     }else{
-      return 'Unfollow';
+      return 'Following';
       
     }
   }
@@ -950,7 +950,7 @@ orgStatus(orgID){
             return 'Follow';
             
           }else{
-            return 'Unfollow';
+            return 'Following';
             
           }
         }

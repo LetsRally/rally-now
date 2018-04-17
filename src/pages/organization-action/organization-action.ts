@@ -38,6 +38,7 @@ export class OrganizationActionPage {
   goal_id:any;
   buttonColor:any;
   shownGroup = null; 
+  shownGroups = []; 
   date:any; 
   pageName:any;
   objectivesMedia:any;
@@ -185,6 +186,7 @@ export class OrganizationActionPage {
         title: "What to say (talking points)",
         description: this.objShort
       });
+
       this.reps_goals = result.goals[0].reps_goals;
       this.contactOption = result.goals[0].contact_option_id;
       if(result.goals[0].contact_option_id === '5ab2a2d5-776c-4364-b7c7-9760b185268e'){
@@ -263,13 +265,14 @@ export class OrganizationActionPage {
 
   toggleGroup(group) {
     if (this.isGroupShown(group)) {
-        this.shownGroup = null;
+        let groupId = this.shownGroups.indexOf(group);
+        this.shownGroups.splice(groupId, 1);
     } else {
-        this.shownGroup = group;
+        this.shownGroups.push(group);
     }
 };
 isGroupShown(group) {
-    return this.shownGroup === group;
+    return this.shownGroups.indexOf(group) > -1;
 };
 
 
