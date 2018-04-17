@@ -14,8 +14,6 @@
     </ion-navbar>
 </ion-header>
 <ion-content>
-    <ion-spinner *ngIf="loader"></ion-spinner>
-
 
     <ion-refresher (ionRefresh)="doRefresh($event)">
         <ion-refresher-content pullingText="Pull down to Refresh" pullingIcon="arrow-dropdown"
@@ -87,7 +85,7 @@
     <!-- <div *ngIf="searching" class="spinner-container">
         <ion-spinner></ion-spinner>
     </div> -->
-    <div *ngIf="events.length < 1" class="flex-center">
+    <div *ngIf="events.length < 1 && !enablePlaceholder" class="flex-center">
         <p>Sorry, no results matched your criteria</p>
     </div>
 

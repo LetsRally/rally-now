@@ -147,7 +147,6 @@ export class EventsPage {
     }
 
     doRefresh(refresher) {
-        console.log('REFRESHER');
         this.start = 1;
         this.events = [];
         this.loader = true;
@@ -173,8 +172,10 @@ export class EventsPage {
 
 
     getFollowedEvents(startDate, endDate, zipcode, distance) {
-        console.log('GET FOLLOWED');
-        this.events = [];
+        if(this.start === 1) {
+            this.events = [];
+        }
+
         return new Promise((resolve, reject) => {
             this.orgProvider.load(this.endpointOld + '/' + this.myrallyID + '/' + zipcode + '/' + startDate + '/' + endDate + '/' + distance + '/', this.start)
                 .then(data => {
@@ -187,7 +188,6 @@ export class EventsPage {
     }
 
     getAllEvents() {
-        console.log('GET ALL');
         if(this.start === 1) {
             this.events = [];
         }
@@ -203,17 +203,19 @@ export class EventsPage {
     }
 
     getArray(array) {
+        console.log(this.events);
         for (let event of array) {
             this.events.push(event);
         }
-        //this.loading.dismiss();
-        this.enablePlaceholder = false;
-        this.loader = false;
 
+        this.enablePlaceholder = false;
     }
 
     getFilteredEvents(startDate, endDate, zipcode, distance) {
-        this.events = [];
+        if(this.start === 1) {
+            this.events = [];
+        }
+
         return new Promise((resolve, reject) => {
             this.orgProvider.load(this.endpointOld + '/' + zipcode + '/' + startDate + '/' + endDate + '/' + distance + '/', this.start).then(
                 result => {
@@ -229,11 +231,9 @@ export class EventsPage {
 
     doInfinite(infiniteScroll: any) {
         this.start += 1;
-        console.log(this.start);
         if (this.filterState.filterBy === 'followed') {
             this.getFollowedEvents(this.filterState.timeStarts, this.filterState.timeEnds, this.filterState.zipcode, this.filterState.distance).then(() => {
                 infiniteScroll.complete();
-
             });
         } else if (this.filterState.filterBy === 'all') {
             this.getFilteredEvents(this.filterState.timeStarts, this.filterState.timeEnds, this.filterState.zipcode, this.filterState.distance).then(() => {
@@ -245,8 +245,6 @@ export class EventsPage {
                 infiniteScroll.complete();
             });
         }
-
-
     }
 
 
