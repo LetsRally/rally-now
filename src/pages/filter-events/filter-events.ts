@@ -14,6 +14,7 @@ import {DataProvider} from "../../providers/data/data";
 export class FilterEventsPage {
 
     public filterState: FilterModel;
+    public invalidZip = false;
     endpoint: any = 'events/';
     enable: boolean = false;
     text: any;
@@ -44,6 +45,7 @@ export class FilterEventsPage {
             this.events = true;
             this.getStorage('eventsFilterState');
         }
+        this.checkZipCode();
     }
 
     getStorage(key) {
@@ -105,11 +107,18 @@ export class FilterEventsPage {
         }
     }
 
-    enableRange() {
-        this.getDistance();
-        if (this.filterState.zipcode && this.filterState.zipcode !== '' && this.filterState.zipcode.length >= 5) {
-            this.disable = false;
-        }
+    checkZipCode() {
+        this.dataService.getZipCodes(this.filterState.zipcode).then((data) => {
+            if(data) {
+                this.invalidZip = false;
+                this.getDistance();
+            } else {
+                this.invalidZip = true;
+            }
+            console.log(data);
+        }, (err) => {
+            console.log(err);
+        });
     }
 
     detail(item) {

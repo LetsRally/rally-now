@@ -1,35 +1,36 @@
-import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
+import {Injectable} from '@angular/core';
+import {Http, Headers, RequestOptions} from '@angular/http';
 import 'rxjs/add/operator/map';
-import { Facebook } from '@ionic-native/facebook';
+import {Facebook} from '@ionic-native/facebook';
 
 @Injectable()
 export class DataProvider {
 
-	items:any;
+    items: any;
 
-  constructor(public http: Http, private facebook: Facebook) {
-    console.log('Hello DataProvider Provider');
+    constructor(public http: Http,
+                private facebook: Facebook) {
+        console.log('Hello DataProvider Provider');
         this.getFacebookFriendsList();
-  }
+    }
 
-  getFacebookFriendsList(){
-    this.facebook.api('me/friends', ['user_friends']).then(
-      list => {
-          console.log("Lista de amigos", list['data']);
-          this.items = list['data'];
-      }, error => {
-        console.log("error", error);
-      });
-  }
+    getFacebookFriendsList() {
+        this.facebook.api('me/friends', ['user_friends']).then(
+            list => {
+                console.log("Lista de amigos", list['data']);
+                this.items = list['data'];
+            }, error => {
+                console.log("error", error);
+            });
+    }
 
-   filterItems(searchTerm){
-     return this.items;
- 
+    filterItems(searchTerm) {
+        return this.items;
+
         // return this.items.filter((item) => {
         //     return item.name.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1;
         // });     
- 
+
     }
 
     getCurrentDate() {
@@ -54,6 +55,23 @@ export class DataProvider {
             currentDate: currentDate,
             nextYear: nextYear
         }
+    }
+
+    getZipCodes(code) {
+        let url = 'https://api.trade.gov/ita_zipcode_to_post/search?api_key=RUX3XxTYsJMW0_1CHfbKJtay&zip_codes=' + code;
+        return new Promise((resolve, reject) => {
+            this.http.get(url)
+                .map(res => res.json())
+                .subscribe((data) => {
+                    if (data && data.results && data.results.length === 1 && data.results[0].country === "US") {
+                        resolve(true);
+                    } else {
+                        resolve(false);
+                    }
+                }, err => {
+                    reject(false);
+                });
+        });
     }
 
 }

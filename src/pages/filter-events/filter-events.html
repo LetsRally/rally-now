@@ -14,15 +14,17 @@
 </ion-header>
 <ion-content>
     <ion-list>
-        <ion-item style="background: #f2f2f2">
-            <ion-label style="color: #6b6b6b;">ZIPCODE</ion-label>
-            <ion-input [(ngModel)]="filterState.zipcode" style="color: #6b6b6b; font-size:40px;" class="zip-input"
-                       (ionChange)="enableRange()"></ion-input>
-        </ion-item>
-        <google-places-autocomplete placeholder="Ex: 12345" [(ngModel)]="filterState.zipcode"
-                                    [ngModelOptions]="{standalone: true}"
-                                    (callback)="detail($event[0])"
-                                    key="AIzaSyAG8YwO3jnFYNYfiV1B35FzICVOYVJYnMQ"></google-places-autocomplete>
+        <div class="zip-code-box">
+            <span>ZIPCODE</span>
+            <p class="zip-input">{{filterState.zipcode}}</p>
+        </div>
+        <ion-searchbar placeholder="Ex: 12345"
+                       (input)="checkZipCode()"
+                       [(ngModel)]="filterState.zipcode">
+
+        </ion-searchbar>
+        <p class="error-message"
+           *ngIf="invalidZip && filterState.zipcode.length">Enter valid code</p>
 
         <ion-list-header style=" background-color: #f2f2f2; color: #6b6b6b; text-transform: uppercase;">
             Distance from me
@@ -31,7 +33,7 @@
 
         </ion-list-header>
         <ion-item style="border:none; background-color: #f2f2f2; color: #6b6b6b;">
-            <ion-range [disabled]="disable" (ionChange)="getDistance()" [(ngModel)]="filterState.distance"
+            <ion-range [disabled]="invalidZip" (ionChange)="getDistance()" [(ngModel)]="filterState.distance"
                        style="color: #6b6b6b;"
                        min="0" max="100">
             </ion-range>
