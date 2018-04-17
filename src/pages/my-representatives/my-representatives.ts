@@ -65,8 +65,9 @@ export class MyRepresentativesPage {
 
   getReps(){
     this.storage.get('representatives').then((val) => {
+      console.log('GET REPS');
       console.log(val);
-        if (val != null){
+        if (val && typeof(val) === 'object'){
           this.reps = val;
         } 
     });
@@ -76,7 +77,7 @@ export class MyRepresentativesPage {
   getSenators(){
     this.storage.get('senators').then((val) => {
       console.log(val);
-        if (val != null){
+        if (val){
           this.senators = val;
         } 
     });
@@ -84,7 +85,7 @@ export class MyRepresentativesPage {
   getStateReps(){
     this.storage.get('statesReps').then((val) => {
       console.log(val);
-        if (val != null){
+        if (val){
           this.statereps = val;
         } 
     });
@@ -106,7 +107,8 @@ export class MyRepresentativesPage {
 
   getAddress(){
     this.storage.get('repAdress').then((val) => {
-      if (val != null){
+      console.log(val);
+      if (val){
         this.repAddress = val;
       } else{
         this.repAddress = "No Address";

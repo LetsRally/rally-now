@@ -32,4 +32,28 @@ export class DataProvider {
  
     }
 
+    getCurrentDate() {
+        var today = new Date();
+        var dd: any = today.getDate();
+        var mm: any = today.getMonth() + 1;
+        var yyyy = today.getFullYear();
+        var next_year = today.getFullYear() + 1;
+
+        if (dd < 10) {
+            dd = '0' + dd;
+        }
+
+        if (mm < 10) {
+            mm = '0' + mm;
+        }
+
+        let currentDate = yyyy + '-' + mm + '-' + dd;
+        let nextYear = next_year + '-' + mm + '-' + dd;
+
+        return {
+            currentDate: currentDate,
+            nextYear: nextYear
+        }
+    }
+
 }

@@ -49,15 +49,8 @@ export class TakeactionPage {
   enable:boolean = true;
   eventFiltered:boolean = false;
   newEndpoint:any = 'homefeed_pagination/';
-  eventStart:any;
-  eventEnd:any;
   private start:number=1;
   public records:any = [];
-  zipcode:any;
-  distance:any; 
-  filterBy:any; 
-
-
 
   constructor(
     public navCtrl: NavController, 
@@ -103,42 +96,6 @@ export class TakeactionPage {
       });
   }
 
-//   getdata(startDate?, endDate?, zipcode?, distance?, filterBy?){
-    
-//     if(startDate != null){
-//       console.log(filterBy);
-//       if(filterBy !== 'all'){
-//         var url = this.endpoint + this.myrallyID + '/' + startDate + '/' + endDate + '/' + zipcode + '/' + distance + '/';
-//       }else{
-//         var url = this.endpoint + 'all-events/' + this.myrallyID + '/' + startDate + '/' + endDate + '/' + zipcode + '/' + distance + '/';
-
-//       }
-//       this.eventFiltered = true;
-//     } else{
-//       var url = this.newEndpoint + this.myrallyID + '/';
-//     }
- 
-//     console.log("This url =>", url);
-  
-
-//   return new Promise(resolve => {
-//     this.httpProvider.loadHome(url, this.start)
-//       .then(data => {
-//         console.log("Full Data", data);
-//         this.getArray(data);
-        
-
-//         //this.organizations = data;
-          
-//         resolve(true);
-//         //this.loading.dismiss(); 
-//         this.enablePlaceholder = false;
-//         this.loader = false;
-
-//       });
-//   });
-// } 
-
   segmentChanged(){
     console.log(this.enable);
     this.enable = !this.enable;
@@ -147,72 +104,7 @@ export class TakeactionPage {
 
     goToRequests(){
       this.navCtrl.push(FriendsRequestPage,  {}, {animate:true,animation:'transition',duration:500,direction:'forward'});
-    } 
-
-    goToEventFilter(){
-      // this.navCtrl.push(FilterEventsPage,  {}, {animate:true,animation:'ios-transition',duration:500,direction:'forward'});
-      let modal = this.modalCtrl.create(FilterEventsPage, {location: 'home'});
-      modal.onDidDismiss((data) => {
-        if(data === 'back'){
-          console.log("No refresh");
-        }else{
-          this.getStartDate(); 
-
-        }
-        
-      });
-      modal.present();
-      
     }
-
-
-     getStartDate(){
-      this.storage.get('startDate').then((val) => {
-        this.eventStart = val;
-        this.getEndDate();
-
-      });
-    }
-
-    getEndDate(){
-      this.storage.get('endDate').then((val) => {
-        this.eventEnd = val; 
-        this.getZipcode();
-      });
-    }
-
-    getZipcode(){
-      this.storage.get('homeZipcode').then((val) => {
-        this.zipcode = val;
-        this.getDistance();
-      });
-    }
-
-    getDistance(){
-      this.storage.get('homeDistance').then((val) => {
-        this.distance = val;
-        this.getFilterType();
-      });
-
-    }
-
-
-    getFilterType(){
-      this.storage.get('filterBy').then((val) => {
-        this.filterBy = val;
-        this.start = 1;
-        // this.getdata(this.eventStart, this.eventEnd, this.zipcode, this.distance, this.filterBy);
-        this.records = [];
-        // this.loading = this.loadingCtrl.create({
-        //   spinner: 'hide',
-        //  content: this.safeSvg,
-        // }); 
-        //   this.loading.present();
-          this.enablePlaceholder = true;
-
-      });
-
-    } 
 
   saveLog(){
     // console.log(this.myrallyID, 66666)
@@ -237,7 +129,7 @@ export class TakeactionPage {
       //   content: this.safeSvg,
       //   }); 
       //   this.loading.present();
-      this.getdata(this.eventStart, this.eventEnd, this.zipcode, this.distance, this.filterBy);
+      this.getdata();
       this.loader = true;
     
         setTimeout(() => {
@@ -310,8 +202,7 @@ export class TakeactionPage {
      }
 
 
-  getdata(startDate?, endDate?, zipcode?, distance?, filterBy?){
-    console.log(startDate, endDate, zipcode, distance, filterBy)
+  getdata(){
     this.orgProvider.getJsonData(this.endpoint+ this.myrallyID ).subscribe(
       result => {
         this.objectives=result;
@@ -531,30 +422,6 @@ hideItem(objective_id, index){
 
        }
      },
-    //  {
-    //   text: 'Copy Link',
-    //   handler: () => {
-    //     this.disable = false;
-
-    //   }
-    // },
-    // {
-    //   text: 'SMS Message',
-    //   handler: () => {
-    //     this.presentToast('Objective shared!');
-    //     this.disable = false;
-
-    //   }
-    // },
-    // {
-    //   text: 'Email',
-    //   handler: () => {
-        
-    //     this.presentToast('Objective shared!');
-    //     this.disable = false;
-
-    //   }
-    // },
      {
        text: 'Cancel',
        role: 'cancel',
