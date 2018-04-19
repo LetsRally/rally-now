@@ -6,6 +6,7 @@ import {RepresentativeProfilePage} from '../representative-profile/representativ
 import {OrganizationsProvider} from '../../providers/organizations/organizations';
 import {FormControl} from '@angular/forms';
 import {DomSanitizer} from '@angular/platform-browser';
+import {Subject} from "rxjs/Subject";
 
 
 @IonicPage()
@@ -16,6 +17,7 @@ import {DomSanitizer} from '@angular/platform-browser';
 export class RepresentivesListPage {
     endpoint: any = 'reps';
     representatives: any = [];
+    public enableInfiniteScroll = true;
     loading: any;
     items: any = [];
     currentRallyID: any;
@@ -25,6 +27,7 @@ export class RepresentivesListPage {
     searchControl: FormControl;
     shouldShowCancel: any = false;
     searchTerm: string = '';
+    private searchTerm$: Subject<string>;
     safeSvg: any;
     enablePlaceholder: boolean = true;
 
@@ -39,23 +42,17 @@ export class RepresentivesListPage {
                 private orgProvider: OrganizationsProvider,
                 public actionSheetCtrl: ActionSheetController,
                 private sanitizer: DomSanitizer) {
+
         this.searchControl = new FormControl();
+        this.searchTerm$ = new Subject<string>();
         this.platform.ready().then(() => {
-            this.enablePlaceholder = true;
-            this.items = [];
-            this.start = 1;
             this.httpProvider.returnRallyUserId().then(
                 user => {
                     this.currentRallyID = user.apiRallyID;
-
                     this.getReps();
                 })
         });
     }
-
-    // ionViewDidEnter(){
-    //
-    // }
 
     ionViewDidLoad() {
         console.log('ionViewDidLoad FriendsRequestPage');
@@ -66,19 +63,10 @@ export class RepresentivesListPage {
     }
 
     getReps() {
-
         return new Promise(resolve => {
             this.orgProvider.load(this.newEndpoint, this.start)
                 .then(data => {
                     this.getArray(data);
-                    // for(let person of data) {
-                    //   this.organizations.push(person);
-                    // }
-                    // this.representatives = data;
-                    // this.initializeItems();
-                    // console.log(data);
-                    // this.loading.dismiss();
-
                     resolve(true);
                 });
         });
@@ -88,42 +76,28 @@ export class RepresentivesListPage {
         for (let person of array) {
             this.items.push(person);
         }
-        //this.loading.dismiss();
         this.enablePlaceholder = false;
-
     }
 
 
     doInfinite(infiniteScroll: any) {
-        console.log(infiniteScroll);
-        console.log('doInfinite, start is currently ' + this.start);
         this.start += 1;
-        console.log(this.start);
-
         this.getReps().then(() => {
             infiniteScroll.complete();
         });
 
     }
 
-    // initializeItems() {
-    //   this.items = this.representatives;
+    // getItems(ev: any) {
+    //     let val = ev.target.value;
+    //
+    //     // if the value is an empty string don't filter the items
+    //     if (val && val.trim() != '') {
+    //         this.items = this.items.filter((item) => {
+    //             return (item.name.toLowerCase().indexOf(val.toLowerCase()) > -1);
+    //         })
+    //     }
     // }
-
-    getItems(ev: any) {
-        // Reset items back to all of the items
-        // this.initializeItems();
-
-        // set val to the value of the searchbar
-        let val = ev.target.value;
-
-        // if the value is an empty string don't filter the items
-        if (val && val.trim() != '') {
-            this.items = this.items.filter((item) => {
-                return (item.name.toLowerCase().indexOf(val.toLowerCase()) > -1);
-            })
-        }
-    }
 
     findInLoop(actions) {
         if (actions != null) {
@@ -221,35 +195,48 @@ export class RepresentivesListPage {
         this.navCtrl.push(RepresentativeProfilePage, {repID: repID});
     }
 
-    search() {
-        this.orgProvider.getJsonData(this.endpoint + '/search/' + this.searchTerm).subscribe(
-            result => {
-                console.log("Search", result);
-                this.items = result['reps'];
-                // this.initializeItems();
+    getFilteredData() {
+        this.searchTerm$.next(this.endpoint + '/search/' + this.searchTerm);
 
-            },
-            err => {
-                console.error("Error : " + err);
-            },
-            () => {
-                console.log('getData completed');
-            });
+        this.orgProvider.getSubjectJson(this.searchTerm$)
+            .subscribe(result => {
+                    this.enablePlaceholder = false;
+                    this.items = result['reps'];
+                },
+                err => {
+                    this.enablePlaceholder = false;
+                    console.error("Error : " + err);
+                },
+                () => {
+                    this.enablePlaceholder = false;
+                    console.log('getData completed');
+                });
     }
 
     onSearchInput() {
         console.log("Busqueda", this.searchTerm);
         if (this.searchTerm === "") {
+            this.start = 1;
+            this.items = [];
             this.shouldShowCancel = false;
+            this.enablePlaceholder = true;
+            this.enableInfiniteScroll = true;
             this.getReps();
         } else {
             this.shouldShowCancel = true;
-            this.search();
+            this.items = [];
+            this.enablePlaceholder = true;
+            this.enableInfiniteScroll = false;
+            this.getFilteredData();
         }
 
     }
 
     cancel() {
+        this.start = 1;
+        this.items = [];
+        this.enablePlaceholder = true;
+        this.enableInfiniteScroll = true;
         this.getReps();
     }
 
