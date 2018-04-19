@@ -5,6 +5,7 @@ import {Storage} from '@ionic/storage';
 import {Keyboard} from '@ionic-native/keyboard';
 import {FilterModel} from "../../models/filter-model";
 import {DataProvider} from "../../providers/data/data";
+import * as constants from "../../constants/constants";
 
 @IonicPage()
 @Component({
@@ -85,7 +86,7 @@ export class FilterEventsPage {
     }
 
     goToEvents() {
-        if(!this.filterState.zipcode || this.filterState.zipcode === '') {
+        if (!this.filterState.zipcode || this.filterState.zipcode === '') {
             this.filterState.zipcode = '98053';
         }
 
@@ -108,39 +109,29 @@ export class FilterEventsPage {
     }
 
     checkZipCode() {
-        this.dataService.getZipCodes(this.filterState.zipcode).then((data) => {
-            if(data) {
-                this.invalidZip = false;
-                this.getDistance();
-            } else {
-                this.invalidZip = true;
-            }
-            console.log(data);
-        }, (err) => {
-            console.log(err);
-        });
-    }
-
-    detail(item) {
-        var string = item.description;
-        var numbers = string.match(/\d+/g).map(Number);
-        console.log(numbers);
-        if (numbers.toString().length <= 4) {
-            console.log("Only numbers", '0' + numbers);
-            this.filterState.zipcode = '0' + numbers;
-
+        if (constants.virginZipCodes.indexOf(this.filterState.zipcode) === -1) {
+            this.dataService.getZipCodes(this.filterState.zipcode)
+                .then((data) => {
+                    if (data) {
+                        this.invalidZip = false;
+                        this.getDistance();
+                    } else {
+                        this.invalidZip = true;
+                    }
+                }, (err) => {
+                    console.log(err);
+                });
+            this.invalidZip = true;
         } else {
-            console.log("Only numbers", numbers);
-            this.filterState.zipcode = numbers;
-
+            this.invalidZip = false;
+            this.getDistance();
         }
-
     }
 
     resetFilter() {
         this.filterState = new FilterModel();
         this.setDate();
-        if(!this.filterState.zipcode || this.filterState.zipcode === '') {
+        if (!this.filterState.zipcode || this.filterState.zipcode === '') {
             this.filterState.zipcode = '98053';
         }
         this.storage.set('eventsFilterState', JSON.stringify(this.filterState));
