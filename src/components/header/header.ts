@@ -25,6 +25,7 @@ export class HeaderComponent {
     public results: any = [];
     public reps: any = [];
     public events: any = [];
+    public enablePlaceholder = false;
 
 
     constructor(public modalCtrl: ModalController, private httpProvider: OrganizationsProvider, public navCtrl: NavController) {
@@ -35,7 +36,6 @@ export class HeaderComponent {
     }
 
     ionViewDidLoad() {
-        console.log('ionViewDidLoad FriendsRequestPage');
         this.searchControl.valueChanges.debounceTime(700).subscribe(search => {
             this.searching = false;
             this.shouldShowCancel = false;
@@ -50,6 +50,7 @@ export class HeaderComponent {
 
     onSearchInput() {
         if (this.searchTerm === "") {
+            this.enablePlaceholder = false;
             this.searching = false;
             this.shouldShowCancel = false;
         } else {
@@ -57,23 +58,32 @@ export class HeaderComponent {
             this.shouldShowCancel = true;
             this.getdata();
         }
-
+        this.users = [];
+        this.organizations = [];
+        this.reps = [];
+        this.events = [];
     }
 
     getdata() {
+        this.enablePlaceholder = true;
         this.httpProvider.getJsonData(this.endpoint + this.searchTerm).subscribe(
             result => {
-                console.log(result['users'].length);
-                this.users = result['users'];
-                this.organizations = result['organizations'];
-                this.reps = result['reps'];
-                this.events = result['events'];
+                if(result['search'] && result['search'] === this.searchTerm) {
+                    this.users = result['users'];
+                    this.organizations = result['organizations'];
+                    this.reps = result['reps'];
+                    this.events = result['events'];
+                }
+
+                this.enablePlaceholder = false;
             },
-            err => {
-                console.error("Error : " + err);
-            },
-            () => {
-                console.log('getData completed');
+        err => {
+            this.enablePlaceholder = false;
+            console.error("Error : " + err);
+        },
+        () => {
+            this.enablePlaceholder = false;
+            console.log('getData completed');
             });
     }
 

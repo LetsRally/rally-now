@@ -35,9 +35,22 @@
 
     <div [ngSwitch]="results">
 
+        <div class="timeline-wrapper" *ngIf="enablePlaceholder">
+            <div class="timeline-item short" *ngFor="let item of [1,2,3,4,5]">
+                <div class="animated-background">
+                    <div class="background-masker header-top"></div>
+                    <div class="background-masker header-left"></div>
+                    <div class="background-masker header-right"></div>
+                    <div class="background-masker header-bottom"></div>
+                    <div class="background-masker subheader-left"></div>
+                    <div class="background-masker subheader-right"></div>
+                    <div class="background-masker subheader-bottom"></div>
+                </div>
+            </div>
+        </div>
 
         <ion-list *ngSwitchCase="'people'">
-            <div class="flex-center" *ngIf="users.length < 1">
+            <div class="flex-center" *ngIf="users.length < 1 && !enablePlaceholder">
                 <p>Sorry, no results matched your criteria</p>
             </div>
             <div *ngIf="users.length > 0">
@@ -54,12 +67,10 @@
 
                 </ion-item>
             </div>
-
-
         </ion-list>
 
         <ion-list *ngSwitchCase="'organizations'">
-            <div class="flex-center" *ngIf="organizations.length < 1">
+            <div class="flex-center" *ngIf="organizations.length < 1 && !enablePlaceholder">
                 <p>Sorry, no results matched your criteria</p>
             </div>
             <div *ngIf="organizations.length > 0">
@@ -77,13 +88,11 @@
 
                 </ion-item>
             </div>
-
-
         </ion-list>
 
 
         <ion-list *ngSwitchCase="'events'">
-            <div class="flex-center" *ngIf="events.length < 1">
+            <div class="flex-center" *ngIf="events.length < 1 && !enablePlaceholder">
                 <p>Sorry, no results matched your criteria</p>
             </div>
 
@@ -100,13 +109,11 @@
                         {{event.title}}</h2></button>
                 </ion-item>
             </div>
-
-
         </ion-list>
 
 
         <ion-list *ngSwitchCase="'reps'">
-            <div class="flex-center" *ngIf="reps.length < 1">
+            <div class="flex-center" *ngIf="reps.length < 1 && !enablePlaceholder">
                 <p>Sorry, no results matched your criteria</p>
             </div>
             <div *ngIf="reps.length > 0">
@@ -122,8 +129,6 @@
                     </button>
                 </ion-item>
             </div>
-
-
         </ion-list>
     </div>
 
