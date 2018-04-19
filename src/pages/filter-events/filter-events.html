@@ -14,15 +14,11 @@
 </ion-header>
 <ion-content>
     <ion-list>
-        <div class="zip-code-box">
-            <span>ZIPCODE</span>
-            <p class="zip-input">{{filterState.zipcode}}</p>
-        </div>
-        <ion-searchbar placeholder="Ex: 12345"
-                       (input)="checkZipCode()"
-                       [(ngModel)]="filterState.zipcode">
-
-        </ion-searchbar>
+        <ion-item style="background: #f2f2f2">
+            <ion-label style="color: #6b6b6b;">ZIPCODE</ion-label>
+            <ion-input [(ngModel)]="filterState.zipcode" style="color: #6b6b6b; font-size:40px;" class="zip-input"
+                       (input)="checkZipCode()"></ion-input>
+        </ion-item>
         <p class="error-message"
            *ngIf="invalidZip && filterState.zipcode.length">Enter valid code</p>
 
