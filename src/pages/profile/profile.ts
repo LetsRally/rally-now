@@ -302,7 +302,10 @@ getStreaks(){
 
   finReps(){
     let modal = this.modalCtrl.create(AdressModalPage);
-    modal.onDidDismiss(() => {
+    modal.onDidDismiss((data) => {
+        if(data && data.cancel) {
+            return;
+        }
       this.goToMyReps();
     });
     modal.present();
