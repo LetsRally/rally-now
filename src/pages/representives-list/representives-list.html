@@ -1,51 +1,64 @@
 <ion-header>
-  <ion-navbar>
-      <ion-title>
-          <p class="white" text-wrap>Find Representatives</p>
-      </ion-title>
-     
-  </ion-navbar>
+    <ion-navbar>
+        <ion-title>
+            <p class="white" text-wrap>Find Representatives</p>
+        </ion-title>
+
+    </ion-navbar>
 </ion-header>
 
 <ion-content>
-  <ion-searchbar (ionInput)="onSearchInput()"  [(ngModel)]="searchTerm" [formControl]="searchControl"   [showCancelButton]="shouldShowCancel" [debounce]="500" (ionCancel)="cancel()"></ion-searchbar>
+    <ion-searchbar (ionInput)="onSearchInput()"
+                   [(ngModel)]="searchTerm"
+                   [formControl]="searchControl"
+                   [showCancelButton]="shouldShowCancel"
+                   [debounce]="800"
+                   (ionCancel)="cancel()"></ion-searchbar>
 
-  <ion-list>
-      <ion-list-header>
-        All Representatives
-      </ion-list-header>
+    <ion-list>
+        <ion-list-header>
+            All Representatives
+        </ion-list-header>
 
-      <div class="timeline-wrapper" *ngIf="enablePlaceholder">
-          <div class="timeline-item short" *ngFor="let item of [1,2,3,4,5]">
-              <div class="animated-background">
-                  <div class="background-masker header-top"></div>
-                  <div class="background-masker header-left"></div>
-                  <div class="background-masker header-right"></div>
-                  <div class="background-masker header-bottom"></div>
-                  <div class="background-masker subheader-left"></div>
-                  <div class="background-masker subheader-right"></div>
-                  <div class="background-masker subheader-bottom"></div>
-              </div>
-          </div>
-      </div>
+        <div class="timeline-wrapper" *ngIf="enablePlaceholder">
+            <div class="timeline-item short" *ngFor="let item of [1,2,3,4,5]">
+                <div class="animated-background">
+                    <div class="background-masker header-top"></div>
+                    <div class="background-masker header-left"></div>
+                    <div class="background-masker header-right"></div>
+                    <div class="background-masker header-bottom"></div>
+                    <div class="background-masker subheader-left"></div>
+                    <div class="background-masker subheader-right"></div>
+                    <div class="background-masker subheader-bottom"></div>
+                </div>
+            </div>
+        </div>
 
-      <div *ngFor="let rep of items, let i = index"> 
-      <ion-item *ngIf="rep.openstate != true">
-          <ion-avatar item-start (click)="goToRepProfile(rep.id)">
-            <img [src]="rep.photo_url ? rep.photo_url : 'assets/img/blank-person.jpg'"  style="border:2px solid #ada8a8;">
-          </ion-avatar>
-          <h2 text-wrap (click)="goToRepProfile(rep.id)">{{rep.name}}</h2>
-          <p class="text-wrap" *ngIf="rep.rep_type === 'sen'"> <small>US Senator for {{rep.state}}</small></p>
-          <p class="text-wrap" *ngIf="rep.rep_type === 'rep'"> <small>US Representative for {{rep.state}}</small></p>
-          <main-button clear item-end  *ngIf="rep.twitter_id !== 'not available'" (click)="followRep(rep.id, $event)" class="blue" btnText={{findInLoop(rep.followers)}}></main-button>
-        </ion-item>
-      </div>
+        <div *ngFor="let rep of items, let i = index">
+            <ion-item *ngIf="rep.openstate != true">
+                <ion-avatar item-start (click)="goToRepProfile(rep.id)">
+                    <img [src]="rep.photo_url ? rep.photo_url : 'assets/img/blank-person.jpg'"
+                         style="border:2px solid #ada8a8;">
+                </ion-avatar>
+                <h2 text-wrap (click)="goToRepProfile(rep.id)">{{rep.name}}</h2>
+                <p class="text-wrap" *ngIf="rep.rep_type === 'sen'">
+                    <small>US Senator for {{rep.state}}</small>
+                </p>
+                <p class="text-wrap" *ngIf="rep.rep_type === 'rep'">
+                    <small>US Representative for {{rep.state}}</small>
+                </p>
+                <main-button clear item-end *ngIf="rep.twitter_id !== 'not available'"
+                             (click)="followRep(rep.id, $event)" class="blue"
+                             btnText={{findInLoop(rep.followers)}}></main-button>
+            </ion-item>
+        </div>
     </ion-list>
-    
+
     <ion-infinite-scroll (ionInfinite)="doInfinite($event)"
+                         *ngIf="enableInfiniteScroll"
                          threshold="500px">
-        <ion-infinite-scroll-content 
-        loadingSpinner="bubbles"
-        loadingText="Loading more..."></ion-infinite-scroll-content>
-      </ion-infinite-scroll>
+        <ion-infinite-scroll-content
+                loadingSpinner="bubbles"
+                loadingText="Loading more..."></ion-infinite-scroll-content>
+    </ion-infinite-scroll>
 </ion-content>

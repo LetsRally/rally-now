@@ -1189,3 +1189,29 @@ html:hover [class^="ss-"] {
         height: 40px;
     }
 }
+.button-container {
+    margin: 15px;
+    &.center {
+        text-align: center;
+    }
+}
+.error-message {
+    padding: 0 16px;
+    color: red;
+    text-align: right;
+}
+.zip-input {
+    font-size: 34px;
+    flex: 1;
+    color: #6b6b6b;
+    text-align: right;
+}
+.zip-code-box {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    background-color: #f2f2f2;
+    span {
+        color: #6b6b6b;
+    }
+}
