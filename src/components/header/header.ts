@@ -7,6 +7,7 @@ import {PublicProfilePage} from '../../pages/public-profile/public-profile';
 import {OrganizationProfilePage} from '../../pages/organization-profile/organization-profile';
 import {EventDetailPage} from '../../pages/event-detail/event-detail';
 import {RepresentativeProfilePage} from '../../pages/representative-profile/representative-profile';
+import {Subject} from "rxjs/Subject";
 
 
 @Component({
@@ -18,6 +19,7 @@ export class HeaderComponent {
     searching: any = false;
     shouldShowCancel: any = false;
     searchTerm: string = '';
+    private searchTerm$: Subject<string>;
     searchControl: FormControl;
     endpoint: string = 'search/';
     public users: any = [];
@@ -28,15 +30,16 @@ export class HeaderComponent {
     public enablePlaceholder = false;
 
 
-    constructor(public modalCtrl: ModalController, private httpProvider: OrganizationsProvider, public navCtrl: NavController) {
-        console.log('Hello HeaderComponent Component');
+    constructor(public modalCtrl: ModalController,
+                private httpProvider: OrganizationsProvider,
+                public navCtrl: NavController) {
+        this.searchTerm$ = new Subject<string>();
         this.results = "people";
         this.searchControl = new FormControl();
-
     }
 
     ionViewDidLoad() {
-        this.searchControl.valueChanges.debounceTime(700).subscribe(search => {
+        this.searchControl.valueChanges.debounceTime(800).subscribe(search => {
             this.searching = false;
             this.shouldShowCancel = false;
         });
@@ -56,7 +59,7 @@ export class HeaderComponent {
         } else {
             this.searching = true;
             this.shouldShowCancel = true;
-            this.getdata();
+            this.getFilteredData();
         }
         this.users = [];
         this.organizations = [];
@@ -64,44 +67,50 @@ export class HeaderComponent {
         this.events = [];
     }
 
-    getdata() {
+    getFilteredData() {
         this.enablePlaceholder = true;
-        this.httpProvider.getJsonData(this.endpoint + this.searchTerm).subscribe(
-            result => {
-                if(result['search'] && result['search'] === this.searchTerm) {
+        this.searchTerm$.next(this.endpoint + this.searchTerm);
+
+        this.httpProvider.getSubjectJson(this.searchTerm$)
+            .subscribe(result => {
+                    this.enablePlaceholder = false;
                     this.users = result['users'];
                     this.organizations = result['organizations'];
                     this.reps = result['reps'];
                     this.events = result['events'];
-                }
-
-                this.enablePlaceholder = false;
-            },
-        err => {
-            this.enablePlaceholder = false;
-            console.error("Error : " + err);
-        },
-        () => {
-            this.enablePlaceholder = false;
-            console.log('getData completed');
-            });
+                },
+                err => {
+                    this.enablePlaceholder = false;
+                    console.error("Error : " + err);
+                },
+                () => {
+                    this.enablePlaceholder = false;
+                    console.log('getData completed');
+                });
     }
 
-// getOrganizations(){
-//   this.httpProvider.getJsonData(this.endpoint + 'organization/' + this.searchTerm).subscribe(
-//     result => {
-//     	this.users = result['users'];
-//     	this.organizations = result['organizations'];
-//     },
-//     err =>{
-//       console.error("Error : "+err);
-//     } ,
-//     () => {
-//       console.log('getData completed');
-//     }
-//   );
-// }
-
+    // getdata() {
+    //     this.enablePlaceholder = true;
+    //     this.httpProvider.getJsonData(this.endpoint + this.searchTerm).subscribe(
+    //         result => {
+    //             if(result['search'] && result['search'] === this.searchTerm) {
+    //                 this.users = result['users'];
+    //                 this.organizations = result['organizations'];
+    //                 this.reps = result['reps'];
+    //                 this.events = result['events'];
+    //             }
+    //
+    //             this.enablePlaceholder = false;
+    //         },
+    //     err => {
+    //         this.enablePlaceholder = false;
+    //         console.error("Error : " + err);
+    //     },
+    //     () => {
+    //         this.enablePlaceholder = false;
+    //         console.log('getData completed');
+    //         });
+    // }
 
     goToPublicProfile(userID) {
         this.navCtrl.push(PublicProfilePage, {
@@ -109,7 +118,6 @@ export class HeaderComponent {
             profilePageName: "Search"
         });
     }
-
 
     goToOrganizationProfile(organizationID) {
         this.navCtrl.push(OrganizationProfilePage, {

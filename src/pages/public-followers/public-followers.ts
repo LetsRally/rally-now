@@ -66,7 +66,7 @@ initializeItems() {
   this.items = this.followers;
 }
 ionViewDidLoad() {
-  console.log('ionViewDidLoad FollowedCandidatesPage');
+  console.log('ionViewDidLoad PUBLIC FOLLOWERS');
 }
 
  
@@ -86,7 +86,7 @@ ionViewDidLoad() {
     // if the value is an empty string don't filter the items
     if (val && val.trim() != '') {
       this.items = this.items.filter((item) => {
-        return (item.follow[0].name.toLowerCase().indexOf(val.toLowerCase()) > -1);
+        return (item.followers[0].name.toLowerCase().indexOf(val.toLowerCase()) > -1);
       })
     }
   }
