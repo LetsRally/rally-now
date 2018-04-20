@@ -110,7 +110,7 @@ export class OrganizationActionPage {
           text: 'Call', 
           handler: () => { 
             //this.showCallAlert(rep, repID, offices);
-            this.navCtrl.push(CallPage, {rep: rep, repID: repID, talkingPoints: this.objDesc, offices: offices, goalID: this.goal_id, objectiveID: this.objectiveID});
+            this.navCtrl.push(CallPage, {rep: rep, repID: repID, talkingPoints: this.objShort, offices: offices, goalID: this.goal_id, objectiveID: this.objectiveID});
 
       
           }
