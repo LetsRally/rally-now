@@ -20,7 +20,6 @@
    ></ion-searchbar> -->
    <google-places-autocomplete placeholder="Ex: 1234 Main St, Yourtown"
                                [(ngModel)]="searchTerm"
-                               componenentRestrictions="{country: 'us'}"
                                [ngModelOptions]="googlePlacesOptions"
                                (callback)="detail($event[0])"
                                key="AIzaSyAG8YwO3jnFYNYfiV1B35FzICVOYVJYnMQ">

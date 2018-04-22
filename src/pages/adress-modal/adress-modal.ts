@@ -43,11 +43,12 @@ export class AdressModalPage {
     }
 
     dismiss() {
-        this.viewCtrl.dismiss();
+        this.viewCtrl.dismiss({cancel: true});
     }
 
 
     public getLocation() {
+        console.log('SEARCH ADDRESS');
         let options = {};
         this.nativeGeocoder.forwardGeocode(this.searchTerm)
             .then((coordinates: NativeGeocoderForwardResult) => {
