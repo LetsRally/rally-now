@@ -35,7 +35,7 @@ export class EventDetailPage {
   rallies:any;
   likes:any;
   shares:any;
-  testPhoto:any = 'https://c1.staticflickr.com/9/8409/buddyicons/41284017@N08_l.jpg?1369764880#41284017@N08';
+  testPhoto:any = '../assets/img/event.svg';
   eventLike:any = 'd5d1b115-dbb6-4894-8935-322c336ae951';
   likeendpoint:any = 'likes';
   shareAction:any = '875b4997-f4e0-4014-a808-2403e0cf24f0';

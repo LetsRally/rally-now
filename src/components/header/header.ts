@@ -16,6 +16,7 @@ import {Subject} from "rxjs/Subject";
 })
 export class HeaderComponent {
 
+    testPhoto:any = '../assets/img/avatar.png';
     searching: any = false;
     shouldShowCancel: any = false;
     searchTerm: string = '';

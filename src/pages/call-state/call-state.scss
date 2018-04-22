@@ -41,22 +41,41 @@ page-call-state {
     }
 
     .btn-light-blue{
-        background: #5f94d2 !important;
-        border-top: 1px solid #fff !important;
+        
         button{
-            background: #5f94d2 !important;
+            border: 1px solid #296fb7;
             height: 5.5rem !important;
+            background-color: transparent !important;
+            border-radius: 7px;
+            color: #296fb7;
+            .special-btn{
+                text-transform: none;
+            }
+        }
+    }
+
+    .call{
+        padding: 0 5px;
+        button{
+            padding: 0;
+            height: 6rem !important;
+            border-radius: 7px;
+            background-color: #296fb7 !important;
+            transition: none;
             .button-inner{
-                display: block !important;
-                .special-btn{
-                    width: 100%;
-                    img{
-                        width: 30px;
-                        height: 30px;
-                        margin-bottom: 5px;
-                        filter: brightness(0) invert(1);
-                        
-                    }
+                display: inline-block !important;
+                background: #296fb7 !important;
+                height: 30px;
+                line-height: 30px;
+                vertical-align: top;
+                width: auto;
+                margin-left: 7px;
+                img{
+                    width: 30px;
+                    height: 30px;
+                    margin-bottom: 5px;
+                    filter: brightness(0) invert(1);
+                    
                 }
             }
         }
@@ -64,5 +83,14 @@ page-call-state {
 
     .right-border{
         border-right: 1px solid #f2f2f2;
+    }
+
+    .footer{
+        padding-top: 5px;
+        background-color: #fff;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
     }
 }

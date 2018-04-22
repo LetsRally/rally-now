@@ -146,7 +146,6 @@ export class ProfilePage {
 
 
      getUserData(){
-     console.log(this.currentRallyID , this.endpoint+'?id='+this.currentRallyID, 555555)
        this.httpProvider.getJsonData(this.endpoint+'?id='+this.currentRallyID)
         .subscribe(
           result => {
