@@ -22,7 +22,7 @@ export class FeedbackPage {
     short_desc: '',
     representative_id: '',
     action_type_id: '',
-    goal_id: ''
+    goal_id: '',
   }];
   objetiveID:any;
   
@@ -73,7 +73,7 @@ export class FeedbackPage {
   }
 
   streakModal() {
-    let modal = this.modalCtrl.create(ThankYouPage);
+    let modal = this.modalCtrl.create(ThankYouPage, {objectiveID: this.objetiveID});
     modal.present();
   }
 
@@ -83,20 +83,21 @@ export class FeedbackPage {
   }
 
   back(){
-    if(this.objetiveID != null){
-    this.navCtrl.push(OrganizationActionPage, {
-      objectiveID: this.objetiveID,
-      pageName: 'Home'
-    }).then(() => {
-      const index = this.viewCtrl.index;
+    this.navCtrl.setRoot(OrganizationActionPage,  {objectiveID: this.objetiveID, pageName: 'Home' }, {animate:true,animation:'transition',duration:500,direction:'back'});
+    // if(this.objetiveID != null){
+    // this.navCtrl.push(OrganizationActionPage, {
+    //   objectiveID: this.objetiveID,
+    //   pageName: 'Home'
+    // }).then(() => {
+    //   const index = this.viewCtrl.index;
 
-      for(let i = index; i > 0; i--){
-          this.navCtrl.remove(i);
-      }
-    });
-    }else{
-      this.navCtrl.pop();
-    }
+    //   for(let i = index; i > 0; i--){
+    //       this.navCtrl.remove(i);
+    //   }
+    // });
+    // }else{
+    //   this.navCtrl.pop();
+    // }
   }
 
 

@@ -124,7 +124,7 @@ export class CallRepPage {
   }
 
   giveFeedBack(){
-    this.navCtrl.push(FeedbackPage, {repID: this.data.representative_id, goalID: this.data.goal_id, objectiveID: this.objetiveID});
+    this.navCtrl.push(FeedbackPage,{repID: this.data.representative_id, goalID: this.data.goal_id, objectiveID: this.objetiveID }, {animate:true,animation:'transition',duration:500,direction:'forward'});
   } 
 
   showCallAlert(phone_number){
@@ -171,6 +171,5 @@ export class CallRepPage {
     this.navCtrl.pop();
   }
   
-
 }
 

@@ -43,6 +43,7 @@ export class CallPage {
       console.log("offices", navParams.get('offices'));
       this.offices = navParams.get('offices');
       this.rep = navParams.get('rep');
+      // console.log(this.rep, 8888)
       this.talkingPoints = navParams.get('talkingPoints');
       this.data.representative_id = navParams.get('repID');
       this.data.goal_id = navParams.get('goalID');
@@ -101,7 +102,7 @@ export class CallPage {
   }
 
   giveFeedBack(){
-    this.navCtrl.push(FeedbackPage, {repID: this.data.representative_id, goalID: this.data.goal_id, objectiveID: this.objetiveID});
+    this.navCtrl.push(FeedbackPage,  {repID: this.data.representative_id, goalID: this.data.goal_id, objectiveID: this.objetiveID,rep: this.rep,talkingPoints: this.talkingPoints,offices: this.offices }, {animate:true,animation:'transition',duration:500,direction:'forward'});
   } 
 
   showCallAlert(phone_number){

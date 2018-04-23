@@ -93,4 +93,15 @@ page-call-state {
         left: 0;
         width: 100%;
     }
+
+    .fixed-panel{
+        position: fixed;
+        z-index: 9;
+        background: #fff;
+        top: 44px;
+        width: 100%;
+    }
+    .scroll-content{
+        padding-top: 140px;
+    }
 }
