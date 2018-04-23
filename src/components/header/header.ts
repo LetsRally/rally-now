@@ -23,6 +23,8 @@ export class HeaderComponent {
     private searchTerm$: Subject<string>;
     searchControl: FormControl;
     endpoint: string = 'search/';
+    public currentTabName = 'all';
+    public actions: any = [];
     public users: any = [];
     public organizations: any = [];
     public results: any = [];
@@ -35,7 +37,7 @@ export class HeaderComponent {
                 private httpProvider: OrganizationsProvider,
                 public navCtrl: NavController) {
         this.searchTerm$ = new Subject<string>();
-        this.results = "people";
+        this.results = "all";
         this.searchControl = new FormControl();
     }
 
@@ -53,7 +55,7 @@ export class HeaderComponent {
     }
 
     onSearchInput() {
-        if (this.searchTerm === "") {
+        if (this.searchTerm === '') {
             this.enablePlaceholder = false;
             this.searching = false;
             this.shouldShowCancel = false;
@@ -62,6 +64,7 @@ export class HeaderComponent {
             this.shouldShowCancel = true;
             this.getFilteredData();
         }
+        this.actions = [];
         this.users = [];
         this.organizations = [];
         this.reps = [];
@@ -69,16 +72,19 @@ export class HeaderComponent {
     }
 
     getFilteredData() {
-        this.enablePlaceholder = true;
         this.searchTerm$.next(this.endpoint + this.searchTerm);
-
+        this.enablePlaceholder = true;
+console.log('OOOOOOOOO');
         this.httpProvider.getSubjectJson(this.searchTerm$)
             .subscribe(result => {
+                console.log('RESULT __________');
+                console.log(result);
                     this.enablePlaceholder = false;
-                    this.users = result['users'];
-                    this.organizations = result['organizations'];
-                    this.reps = result['reps'];
-                    this.events = result['events'];
+                    this.actions = result['objective'] || [];
+                    this.users = result['users'] || [];
+                    this.organizations = result['organizations'] || [];
+                    this.reps = result['reps'] || [];
+                    this.events = result['events'] || [];
                 },
                 err => {
                     this.enablePlaceholder = false;
