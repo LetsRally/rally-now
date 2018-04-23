@@ -111,6 +111,7 @@ import { NewsPage } from '../pages/news/news';
 import { PublicFollowersPage } from '../pages/public-followers/public-followers';
 import { PublicFollowingPage } from '../pages/public-following/public-following';
 import { ButtonComponent } from '../components/main-button/main-button';
+import { EventLoggerProvider } from '../providers/event-logger/event-logger';
 
 
 //import { FCM } from '@ionic-native/fcm';
@@ -347,7 +348,8 @@ firebase.initializeApp(config);
         NativeGeocoder,
         Contacts,
         Keyboard,
-        FCM
+        FCM,
+    EventLoggerProvider
        
         
     
