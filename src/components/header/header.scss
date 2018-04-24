@@ -79,5 +79,16 @@ rally-header {
   h2 {
     font-size: 20px;
   }
+}
 
+.search-icon-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -40px;
+  bottom: 40px;
+  font-size: 60px;
 }
