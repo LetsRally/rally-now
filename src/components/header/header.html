@@ -5,15 +5,22 @@
             <ion-searchbar (ionInput)="onSearchInput()"
                            no-padding
                            class="rally-search"
+                           name="searchField"
+                           [debounce]="800"
                            [(ngModel)]="searchTerm"
-                           [formControl]="searchControl"
-                           [showCancelButton]="true"
+                           [showCancelButton]="shouldShowCancel"
                            (ionCancel)="cancel()"
             ></ion-searchbar>
         </form>
 
     </ion-navbar>
 </ion-header>
+
+<ion-content *ngIf="!searching">
+    <div class="search-icon-wrapper">
+        <ion-icon name="search"></ion-icon>
+    </div>
+</ion-content>
 
 <ion-content *ngIf="searching" class="results-content" padding>
     <!-- <div class="spinner-container">
@@ -23,7 +30,7 @@
     <div padding>
         <div class="swipeable-segment">
             <ion-segment [(ngModel)]="results">
-                <ion-segment-button value="all"
+                <ion-segment-button value="'all"
                                     (ionSelect)="currentTabName = 'all'">
                     All
                 </ion-segment-button>
@@ -33,32 +40,30 @@
                     Actions
                 </ion-segment-button>
 
-                <ion-segment-button value="people"
+                <ion-segment-button value="'people'"
                                     (ionSelect)="currentTabName = 'people'">
                     People
                 </ion-segment-button>
 
-                <ion-segment-button value="organizations"
+                <ion-segment-button value="'organizations'"
                                     (ionSelect)="currentTabName = 'organizations'">
                     Organizations
                 </ion-segment-button>
 
-                <ion-segment-button value="events"
+                <ion-segment-button value="'events'"
                                     (ionSelect)="currentTabName = 'events'">
                     Events
                 </ion-segment-button>
 
-                <ion-segment-button value="reps"
+                <ion-segment-button value="'reps'"
                                     (ionSelect)="currentTabName = 'reps'">
                     Representatives
                 </ion-segment-button>
             </ion-segment>
         </div>
-
     </div>
 
     <div>
-
         <div class="timeline-wrapper" *ngIf="enablePlaceholder">
             <div class="timeline-item short" *ngFor="let item of [1,2,3,4,5]">
                 <div class="animated-background">
@@ -73,7 +78,7 @@
             </div>
         </div>
 
-        <ion-list [ngSwitch]="true">
+        <ion-list>
             <div *ngIf="currentTabName === 'all'">
                 <div class="flex-center"
                      *ngIf="!actions.length && !users.length && !organizations.length && !reps.length && !events.length && !enablePlaceholder">
@@ -122,7 +127,8 @@
             </div>
 
             <div *ngIf="currentTabName === 'organizations' || currentTabName === 'all'">
-                <div class="flex-center" *ngIf="!organizations.length && currentTabName !== 'all' && !enablePlaceholder">
+                <div class="flex-center"
+                     *ngIf="!organizations.length && currentTabName !== 'all' && !enablePlaceholder">
                     <p>Sorry, no results matched your criteria</p>
                 </div>
                 <div *ngIf="organizations.length > 0">

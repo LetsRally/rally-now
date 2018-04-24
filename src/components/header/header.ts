@@ -1,13 +1,13 @@
 import {Component} from '@angular/core';
-import {FormControl} from '@angular/forms';
 import {SearchResultsPage} from '../../pages/search-results/search-results';
-import {ModalController, NavController} from 'ionic-angular';
+import {ModalController, NavController, Platform} from 'ionic-angular';
 import {OrganizationsProvider} from '../../providers/organizations/organizations';
 import {PublicProfilePage} from '../../pages/public-profile/public-profile';
 import {OrganizationProfilePage} from '../../pages/organization-profile/organization-profile';
 import {EventDetailPage} from '../../pages/event-detail/event-detail';
 import {RepresentativeProfilePage} from '../../pages/representative-profile/representative-profile';
 import {Subject} from "rxjs/Subject";
+import {Keyboard} from "@ionic-native/keyboard";
 
 
 @Component({
@@ -16,12 +16,11 @@ import {Subject} from "rxjs/Subject";
 })
 export class HeaderComponent {
 
-    testPhoto:any = '../assets/img/avatar.png';
+    testPhoto: any = '../assets/img/avatar.png';
     searching: any = false;
     shouldShowCancel: any = false;
     searchTerm: string = '';
     private searchTerm$: Subject<string>;
-    searchControl: FormControl;
     endpoint: string = 'search/';
     public currentTabName = 'all';
     public actions: any = [];
@@ -34,19 +33,12 @@ export class HeaderComponent {
 
 
     constructor(public modalCtrl: ModalController,
+                private keyboard: Keyboard,
+                private platform: Platform,
                 private httpProvider: OrganizationsProvider,
                 public navCtrl: NavController) {
         this.searchTerm$ = new Subject<string>();
         this.results = "all";
-        this.searchControl = new FormControl();
-    }
-
-    ionViewDidLoad() {
-        this.searchControl.valueChanges.debounceTime(800).subscribe(search => {
-            this.searching = false;
-            this.shouldShowCancel = false;
-        });
-
     }
 
     presentResultsPage() {
@@ -74,11 +66,8 @@ export class HeaderComponent {
     getFilteredData() {
         this.searchTerm$.next(this.endpoint + this.searchTerm);
         this.enablePlaceholder = true;
-console.log('OOOOOOOOO');
         this.httpProvider.getSubjectJson(this.searchTerm$)
             .subscribe(result => {
-                console.log('RESULT __________');
-                console.log(result);
                     this.enablePlaceholder = false;
                     this.actions = result['objective'] || [];
                     this.users = result['users'] || [];
@@ -134,6 +123,13 @@ console.log('OOOOOOOOO');
     }
 
     cancel() {
+        if (this.platform.is('ios')) {
+            this.keyboard.onKeyboardShow().take(1).subscribe(() => {
+                this.keyboard.close();
+            });
+        }
+
+        this.shouldShowCancel = false;
         this.searching = false;
     }
 

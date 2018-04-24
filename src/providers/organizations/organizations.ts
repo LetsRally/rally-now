@@ -28,11 +28,12 @@ export class OrganizationsProvider {
     }
 
     getSubjectJson(terms: Observable<string>) {
-        return terms.switchMap(term => this.getJsonData(term));
+        return terms.switchMap(term => {
+            return this.getJsonData(term)
+        });
     }
 
     getJsonData(endpoint) {
-        console.log('PPPPPPPPPPP');
         var headers = new Headers();
         headers.append('Content-Type', 'application/json');
         headers.append('Access-Control-Allow-Origin', '*');
