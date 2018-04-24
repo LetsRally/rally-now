@@ -5,9 +5,9 @@
             <ion-searchbar (ionInput)="onSearchInput()"
                            no-padding
                            class="rally-search"
+                           name="searchField"
                            [(ngModel)]="searchTerm"
-                           [formControl]="searchControl"
-                           [showCancelButton]="true"
+                           [showCancelButton]="shouldShowCancel"
                            (ionCancel)="cancel()"
             ></ion-searchbar>
         </form>
@@ -22,34 +22,28 @@
 
     <div padding>
         <div class="swipeable-segment">
-            <ion-segment [(ngModel)]="results">
-                <ion-segment-button value="all"
-                                    (ionSelect)="currentTabName = 'all'">
+            <ion-segment>
+                <ion-segment-button (ionSelect)="currentTabName = 'all'">
                     All
                 </ion-segment-button>
 
-                <ion-segment-button value="actions"
-                                    (ionSelect)="currentTabName = 'actions'">
+                <ion-segment-button (ionSelect)="currentTabName = 'actions'">
                     Actions
                 </ion-segment-button>
 
-                <ion-segment-button value="people"
-                                    (ionSelect)="currentTabName = 'people'">
+                <ion-segment-button (ionSelect)="currentTabName = 'people'">
                     People
                 </ion-segment-button>
 
-                <ion-segment-button value="organizations"
-                                    (ionSelect)="currentTabName = 'organizations'">
+                <ion-segment-button (ionSelect)="currentTabName = 'organizations'">
                     Organizations
                 </ion-segment-button>
 
-                <ion-segment-button value="events"
-                                    (ionSelect)="currentTabName = 'events'">
+                <ion-segment-button (ionSelect)="currentTabName = 'events'">
                     Events
                 </ion-segment-button>
 
-                <ion-segment-button value="reps"
-                                    (ionSelect)="currentTabName = 'reps'">
+                <ion-segment-button (ionSelect)="currentTabName = 'reps'">
                     Representatives
                 </ion-segment-button>
             </ion-segment>
@@ -73,7 +67,7 @@
             </div>
         </div>
 
-        <ion-list [ngSwitch]="true">
+        <ion-list>
             <div *ngIf="currentTabName === 'all'">
                 <div class="flex-center"
                      *ngIf="!actions.length && !users.length && !organizations.length && !reps.length && !events.length && !enablePlaceholder">
