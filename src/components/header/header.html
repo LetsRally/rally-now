@@ -30,32 +30,38 @@
     <div padding>
         <div class="swipeable-segment">
             <ion-segment [(ngModel)]="results">
-                <ion-segment-button value="'all"
+                <ion-segment-button [ngClass]="{'segment-activated': (currentTabName === 'all')}"
+                                    value="all"
                                     (ionSelect)="currentTabName = 'all'">
                     All
                 </ion-segment-button>
 
-                <ion-segment-button value="actions"
+                <ion-segment-button [ngClass]="{'segment-activated': (currentTabName === 'actions')}"
+                                    value="actions"
                                     (ionSelect)="currentTabName = 'actions'">
                     Actions
                 </ion-segment-button>
 
-                <ion-segment-button value="'people'"
+                <ion-segment-button [ngClass]="{'segment-activated': (currentTabName === 'people')}"
+                                    value="people"
                                     (ionSelect)="currentTabName = 'people'">
                     People
                 </ion-segment-button>
 
-                <ion-segment-button value="'organizations'"
+                <ion-segment-button [ngClass]="{'segment-activated': (currentTabName === 'organizations')}"
+                                    value="organizations"
                                     (ionSelect)="currentTabName = 'organizations'">
                     Organizations
                 </ion-segment-button>
 
-                <ion-segment-button value="'events'"
+                <ion-segment-button [ngClass]="{'segment-activated': (currentTabName === 'events')}"
+                                    value="events"
                                     (ionSelect)="currentTabName = 'events'">
                     Events
                 </ion-segment-button>
 
-                <ion-segment-button value="'reps'"
+                <ion-segment-button [ngClass]="{'segment-activated': (currentTabName === 'reps')}"
+                                    value="reps"
                                     (ionSelect)="currentTabName = 'reps'">
                     Representatives
                 </ion-segment-button>
@@ -183,9 +189,18 @@
                         <ion-avatar item-start (click)="goToRepProfile(rep.id)">
                             <img src="{{rep.photo_url}}" style="width: 70px; height: 70px;">
                         </ion-avatar>
-                        <button (click)="goToRepProfile(rep.id)" style="background: none;"><h2 text-wrap>
-                            {{rep.name}}</h2>
-                        </button>
+
+                        <h2 (click)="goToRepProfile(rep.id)" text-wrap>{{rep.name}}</h2>
+                        <p class="text-wrap" *ngIf="rep.rep_type === 'sen'">
+                            <small>US Senator for {{rep.state}}</small>
+                        </p>
+                        <p class="text-wrap" *ngIf="rep.rep_type === 'rep'">
+                            <small>US Representative for {{rep.state}}</small>
+                        </p>
+
+                        <main-button clear item-end *ngIf="rep.twitter_id !== 'not available'"
+                                     (click)="followRep(rep.id, $event)" class="blue"
+                                     btnText="{{rep.followers == currentRallyID ? 'Following' : 'Follow'}}"></main-button>
                     </ion-item>
                 </div>
             </div>

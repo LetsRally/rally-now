@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {SearchResultsPage} from '../../pages/search-results/search-results';
-import {ModalController, NavController, Platform} from 'ionic-angular';
+import {ActionSheetController, ModalController, NavController, Platform, ToastController} from 'ionic-angular';
 import {OrganizationsProvider} from '../../providers/organizations/organizations';
 import {PublicProfilePage} from '../../pages/public-profile/public-profile';
 import {OrganizationProfilePage} from '../../pages/organization-profile/organization-profile';
@@ -8,6 +8,7 @@ import {EventDetailPage} from '../../pages/event-detail/event-detail';
 import {RepresentativeProfilePage} from '../../pages/representative-profile/representative-profile';
 import {Subject} from "rxjs/Subject";
 import {Keyboard} from "@ionic-native/keyboard";
+import {UsersProvider} from "../../providers/users/users";
 
 
 @Component({
@@ -22,6 +23,8 @@ export class HeaderComponent {
     searchTerm: string = '';
     private searchTerm$: Subject<string>;
     endpoint: string = 'search/';
+    followEndpoint: any = 'following_representative';
+    currentRallyID: any;
     public currentTabName = 'all';
     public actions: any = [];
     public users: any = [];
@@ -35,10 +38,19 @@ export class HeaderComponent {
     constructor(public modalCtrl: ModalController,
                 private keyboard: Keyboard,
                 private platform: Platform,
+                public toastCtrl: ToastController,
+                public actionSheetCtrl: ActionSheetController,
+                private usersProvider: UsersProvider,
                 private httpProvider: OrganizationsProvider,
                 public navCtrl: NavController) {
         this.searchTerm$ = new Subject<string>();
         this.results = "all";
+        this.platform.ready().then(() => {
+            this.usersProvider.returnRallyUserId().then(
+                user => {
+                    this.currentRallyID = user.apiRallyID;
+                })
+        });
     }
 
     presentResultsPage() {
@@ -85,28 +97,75 @@ export class HeaderComponent {
                 });
     }
 
-    // getdata() {
-    //     this.enablePlaceholder = true;
-    //     this.httpProvider.getJsonData(this.endpoint + this.searchTerm).subscribe(
-    //         result => {
-    //             if(result['search'] && result['search'] === this.searchTerm) {
-    //                 this.users = result['users'];
-    //                 this.organizations = result['organizations'];
-    //                 this.reps = result['reps'];
-    //                 this.events = result['events'];
-    //             }
-    //
-    //             this.enablePlaceholder = false;
-    //         },
-    //     err => {
-    //         this.enablePlaceholder = false;
-    //         console.error("Error : " + err);
-    //     },
-    //     () => {
-    //         this.enablePlaceholder = false;
-    //         console.log('getData completed');
-    //         });
-    // }
+    followRep(repID, $event) {
+        console.log($event);
+
+
+        this.usersProvider.getJsonData(this.followEndpoint + '?user_id=' + this.currentRallyID + '&representative_id=' + repID)
+            .subscribe(
+                result => {
+                    if (result != "") {
+                        this.unFollowActionSheet(result[0].id, $event)
+                    } else {
+                        this.saveRepInApi(repID);
+                        $event.srcElement.innerHTML = "Following";
+                        $event.srcElement.innerText = "FOLLOWING";
+                    }
+                },
+                err => {
+                    console.error("Error : " + err);
+                },
+                () => {
+                    console.log('getData completed');
+                }
+            );
+    }
+
+    saveRepInApi(repID) {
+        this.usersProvider.followRep(this.followEndpoint, this.currentRallyID, repID);
+        this.presentToast('Representative added');
+    }
+
+    unFollowActionSheet(representativeID, el) {
+
+        let actionSheet = this.actionSheetCtrl.create({
+            title: 'Unfollow this representative?',
+            cssClass: 'title-img',
+            buttons: [
+                {
+                    text: 'Unfollow',
+                    role: 'destructive',
+                    handler: () => {
+                        console.log('Destructive clicked');
+                        this.unFollowRep(representativeID);
+                        el.srcElement.innerHTML = "Follow";
+                        el.srcElement.innerText = "FOLLOW";
+
+                    }
+                }, {
+                    text: 'Cancel',
+                    role: 'cancel',
+                    handler: () => {
+                        console.log('Cancel clicked');
+                    }
+                }
+            ]
+        });
+        actionSheet.present();
+    }
+
+    unFollowRep(recordID) {
+        this.usersProvider.unfollowOrganization(this.followEndpoint, recordID);
+        this.presentToast('Representative removed');
+    }
+
+    presentToast(message) {
+        let toast = this.toastCtrl.create({
+            message: message,
+            duration: 3000
+        });
+        toast.present();
+    }
 
     goToPublicProfile(userID) {
         this.navCtrl.push(PublicProfilePage, {

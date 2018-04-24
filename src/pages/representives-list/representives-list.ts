@@ -124,8 +124,6 @@ export class RepresentivesListPage {
 
     followRep(repID, $event) {
         console.log($event);
-
-
         this.httpProvider.getJsonData(this.followEndpoint + '?user_id=' + this.currentRallyID + '&representative_id=' + repID)
             .subscribe(
                 result => {
@@ -179,8 +177,6 @@ export class RepresentivesListPage {
     saveRepInApi(repID) {
         this.httpProvider.followRep(this.followEndpoint, this.currentRallyID, repID);
         this.presentToast('Representative added');
-
-
     }
 
     presentToast(message) {
