@@ -28,18 +28,6 @@ export class ThankYouPage {
   weekStreaks:any; 
   countWeek:number = 0;
   accountStatus:any;
-  data:any = [{
-    user_id: '',
-    title: '',
-    short_desc: '',
-    representative_id: '',
-    action_type_id: '',
-    goal_id: '',
-  }];
-  objetiveID:any;
-  talkingPoints: any;
-  rep: any;
-  offices: any;
 
   constructor(
     public navCtrl: NavController, 
@@ -49,8 +37,6 @@ export class ThankYouPage {
     private app:App,
     public actionSheetCtrl: ActionSheetController,
     private shareProvider:SocialShareProvider) {
-      this.objetiveID = navParams.get('objectiveID');
-
       this.httpProvider.returnRallyUserId().then(user =>{
         this.currentRallyID = user.apiRallyID;
           this.getStreaks();
@@ -63,37 +49,7 @@ export class ThankYouPage {
     console.log('ionViewDidLoad ThankYouPage');
   }
 
-  back(){
-    if(this.objetiveID != null){
-      this.navCtrl.setRoot(OrganizationActionPage,  {objectiveID: this.objetiveID, pageName: 'Home' }, {animate:true,animation:'transition',duration:500,direction:'back'});
-    } else{
-      // console.log(2222);
-     this.navCtrl.pop();
-    // this.navCtrl.push(TakeactionPage );
-      // this.navCtrl.popToRoot({
-
-      // })
-    }
-
-    // this.navCtrl.push(OrganizationActionPage, {
-    //   objectiveID: this.objetiveID,
-    //   pageName: 'Home'
-    // })
-
-    // .then(() => {
-    //   const index = this.viewCtrl.index;
-
-    //   for(let i = index; i > 0; i--){
-    //       this.navCtrl.remove(i);
-    //   }
-    // });
-    // }else{
-    //   this.navCtrl.pop();
-    // ]
-  }
-
   dismiss() {
-    this.back();
     this.viewCtrl.dismiss();
   }
 

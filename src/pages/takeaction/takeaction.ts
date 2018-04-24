@@ -150,7 +150,8 @@ export class TakeactionPage {
         {
           text: 'Call',
           handler: () => {
-             this.navCtrl.push(CallPage);
+             // this.navCtrl.push(CallPage);
+             this.navCtrl.setRoot(CallPage);
           }
         },{
           text: 'Post on Facebook',

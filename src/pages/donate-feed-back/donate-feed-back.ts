@@ -69,6 +69,9 @@ export class DonateFeedBackPage {
 
   streakModal() {
     let modal = this.modalCtrl.create(ThankYouPage);
+    modal.onDidDismiss(() => {
+      this.navCtrl.popTo(this.navCtrl.getByIndex(0), {animate:true,animation:'transition',duration:500,direction:'back'});
+    });
     modal.present();
   }
 
@@ -99,6 +102,9 @@ export class DonateFeedBackPage {
 
   errorModal(){
     let modal = this.modalCtrl.create(IssueScreenPage);
+    modal.onDidDismiss(() => {
+      this.navCtrl.popTo(this.navCtrl.getByIndex(0), {animate:true,animation:'transition',duration:500,direction:'back'});
+    });
     modal.present();
   }
 

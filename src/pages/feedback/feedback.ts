@@ -44,7 +44,7 @@ export class FeedbackPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad FeedbackPage');
+    // console.log('ionViewDidLoad FeedbackPage');
   }
 
   // sendActions($event){
@@ -55,7 +55,7 @@ export class FeedbackPage {
 
   sendActions($event){
     this.isenabled = true;
-    console.log($event);
+    // console.log($event);
     
     let clickedElement = $event.target || $event.srcElement;
 
@@ -73,17 +73,23 @@ export class FeedbackPage {
   }
 
   streakModal() {
-    let modal = this.modalCtrl.create(ThankYouPage, {objectiveID: this.objetiveID});
+    let modal = this.modalCtrl.create(ThankYouPage);
+    modal.onDidDismiss(() => {
+      this.navCtrl.popTo(this.navCtrl.getByIndex(1), {animate:true,animation:'transition',duration:500,direction:'back'});
+    });
     modal.present();
   }
 
   errorModal(){
     let modal = this.modalCtrl.create(IssueScreenPage);
+    modal.onDidDismiss(() => {
+      this.navCtrl.popTo(this.navCtrl.getByIndex(1), {animate:true,animation:'transition',duration:500,direction:'back'});
+    });
     modal.present();
   }
 
   back(){
-    this.navCtrl.setRoot(OrganizationActionPage,  {objectiveID: this.objetiveID, pageName: 'Home' }, {animate:true,animation:'transition',duration:500,direction:'back'});
+    this.navCtrl.popTo(this.navCtrl.getByIndex(1), {animate:true,animation:'transition',duration:500,direction:'back'});
     // if(this.objetiveID != null){
     // this.navCtrl.push(OrganizationActionPage, {
     //   objectiveID: this.objetiveID,
@@ -102,7 +108,7 @@ export class FeedbackPage {
 
 
   getValue(value){
-    console.log(value);
+    // console.log(value);
     this.value = value;
 
   }
@@ -113,7 +119,7 @@ export class FeedbackPage {
 
   submit(){
   
-    console.log("Value", this.value);
+    // console.log("Value", this.value);
     if(this.value === 'success'){
       this.streakModal();
       this.addAction();
