@@ -146,10 +146,14 @@
                         <ion-avatar item-start (click)="goToOrganizationProfile(organization.id)">
                             <img src="{{organization.image_url}}" style="width: 70px; height: 70px;">
                         </ion-avatar>
-                        <button (click)="goToOrganizationProfile(organization.id)" style="background: none;"><h2
-                                text-wrap>
-                            {{organization.name}}</h2></button>
-                        <p>{{organization.short_desc}}</p>
+
+                        <h2 text-wrap (click)="goToOrganizationProfile(organization.id)">{{organization.name}}</h2>
+                        <main-button clear
+                                     item-end
+                                     class="blue"
+                                     (click)="addFollowRecordFirebase(organization.id, $event)"
+                                     btnText="{{organization.followers == currentRallyID ? 'Following' : 'Follow'}}"></main-button>
+                        <!--<p>{{organization.short_desc}}</p>-->
 
                     </ion-item>
                 </div>

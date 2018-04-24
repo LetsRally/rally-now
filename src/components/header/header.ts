@@ -9,7 +9,8 @@ import {RepresentativeProfilePage} from '../../pages/representative-profile/repr
 import {Subject} from "rxjs/Subject";
 import {Keyboard} from "@ionic-native/keyboard";
 import {UsersProvider} from "../../providers/users/users";
-
+import {AngularFireDatabase} from "angularfire2/database";
+import firebase from 'firebase';
 
 @Component({
     selector: 'rally-header',
@@ -25,6 +26,7 @@ export class HeaderComponent {
     endpoint: string = 'search/';
     followEndpoint: any = 'following_representative';
     currentRallyID: any;
+    organizationEndpoint: any = 'following_organizations';
     public currentTabName = 'all';
     public actions: any = [];
     public users: any = [];
@@ -38,6 +40,7 @@ export class HeaderComponent {
     constructor(public modalCtrl: ModalController,
                 private keyboard: Keyboard,
                 private platform: Platform,
+                private db: AngularFireDatabase,
                 public toastCtrl: ToastController,
                 public actionSheetCtrl: ActionSheetController,
                 private usersProvider: UsersProvider,
@@ -209,5 +212,73 @@ export class HeaderComponent {
         });
     }
 
+    addFollowRecordFirebase(organizationID, $event) {
+        let user: any = firebase.auth().currentUser;
+        let followRef = this.db.database.ref('organizations/' + user['uid'] + '/' + organizationID);
+        followRef.once('value', snapshot => {
+            if (snapshot.hasChildren()) {
+                console.log('You already follow this org');
+                this.unFollowOrgActionSheet(organizationID, $event);
 
+                //this.presentToast('You are not following this organization anymore');
+
+            } else {
+                this.followOrg(organizationID, $event);
+
+                this.presentToast('Follow Organization successfully');
+            }
+        });
+    }
+
+    followOrg(organizationID, el) {
+        this.usersProvider.followOrganization(this.organizationEndpoint, this.currentRallyID, organizationID);
+        el.srcElement.innerText = 'Following';
+    }
+
+    unFollowOrgActionSheet(organizationID, el) {
+
+        let actionSheet = this.actionSheetCtrl.create({
+            title: 'Unfollow this organization?',
+            cssClass: 'title-img',
+            buttons: [
+                {
+                    text: 'Unfollow',
+                    role: 'destructive',
+                    handler: () => {
+                        console.log('Destructive clicked');
+                        this.getOrganizationFollowRecordID(organizationID);
+                        el.srcElement.innerText = 'Follow';
+
+                    }
+                }, {
+                    text: 'Cancel',
+                    role: 'cancel',
+                    handler: () => {
+                        console.log('Cancel clicked');
+                    }
+                }
+            ]
+        });
+        actionSheet.present();
+    }
+
+    getOrganizationFollowRecordID(organizationID) {
+        this.usersProvider.getJsonData(this.organizationEndpoint + '?follower_id=' + this.currentRallyID + '&organization_id=' + organizationID).subscribe(
+            result => {
+                console.log("Delete ID : " + result[0].id);
+                this.unfollow(result[0].id, organizationID);
+            },
+            err => {
+                console.error("Error : " + err);
+            },
+            () => {
+                console.log('getData completed');
+            }
+        );
+    }
+
+    unfollow(recordID, organizationID) {
+        this.usersProvider.unfollowOrganization(this.organizationEndpoint, recordID);
+        this.usersProvider.removeFollowRecordID(organizationID, 'organizations');
+    }
 }
