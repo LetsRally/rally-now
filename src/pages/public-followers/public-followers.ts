@@ -1,5 +1,13 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ToastController, LoadingController, PopoverController } from 'ionic-angular';
+import {
+    IonicPage,
+    NavController,
+    NavParams,
+    ToastController,
+    LoadingController,
+    PopoverController,
+    Platform
+} from 'ionic-angular';
 import { DomSanitizer } from '@angular/platform-browser';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { UsersProvider } from '../../providers/users/users';
@@ -7,6 +15,7 @@ import { OrganizationsProvider } from '../../providers/organizations/organizatio
 import firebase from 'firebase';
 import { PublicProfilePage } from '../public-profile/public-profile';
 import { OverlayPage } from '../overlay/overlay';
+import {Keyboard} from "@ionic-native/keyboard";
 
 
 @IonicPage()
@@ -32,6 +41,8 @@ export class PublicFollowersPage {
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
+    private platform: Platform,
+    private keyboard: Keyboard,
     public popoverCtrl: PopoverController,
     private httpProvider: OrganizationsProvider,
     private userProvider: UsersProvider,
@@ -185,4 +196,11 @@ ionViewDidLoad() {
    });
   }
 
+    cancel() {
+        if (this.platform.is('ios')) {
+            this.keyboard.onKeyboardShow().take(1).subscribe(() => {
+                this.keyboard.close();
+            });
+        }
+    }
 }

@@ -9,7 +9,9 @@
 
 
 <ion-content>
-    <ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>
+    <ion-searchbar (ionInput)="getItems($event)"
+                   (ionCancel)="cancel()"
+                   [showCancelButton]="true"></ion-searchbar>
 
     <div class="timeline-wrapper" *ngIf="enablePlaceholder">
         <div class="timeline-item short" *ngFor="let item of [1,2,3,4,5]">
