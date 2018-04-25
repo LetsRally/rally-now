@@ -160,13 +160,6 @@ getArray(array){
   } 
 
 }
-presentToast(message) {
-    let toast = this.toastCtrl.create({
-      message: message,
-      duration: 3000
-    });
-    toast.present();
-  }
 
  addFollowRecordFirebase(friendID){ 
      let user:any = firebase.auth().currentUser;
@@ -175,12 +168,10 @@ presentToast(message) {
        if (snapshot.hasChildren()) {
          console.log('You already follow this user');
          this.unFollowActionSheet(); 
-         //this.presentToast('You are not following this user anymore');
 
        }else{
          //this.followFriend(friendID);
          this.followFriend(friendID);
-         this.presentToast('Follow user successfully');
        }
      });
     }
@@ -340,7 +331,6 @@ getLikeStatus($event, reference_id, like_type, likes){
       
       if(result != "" ){
         this.removeFav(result[0].id);
-        this.presentToast('You unliked it');
         $event.srcElement.style.backgroundColor = '#f2f2f2';
         $event.srcElement.offsetParent.style.backgroundColor = '#f2f2f2';
         $event.srcElement.lastChild.data--;
@@ -349,7 +339,6 @@ getLikeStatus($event, reference_id, like_type, likes){
         
       }else{
        this.addLike(reference_id, like_type);
-       this.presentToast('You liked it');
         $event.srcElement.style.backgroundColor = '#296fb7';
         $event.srcElement.offsetParent.style.backgroundColor = '#296fb7';
         $event.srcElement.lastChild.data++;
@@ -401,7 +390,6 @@ const actionSheet = this.actionSheetCtrl.create({
        this.shareProvider.facebookShare(title, imgURI);
        this.addShareAction(reference_id, like_type);
        $event.path[1].lastChild.data++;
-       this.presentToast('Objective shared!');
        this.disable = false;
 
      }
@@ -412,7 +400,6 @@ const actionSheet = this.actionSheetCtrl.create({
        this.shareProvider.twitterShare(title, imgURI).then(() =>{
         this.addShareAction(reference_id, like_type);
         $event.path[1].lastChild.data++;
-        this.presentToast('Objective shared!');
         this.disable = false;
        }).catch((error) => {
         console.error("shareViaWhatsapp: failed", error);
@@ -433,7 +420,6 @@ const actionSheet = this.actionSheetCtrl.create({
   // {
   //   text: 'SMS Message',
   //   handler: () => {
-  //     this.presentToast('Objective shared!');
   //     this.disable = false;
 
   //   }
@@ -442,7 +428,6 @@ const actionSheet = this.actionSheetCtrl.create({
   //   text: 'Email',
   //   handler: () => {
       
-  //     this.presentToast('Objective shared!');
   //     this.disable = false;
 
   //   }

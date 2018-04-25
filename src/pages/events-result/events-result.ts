@@ -93,16 +93,6 @@ goToEventDetail(eventID){
 
 
 
-presentToast(message) {
-  let toast = this.toastCtrl.create({
-    message: message,
-    duration: 3000
-  });
-  toast.present();
-}
-
-
-
 
 removeEventFav(recordID){
   this.httpProvider.removeItem(this.likeendpoint, recordID).subscribe(res => {
@@ -142,7 +132,6 @@ getLikeStatus($event, reference_id, like_type){
       
       if(result != "" ){
         this.removeEventFav(result[0].id);
-        this.presentToast('You unliked it');
         $event.srcElement.style.backgroundColor = '#f2f2f2';
         $event.srcElement.offsetParent.style.backgroundColor = '#f2f2f2';
         $event.srcElement.lastChild.data--;
@@ -150,7 +139,6 @@ getLikeStatus($event, reference_id, like_type){
         
       }else{
        this.addLike(reference_id, like_type);
-       this.presentToast('You liked it');
         $event.srcElement.style.backgroundColor = '#296fb7';
         $event.srcElement.offsetParent.style.backgroundColor = '#296fb7';
         $event.srcElement.lastChild.data++;
@@ -188,7 +176,6 @@ const actionSheet = this.actionSheetCtrl.create({
        this.shareProvider.facebookShare(title, imgURI);
        this.addShareAction(reference_id, like_type);
        $event.srcElement.lastChild.data++;
-       this.presentToast('Objective shared!');
        this.disable = false;
 
      }
@@ -199,7 +186,6 @@ const actionSheet = this.actionSheetCtrl.create({
        this.shareProvider.twitterShare(title, imgURI);
        this.addShareAction(reference_id, like_type);
        $event.srcElement.lastChild.data++;
-       this.presentToast('Objective shared!');
        this.disable = false;
 
      }
@@ -214,7 +200,6 @@ const actionSheet = this.actionSheetCtrl.create({
   // {
   //   text: 'SMS Message',
   //   handler: () => {
-  //     this.presentToast('Objective shared!');
   //     this.disable = false;
 
   //   }
@@ -222,8 +207,7 @@ const actionSheet = this.actionSheetCtrl.create({
   // {
   //   text: 'Email',
   //   handler: () => {
-      
-  //     this.presentToast('Objective shared!');
+    
   //     this.disable = false;
 
   //   }

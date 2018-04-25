@@ -222,14 +222,12 @@ export class CandidatesPage {
 
     saveRepInApi(repID){
       this.userProv.followRep(this.followEndpoint, this.myRallyID, repID);
-      this.presentToast('Representative added');
       
     
     }
     
     unFollowRep(recordID){
       this.userProv.unfollowOrganization(this.followEndpoint, recordID);
-      this.presentToast('Representative removed');
     }
     
 
@@ -273,7 +271,6 @@ export class CandidatesPage {
           
           if(result != "" ){
             this.removeFav(result[0].id);
-            this.presentToast('You unliked it');
             $event.srcElement.style.backgroundColor = '#f2f2f2';
             $event.srcElement.offsetParent.style.backgroundColor = '#f2f2f2';
             $event.srcElement.lastChild.data--;
@@ -282,7 +279,6 @@ export class CandidatesPage {
             
           }else{
            this.addLike(reference_id, like_type);
-           this.presentToast('You liked it');
             $event.srcElement.style.backgroundColor = '#296fb7';
             $event.srcElement.offsetParent.style.backgroundColor = '#296fb7';
             $event.srcElement.lastChild.data++;
@@ -321,15 +317,6 @@ export class CandidatesPage {
     
     }
 
-    presentToast(message) {
-      let toast = this.toastCtrl.create({
-        message: message,
-        duration: 3000
-      });
-      toast.present();
-    }
-
-
     shareController(title, imgURI, reference_id, like_type, $event) {
       this.disable = true;
 
@@ -342,7 +329,6 @@ export class CandidatesPage {
            this.shareProvider.facebookShare(title, imgURI);
            this.addShareAction(reference_id, like_type);
            $event.path[1].lastChild.data++;
-           this.presentToast('Objective shared!');
            this.disable = false;
            this.streakModal();
  
@@ -355,7 +341,6 @@ export class CandidatesPage {
             console.log("twitter: Success");
             this.addShareAction(reference_id, like_type);
             $event.path[1].lastChild.data++;
-            this.presentToast('Objective shared!');
            this.disable = false;
            this.streakModal();
           }).catch((error) => {
@@ -377,7 +362,6 @@ export class CandidatesPage {
       // {
       //   text: 'SMS Message',
       //   handler: () => {
-      //     this.presentToast('Objective shared!');
       //     this.disable = false;
 
       //   }
@@ -386,7 +370,6 @@ export class CandidatesPage {
       //   text: 'Email',
       //   handler: () => {
           
-      //     this.presentToast('Objective shared!');
       //     this.disable = false;
 
       //   }
@@ -439,12 +422,10 @@ findInLoopTweet(actions){
 
           this.userProv.unfollowOrganization(this.organizationEndpoint, recordID);
           this.userProv.removeFollowRecordID(orgID, 'organizations');
-          this.presentToast("You're not following this organization anymore");
         }
 
         followOrg(organizationID){
           this.userProv.followOrganization(this.organizationEndpoint, this.myRallyID, organizationID );
-          this.presentToast("You're now following this organization");
 
         }
 
@@ -490,14 +471,9 @@ findInLoopTweet(actions){
                   console.log(result[0].enable_notifications);
                   if(result[0].enable_notifications == true){
                     this.userProv.updateSingleItem(this.followEndpoint + '/' + result[0].id, JSON.stringify({enable_notifications: false}));
-                    this.presentToast("You've turned off notifications for this Representative");
                   }else{
                     this.userProv.updateSingleItem(this.followEndpoint + '/' + result[0].id, JSON.stringify({enable_notifications: true}));
-                    this.presentToast("You've turned on notifications for this Representative");
-    
                   }
-                }else{
-                  this.presentToast("You need to follow this Representative to enable the notifications");
                 }
               });
           }

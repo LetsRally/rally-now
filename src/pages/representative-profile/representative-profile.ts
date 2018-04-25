@@ -76,7 +76,6 @@ export class RepresentativeProfilePage {
         
         if(result != "" ){
           this.removeFav(result[0].id);
-          this.presentToast('You unliked it');
           $event.srcElement.style.backgroundColor = '#f2f2f2';
           $event.srcElement.offsetParent.style.backgroundColor = '#f2f2f2';
           $event.srcElement.lastChild.data--;
@@ -85,7 +84,6 @@ export class RepresentativeProfilePage {
           
         }else{
          this.addLike(reference_id, like_type);
-         this.presentToast('You liked it');
           $event.srcElement.style.backgroundColor = '#296fb7';
           $event.srcElement.offsetParent.style.backgroundColor = '#296fb7';
           $event.srcElement.lastChild.data++;
@@ -158,23 +156,11 @@ export class RepresentativeProfilePage {
 
   saveRepInApi(repID){
     this.httpProvider.followRep(this.followEndpoint, this.currentRallyID, repID);
-    this.presentToast('Representative added');
-    
-
 }
-
-  presentToast(message) {
-    let toast = this.toastCtrl.create({
-      message: message,
-      duration: 3000
-    });
-    toast.present();
-  }
 
 
   unFollowRep(recordID){
     this.httpProvider.unfollowOrganization(this.followEndpoint, recordID);
-    this.presentToast('Representative removed');
   }
 
   findInLoop(actions){
@@ -295,7 +281,6 @@ export class RepresentativeProfilePage {
          this.shareProvider.facebookShare(title, imgURI);
          this.addShareAction(reference_id, like_type);
          $event.path[1].lastChild.data++;
-         this.presentToast('Objective shared!');
          this.disable = false;
          this.streakModal();
 
@@ -307,7 +292,6 @@ export class RepresentativeProfilePage {
          this.shareProvider.twitterShare(title, imgURI).then(() => {
           this.addShareAction(reference_id, like_type);
           $event.path[1].lastChild.data++;
-          this.presentToast('Objective shared!');
           this.disable = false;
           this.streakModal();
          }).catch((error) => {
@@ -329,7 +313,6 @@ export class RepresentativeProfilePage {
     // {
     //   text: 'SMS Message',
     //   handler: () => {
-    //     this.presentToast('Objective shared!');
     //     this.disable = false;
 
     //   }
@@ -338,7 +321,6 @@ export class RepresentativeProfilePage {
     //   text: 'Email',
     //   handler: () => {
         
-    //     this.presentToast('Objective shared!');
     //     this.disable = false;
 
     //   }
@@ -433,14 +415,9 @@ checkNotifiersRep(repID){
         console.log(result[0].enable_notifications);
         if(result[0].enable_notifications == true){
           this.httpProvider.updateSingleItem(this.followEndpoint + '/' + result[0].id, JSON.stringify({enable_notifications: false}));
-          this.presentToast("You've turned off notifications for this Representative");
         }else{
           this.httpProvider.updateSingleItem(this.followEndpoint + '/' + result[0].id, JSON.stringify({enable_notifications: true}));
-          this.presentToast("You've turned on notifications for this Representative");
-
         }
-      }else{
-        this.presentToast("You need to follow this Representative to enable the notifications");
       }
     });
 }

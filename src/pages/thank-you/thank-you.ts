@@ -171,7 +171,6 @@ export class ThankYouPage {
     // {
     //   text: 'SMS Message',
     //   handler: () => {
-    //     this.presentToast('Objective shared!');
     //     this.disable = false;
 
     //   }
@@ -180,7 +179,6 @@ export class ThankYouPage {
     //   text: 'Email',
     //   handler: () => {
         
-    //     this.presentToast('Objective shared!');
     //     this.disable = false;
 
     //   }

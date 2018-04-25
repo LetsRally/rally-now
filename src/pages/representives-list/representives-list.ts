@@ -119,7 +119,6 @@ export class RepresentivesListPage {
 
     unFollowRep(recordID) {
         this.httpProvider.unfollowOrganization(this.followEndpoint, recordID);
-        this.presentToast('Representative removed');
     }
 
     followRep(repID, $event) {
@@ -176,15 +175,6 @@ export class RepresentivesListPage {
 
     saveRepInApi(repID) {
         this.httpProvider.followRep(this.followEndpoint, this.currentRallyID, repID);
-        this.presentToast('Representative added');
-    }
-
-    presentToast(message) {
-        let toast = this.toastCtrl.create({
-            message: message,
-            duration: 3000
-        });
-        toast.present();
     }
 
     goToRepProfile(repID) {

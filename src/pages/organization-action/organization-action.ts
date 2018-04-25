@@ -103,10 +103,7 @@ export class OrganizationActionPage {
   }
 
   presentActionSheet(rep, fax, twitter, email, repID, offices) {
-    let actionSheet = this.actionSheetCtrl.create({
-      title: 'Contact ' + rep.name,
-      buttons: [ 
-        {
+    let buttonsArray = [{
           text: 'Call', 
           handler: () => { 
             //this.showCallAlert(rep, repID, offices);
@@ -114,7 +111,12 @@ export class OrganizationActionPage {
 
       
           }
-        },{
+        }];
+
+
+    if (fax) {
+      buttonsArray.push(
+        {
           text: 'Fax',
           handler: () => {
             console.log('Fax clicked');
@@ -123,7 +125,13 @@ export class OrganizationActionPage {
             this.navCtrl.push(FaxFeedBackPage, {iframeUrl: fax, repID: repID, goalID: this.goal_id, objectiveID: this.objectiveID});
 
           }
-        },{  
+        }
+      );
+    }
+
+    if(email) {
+      buttonsArray.push(
+        {  
           text: 'Email',
           handler: () => {
             console.log('Email clicked');
@@ -131,7 +139,13 @@ export class OrganizationActionPage {
             // this.httpProvider.addAction(this.favEndpoint, this.data);
             this.navCtrl.push(EmailFeedBackPage, {iframeUrl: email, repID: repID, goalID: this.goal_id, objectiveID: this.objectiveID});
           }
-        },{
+        }
+      )
+    }
+
+    if(twitter) {
+      buttonsArray.push(
+        {
           text: 'Post message via Twitter',
           handler: () => {
             console.log('Post message via Twitter clicked');
@@ -143,14 +157,24 @@ export class OrganizationActionPage {
               this.streakModal();
             }); 
           }
-        },{
+        }
+      )
+    }
+
+
+    buttonsArray[buttonsArray.length] = {
           text: 'Cancel',
-          role: 'cancel',
+          // role: 'cancel',
           handler: () => {
             console.log('Cancel clicked');
           }
-        }
-      ]
+    };
+
+
+
+    let actionSheet = this.actionSheetCtrl.create({
+      title: 'Contact ' + rep.name,
+      buttons: buttonsArray
     });
     actionSheet.present();
   }
@@ -210,15 +234,6 @@ export class OrganizationActionPage {
     }
   );
 }
-
-
- presentToast(message) {
-      let toast = this.toastCtrl.create({
-        message: message,
-        duration: 3000
-      });
-      toast.present();
-    }
 
 
 
@@ -285,14 +300,12 @@ getLikeStatus($event, reference_id, like_type){
       
       if(result != "" ){
         this.removeFav(result[0].id);
-        this.presentToast('You unliked it');
         $event.srcElement.style.backgroundColor = '#f2f2f2';
         $event.srcElement.offsetParent.style.backgroundColor = '#f2f2f2';
         $event.srcElement.lastChild.data--;
         
       }else{
        this.addLike(reference_id, like_type);
-       this.presentToast('You liked it');
         $event.srcElement.style.backgroundColor = '#296fb7';
         $event.srcElement.offsetParent.style.backgroundColor = '#296fb7';
         $event.srcElement.lastChild.data++;
@@ -329,7 +342,6 @@ const actionSheet = this.actionSheetCtrl.create({
        this.shareProvider.facebookShare(title, imgURI);
        this.addShareAction(reference_id, like_type);
        $event.srcElement.lastChild.data++;
-       this.presentToast('Objective shared!');
        this.disable = false;
        this.streakModal();
 
@@ -341,7 +353,6 @@ const actionSheet = this.actionSheetCtrl.create({
        this.shareProvider.twitterShare(title, imgURI).then(() => {
         this.addShareAction(reference_id, like_type);
         $event.srcElement.lastChild.data++;
-        this.presentToast('Objective shared!');
         this.disable = false;
         this.streakModal();
        }).catch((error) => {
@@ -363,7 +374,6 @@ const actionSheet = this.actionSheetCtrl.create({
   // {
   //   text: 'SMS Message',
   //   handler: () => {
-  //     this.presentToast('Objective shared!');
   //     this.disable = false;
 
   //   }
@@ -372,7 +382,6 @@ const actionSheet = this.actionSheetCtrl.create({
   //   text: 'Email',
   //   handler: () => {
       
-  //     this.presentToast('Objective shared!');
   //     this.disable = false;
 
   //   }

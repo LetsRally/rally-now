@@ -154,14 +154,6 @@ getShortDate(day){
   }
 
 
-presentToast(message) {
-    let toast = this.toastCtrl.create({
-      message: message,
-      duration: 3000
-    });
-    toast.present();
-  }
-
     addFollowRecordFirebase(organizationID){
      let user:any = firebase.auth().currentUser;
      let followRef = this.db.database.ref('organizations/'+user['uid']+'/'+organizationID);
@@ -169,11 +161,9 @@ presentToast(message) {
        if (snapshot.hasChildren()) {
          console.log('You already follow this org');
          this.unFollowActionSheet();
-         //this.presentToast('You are not following this organization anymore');
 
        }else{
          this.followOrg(organizationID);
-         this.presentToast('Follow Organization successfully');
        }
      });
     }
@@ -332,7 +322,6 @@ goToActionPage(objectiveID, goal_type, source, goalID, repID){
           
           if(result != "" ){
             this.removeFav(result[0].id);
-            this.presentToast('You unliked it');
             $event.srcElement.style.backgroundColor = '#f2f2f2';
             $event.srcElement.offsetParent.style.backgroundColor = '#f2f2f2';
             $event.srcElement.lastChild.data--;
@@ -341,7 +330,6 @@ goToActionPage(objectiveID, goal_type, source, goalID, repID){
             
           }else{
            this.addLike(reference_id, like_type);
-           this.presentToast('You liked it');
             $event.srcElement.style.backgroundColor = '#296fb7';
             $event.srcElement.offsetParent.style.backgroundColor = '#296fb7';
             $event.srcElement.lastChild.data++;
@@ -464,14 +452,9 @@ goToActionPage(objectiveID, goal_type, source, goalID, repID){
             console.log(result[0].enable_notifications);
             if(result[0].enable_notifications == true){
               this.httpProvider.updateSingleItem(this.organizationEndpoint + '/' + result[0].id, JSON.stringify({enable_notifications: false}));
-              this.presentToast("You've turned off notifications for this organization");
             }else{
               this.httpProvider.updateSingleItem(this.organizationEndpoint + '/' + result[0].id, JSON.stringify({enable_notifications: true}));
-              this.presentToast("You've turned on notifications for this organization");
-    
             }
-          }else{
-            this.presentToast("You need to follow this organization to enable the notifications");
           }
         });
     }
@@ -499,7 +482,6 @@ goToActionPage(objectiveID, goal_type, source, goalID, repID){
            this.shareProvider.facebookShare(title, imgURI);
            this.addShareAction(reference_id, like_type);
            $event.path[1].lastChild.data++;
-           this.presentToast('Objective shared!');
            this.disable = false;
  
          }
@@ -510,7 +492,6 @@ goToActionPage(objectiveID, goal_type, source, goalID, repID){
            this.shareProvider.twitterShare(title, imgURI).then(() => {
             this.addShareAction(reference_id, like_type);
             $event.path[1].lastChild.data++;
-            this.presentToast('Objective shared!');
            this.disable = false;
            }).catch((error) => {
             console.error("shareViaWhatsapp: failed", error);
@@ -531,7 +512,6 @@ goToActionPage(objectiveID, goal_type, source, goalID, repID){
       // {
       //   text: 'SMS Message',
       //   handler: () => {
-      //     this.presentToast('Objective shared!');
       //     this.disable = false;
 
       //   }
@@ -540,7 +520,6 @@ goToActionPage(objectiveID, goal_type, source, goalID, repID){
       //   text: 'Email',
       //   handler: () => {
           
-      //     this.presentToast('Objective shared!');
       //     this.disable = false;
 
       //   }

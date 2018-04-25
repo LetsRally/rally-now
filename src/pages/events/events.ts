@@ -287,15 +287,6 @@ export class EventsPage {
     }
 
 
-    presentToast(message) {
-        let toast = this.toastCtrl.create({
-            message: message,
-            duration: 3000
-        });
-        toast.present();
-    }
-
-
     removeEventFav(recordID) {
         this.httpProvider.removeItem(this.likeendpoint, recordID).subscribe(res => {
             console.log(res);
@@ -371,7 +362,6 @@ export class EventsPage {
 
                 if (result != "") {
                     this.removeEventFav(result[0].id);
-                    this.presentToast('You unliked it');
                     $event.srcElement.style.backgroundColor = '#f2f2f2';
                     $event.srcElement.offsetParent.style.backgroundColor = '#f2f2f2';
                     $event.srcElement.lastChild.data--;
@@ -380,7 +370,6 @@ export class EventsPage {
 
                 } else {
                     this.addLike(reference_id, like_type);
-                    this.presentToast('You liked it');
                     $event.srcElement.style.backgroundColor = '#296fb7';
                     $event.srcElement.offsetParent.style.backgroundColor = '#296fb7';
                     $event.srcElement.lastChild.data++;
@@ -423,7 +412,6 @@ export class EventsPage {
                         this.shareProvider.facebookShare(title, imgURI);
                         this.addShareAction(reference_id, like_type);
                         $event.path[1].lastChild.data++;
-                        this.presentToast('Objective shared!');
                         this.disable = false;
                         this.streakModal();
 
@@ -435,7 +423,6 @@ export class EventsPage {
                         this.shareProvider.twitterShare(title, imgURI).then(() => {
                             this.addShareAction(reference_id, like_type);
                             $event.path[1].lastChild.data++;
-                            this.presentToast('Objective shared!');
                             this.disable = false;
                             this.streakModal();
                         }).catch((error) => {
@@ -457,7 +444,6 @@ export class EventsPage {
                 // {
                 //   text: 'SMS Message',
                 //   handler: () => {
-                //     this.presentToast('Objective shared!');
                 //     this.disable = false;
 
                 //   }
@@ -466,7 +452,6 @@ export class EventsPage {
                 //   text: 'Email',
                 //   handler: () => {
 
-                //     this.presentToast('Objective shared!');
                 //     this.disable = false;
 
                 //   }
@@ -563,14 +548,9 @@ export class EventsPage {
                     console.log(result[0].enable_notifications);
                     if (result[0].enable_notifications == true) {
                         this.httpProvider.updateSingleItem(this.organizationEndpoint + '/' + result[0].id, JSON.stringify({enable_notifications: false}));
-                        this.presentToast("You've turned off notifications for this organization");
                     } else {
                         this.httpProvider.updateSingleItem(this.organizationEndpoint + '/' + result[0].id, JSON.stringify({enable_notifications: true}));
-                        this.presentToast("You've turned on notifications for this organization");
-
                     }
-                } else {
-                    this.presentToast("You need to follow this organization to enable the notifications");
                 }
             });
     }
@@ -617,12 +597,10 @@ export class EventsPage {
 
         this.httpProvider.unfollowOrganization(this.organizationEndpoint, recordID);
         this.httpProvider.removeFollowRecordID(orgID, 'organizations');
-        this.presentToast("You're not following this organization anymore");
     }
 
     followOrg(organizationID) {
         this.httpProvider.followOrganization(this.organizationEndpoint, this.myrallyID, organizationID);
-        this.presentToast("You're now following this organization");
 
     }
 

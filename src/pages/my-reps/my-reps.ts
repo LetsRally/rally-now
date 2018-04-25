@@ -120,13 +120,6 @@ export class MyRepsPage {
       );
     }
 
-    presentToast(message) {
-      let toast = this.toastCtrl.create({
-        message: message,
-        duration: 3000
-      });
-      toast.present();
-    }
     followRep(repID, $event){
       console.log($event);
       
@@ -156,15 +149,11 @@ export class MyRepsPage {
 
     saveRepInApi(repID){
         this.httpProvider.followRep(this.followEndpoint, this.currentRallyID, repID);
-        this.presentToast('Representative added');
-        
-
     }
 
 
     unFollowRep(recordID){
       this.httpProvider.unfollowOrganization(this.followEndpoint, recordID);
-      this.presentToast('Representative removed');
     }
 
     findInLoop(actions){

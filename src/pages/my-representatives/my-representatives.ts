@@ -127,15 +127,17 @@ export class MyRepresentativesPage {
   
 
   presentActionSheet(rep, fax, twitter, email, repID, offices) {
-    let actionSheet = this.actionSheetCtrl.create({
-      title: 'Contact ' + rep.name,
-      buttons: [
-        {
-          text: 'Call',
-          handler: () => {
+    let buttonsArray = [{
+          text: 'Call', 
+          handler: () => { 
             this.navCtrl.push(CallRepPage, {rep: rep, repID: repID, offices: offices});
           }
-        },{
+        }];
+
+
+    if (fax) {
+      buttonsArray.push(
+        {
           text: 'Fax',
           handler: () => {
             console.log('Fax clicked');
@@ -143,9 +145,14 @@ export class MyRepresentativesPage {
             // this.data.action_type_id = 'ad3ef19b-d809-45b7-bef2-d470c9af0d1d';
             // this.httpProvider.addAction(this.favEndpoint, this.data);
             this.navCtrl.push(FaxFeedBackPage, {iframeUrl: fax, repID: repID});
-
           }
-        },{
+        }
+      );
+    }
+
+    if(email) {
+      buttonsArray.push(
+        {  
           text: 'Email',
           handler: () => {
             console.log('Email clicked');
@@ -154,7 +161,13 @@ export class MyRepresentativesPage {
             // this.httpProvider.addAction(this.favEndpoint, this.data);
             this.navCtrl.push(EmailFeedBackPage, {iframeUrl: email, repID: repID});
           }
-        },{
+        }
+      )
+    }
+
+    if(twitter) {
+      buttonsArray.push(
+        {
           text: 'Post message via Twitter',
           handler: () => {
             console.log('Post message via Twitter clicked');
@@ -166,14 +179,22 @@ export class MyRepresentativesPage {
               this.streakModal();
             }); 
           }
-        },{
+        }
+      )
+    }
+
+
+    buttonsArray[buttonsArray.length] = {
           text: 'Cancel',
-          role: 'cancel',
+          // role: 'cancel',
           handler: () => {
             console.log('Cancel clicked');
           }
-        }
-      ]
+    };
+
+    let actionSheet = this.actionSheetCtrl.create({
+      title: 'Contact ' + rep.name,
+      buttons: buttonsArray
     });
     actionSheet.present();
   }
@@ -228,23 +249,11 @@ export class MyRepresentativesPage {
 
   saveRepInApi(repID){
       this.httpProvider.followRep(this.followEndpoint, this.myrallyID, repID);
-      this.presentToast('Representative added');
-      
-
   }
 
 
   unFollowRep(recordID){
     this.httpProvider.unfollowOrganization(this.followEndpoint, recordID);
-    this.presentToast('Representative removed');
-  }
-
-  presentToast(message) {
-    let toast = this.toastCtrl.create({
-      message: message,
-      duration: 3000
-    });
-    toast.present();
   }
 
   getRepStateID(rep, fax, twitter, email, bioguide, offices){ 

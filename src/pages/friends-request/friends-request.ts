@@ -300,13 +300,11 @@ console.log('GET SUGGESTED FRIENDS');
             if (snapshot.hasChildren()) {
                 console.log('You already follow this user');
                 // this.getFollowRecordID(friendID);
-                // this.presentToast('You are not following this user anymore');
                 this.unFollowUserActionSheet(friendID, $event);
 
             } else {
                 this.followFriend(friendID, $event);
                 // this.getDeviceID(friendID, $event);
-                this.presentToast('Follow user successfully');
             }
         });
     }
@@ -377,15 +375,6 @@ console.log('GET SUGGESTED FRIENDS');
     }
 
 
-    presentToast(message) {
-        let toast = this.toastCtrl.create({
-            message: message,
-            duration: 3000
-        });
-        toast.present();
-    }
-
-
     addOrg(organizationID, $event) {
         console.log($event);
         let user: any = firebase.auth().currentUser;
@@ -395,9 +384,6 @@ console.log('GET SUGGESTED FRIENDS');
                 console.log('You already follow this org');
                 this.unFollowActionSheet(organizationID, $event);
 
-
-                //this.presentToast('You are not following this organization anymore');
-
             } else {
                 this.followOrg(organizationID);
                 $event.srcElement.innerText = 'Following';
@@ -406,7 +392,6 @@ console.log('GET SUGGESTED FRIENDS');
                 // $event.srcElement.parentNode.style.backgroundColor = '#fff';
                 // $event.srcElement.style.color = '#6D6D72';
 
-                this.presentToast('Follow Organization successfully');
             }
         });
     }
