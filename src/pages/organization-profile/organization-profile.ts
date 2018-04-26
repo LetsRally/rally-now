@@ -19,6 +19,7 @@ import { DonateFeedBackPage } from '../donate-feed-back/donate-feed-back';
   templateUrl: 'organization-profile.html',
 })
 export class OrganizationProfilePage {
+  testPhoto:any = '../assets/img/event.png';
 	organizationID:string;
 	endpoint:string = 'organization/';
 	name:string;

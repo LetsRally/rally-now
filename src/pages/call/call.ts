@@ -30,6 +30,7 @@ export class CallPage {
   talkingPoints:any;
   offices:any;
   objetiveID:any;
+  phoneArr:any = [];
 
   constructor(
     public navCtrl: NavController, 
@@ -84,6 +85,9 @@ export class CallPage {
     });
 
     this.offices.forEach(office => {
+
+      phoneArr.push(office.phone);
+
       actionSheet.addButton({
         text: office.phone, 
         handler: ()=> {

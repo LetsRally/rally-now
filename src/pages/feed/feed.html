@@ -195,7 +195,7 @@
                     </ion-fab-list> -->
                 </ion-fab>
                 <ion-avatar item-start>
-                    <img [src]="record.organization['image_url'] ? record.organization['image_url'] : 'assets/img/org_icon.svg'"
+                    <img [src]="record.organization['image_url'] ? record.organization['image_url'] : organizationPhoto"
                          (click)="goToOrganizationProfile(record.organization_id)">
                 </ion-avatar>
                 <div class="item-heading" (click)="goToOrganizationProfile(record.organization_id)">
@@ -275,7 +275,7 @@
                    </ion-fab-list> -->
                 </ion-fab>
                 <ion-avatar item-start>
-                    <img [src]="record.organization.image_url ? record.organization.image_url : 'assets/img/org_icon.svg'"
+                    <img [src]="record.organization.image_url ? record.organization.image_url : organizationPhoto"
                          (click)="goToOrganizationProfile(record.organization_id)">
                 </ion-avatar>
                 <h2 text-wrap style="text-align: left; ">

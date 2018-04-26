@@ -44,7 +44,7 @@
         </ion-item>
         <ion-item *ngFor="let rep of reps">
             <ion-avatar item-start (click)="goToRepProfile(rep[0])">
-                <img src="{{rep[2]}}" style="border:2px solid #ada8a8;">
+                <img [src]="rep[2] ? rep[2] : organizationPhoto" style="border:2px solid #ada8a8;">
             </ion-avatar>
             <h2 text-wrap (click)="goToRepProfile(rep[0])">{{rep[1]}}</h2>
             <button ion-button clear item-end class="action-btn" (click)="followRep(rep[0], $event)">Following</button>

@@ -31,6 +31,7 @@ export class FollowedOrganizationsPage {
     followEndpoint: any = 'following_representative';
     followUserEndpoint: string = 'following_users';
     enablePlaceholder: boolean = true;
+    testPhoto:any = '../assets/img/event.png';
 
 
     constructor(public navCtrl: NavController,

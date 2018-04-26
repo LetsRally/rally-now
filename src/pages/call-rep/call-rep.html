@@ -20,9 +20,12 @@
 
 <ion-content>
     <ion-row padding>
-        <ion-list *ngIf="talkingPoints != null">
+        <ion-list>
             <ion-list-header style="border: none; padding-left: 0;">Talking Points</ion-list-header>
-            <p>{{talkingPoints}}</p>
+            <p>Hello, my name is {{rep.name}} and I am calling from {{rep.address_city
+}}, {{rep.address_zipcode}} to urge [representative name] to [vote for or against a bill, or take another specific action].</p>
+
+            <p>Thank you for your time. I will follow up soon to see what [representative] has done about this important issue.</p>
            
         </ion-list>
     </ion-row>

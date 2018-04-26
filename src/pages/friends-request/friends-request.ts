@@ -33,6 +33,7 @@ import {OrganizationProfilePage} from '../organization-profile/organization-prof
     templateUrl: 'friends-request.html',
 })
 export class FriendsRequestPage {
+    testPhoto:any = '../assets/img/event.png';
     searchTerm: string = '';
     public items: any = [];
     searchControl: FormControl;

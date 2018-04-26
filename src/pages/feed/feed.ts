@@ -37,6 +37,7 @@ import { NotificationProvider } from '../../providers/notification/notification'
 })
 
 export class FeedPage {
+  organizationPhoto:any = '../assets/img/event.png';
   organizationsData:any;
   endpoint:string = 'homefeed/';
   loading:any;

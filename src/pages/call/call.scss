@@ -52,6 +52,11 @@ page-call {
                 text-transform: none;
             }
         }
+        &.add-class{
+            width: 100% !important;
+            max-width: 100%;
+            flex: 1;
+        }
     }
 
     .call{

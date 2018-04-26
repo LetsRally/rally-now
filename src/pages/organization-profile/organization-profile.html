@@ -8,7 +8,7 @@
     <ion-row padding style="padding-bottom: 0; background: #fff;">
         <ion-col col-4 class="profile-headshot">
             <ion-avatar item-start class="profile-img">
-                <img [src]="data?.image_url ? data?.image_url : 'assets/img/org_icon.svg'">
+                <img [src]="data?.image_url ? data?.image_url : testPhoto">
             </ion-avatar>
           
         </ion-col>
@@ -143,7 +143,7 @@
                </ion-fab-list> -->
             </ion-fab>
             <ion-avatar item-start>
-                <img [src]="data?.image_url ? data?.image_url : 'assets/img/org_icon.svg'">
+                <img [src]="data?.image_url ? data?.image_url : testPhoto">
             </ion-avatar>
             <div class="item-heading">
                 <h2 text-wrap> <small>via</small> {{name}}</h2>

@@ -24,6 +24,7 @@ import {Subject} from "rxjs/Subject";
     templateUrl: 'organizations-list.html',
 })
 export class OrganizationsListPage {
+    testPhoto:any = '../assets/img/event.png';
     endpoint: any = 'organizations';
     public organizations: any = [];
     public enableInfiniteScroll = true;

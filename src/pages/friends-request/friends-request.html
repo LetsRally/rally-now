@@ -116,7 +116,7 @@
 
         <ion-item *ngFor="let org of orgs">
             <ion-avatar item-start (click)="goToOrganizationProfile(org[0])">
-                <img [src]="org[2] ? org[2] : 'assets/img/org_icon.svg'" style="border:2px solid #ada8a8;">
+                <img [src]="org[2] ? org[2] : testPhoto" style="border:2px solid #ada8a8;">
             </ion-avatar>
             <h2 text-wrap (click)="goToOrganizationProfile(org[0])">{{org[1]}}</h2>
 

@@ -51,6 +51,7 @@ page-takeaction {
     ion-content {
         background-color: #f2f2f2 !important;
         top: 40px;
+        height: calc(100% - 26px);
     }
 
     p.white {
@@ -267,5 +268,8 @@ page-takeaction {
 
     .right-border {
         border-right: 1px solid #f2f2f2;
+    }
+    .scroll-content{
+        //margin-bottom: 75px !important;
     }
 }

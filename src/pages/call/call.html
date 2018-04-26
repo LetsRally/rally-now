@@ -37,14 +37,14 @@
                     </div>             
             </button>
         </ion-col>
-        <ion-col col-6 class="btn-light-blue right-border">
+        <ion-col col-6 class="btn-light-blue right-border" *ngIf="phoneArr.length">
             <button ion-button full (click)="callOffices()">
                 <div class="special-btn">
                         Try another office             
                 </div>
             </button>
         </ion-col>
-        <ion-col col-6 class="btn-light-blue">
+        <ion-col col-6 class="btn-light-blue" [ngClass]="!phoneArr.length ? 'add-class' : ''">
             <button ion-button full (click)="giveFeedBack()">
                     <div class="special-btn">
                             I'm done
