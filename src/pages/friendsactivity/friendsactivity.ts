@@ -226,7 +226,6 @@ getLikeStatus($event, reference_id, like_type, likes){
       
       if(result != "" ){
         this.removeFav(result[0].id);
-        this.presentToast('You unliked it');
         $event.srcElement.style.backgroundColor = '#f2f2f2';
         $event.srcElement.offsetParent.style.backgroundColor = '#f2f2f2';
         $event.srcElement.lastChild.data--;
@@ -235,7 +234,6 @@ getLikeStatus($event, reference_id, like_type, likes){
         
       }else{
        this.addLike(reference_id, like_type);
-       this.presentToast('You liked it');
         $event.srcElement.style.backgroundColor = '#296fb7';
         $event.srcElement.offsetParent.style.backgroundColor = '#296fb7';
         $event.srcElement.lastChild.data++;
@@ -330,14 +328,6 @@ removeFav(recordID){
 
 }
 
-presentToast(message) {
-  let toast = this.toastCtrl.create({
-    message: message,
-    duration: 3000
-  });
-  toast.present();
-}
-
 streakModal() {
   let modal = this.modalCtrl.create(ThanksPage);
   modal.present();
@@ -354,7 +344,6 @@ const actionSheet = this.actionSheetCtrl.create({
        this.shareProvider.facebookShare(title, imgURI);
        this.addShareAction(reference_id, like_type);
        $event.path[1].lastChild.data++;
-       this.presentToast('Objective shared!');
        this.streakModal();
        this.disable = false;
 
@@ -366,7 +355,6 @@ const actionSheet = this.actionSheetCtrl.create({
        this.shareProvider.twitterShare(title, imgURI).then(() =>{
         this.addShareAction(reference_id, like_type);
         $event.path[1].lastChild.data++;
-        this.presentToast('Objective shared!');
         this.streakModal();
         this.disable = false;
        }).catch((error) => {
@@ -388,7 +376,6 @@ const actionSheet = this.actionSheetCtrl.create({
   // {
   //   text: 'SMS Message',
   //   handler: () => {
-  //     this.presentToast('Objective shared!');
   //     this.disable = false;
 
   //   }
@@ -397,7 +384,6 @@ const actionSheet = this.actionSheetCtrl.create({
   //   text: 'Email',
   //   handler: () => {
       
-  //     this.presentToast('Objective shared!');
   //     this.disable = false;
 
   //   }
@@ -524,12 +510,10 @@ followUser(userid){
         if (snapshot.hasChildren()) {
           console.log('You already follow this user');
           this.getFollowRecordID(userid);
-          this.presentToast('You are not following this user anymore');
  
         }else{
           this.followFriend(userid);
           // this.getDeviceID(userid);
-          this.presentToast('Follow user successfully');
         }
       });
 }

@@ -149,7 +149,6 @@ export class HeaderComponent {
 
     saveRepInApi(repID) {
         this.usersProvider.followRep(this.followEndpoint, this.currentRallyID, repID);
-        this.presentToast('Representative added');
     }
 
     unFollowActionSheet(representativeID, el) {
@@ -182,16 +181,8 @@ export class HeaderComponent {
 
     unFollowRep(recordID) {
         this.usersProvider.unfollowOrganization(this.followEndpoint, recordID);
-        this.presentToast('Representative removed');
     }
 
-    presentToast(message) {
-        let toast = this.toastCtrl.create({
-            message: message,
-            duration: 3000
-        });
-        toast.present();
-    }
 
     goToPublicProfile(userID) {
         this.navCtrl.push(PublicProfilePage, {
@@ -243,12 +234,8 @@ export class HeaderComponent {
                 console.log('You already follow this org');
                 this.unFollowOrgActionSheet(organizationID, $event);
 
-                //this.presentToast('You are not following this organization anymore');
-
             } else {
                 this.followOrg(organizationID, $event);
-
-                this.presentToast('Follow Organization successfully');
             }
         });
     }

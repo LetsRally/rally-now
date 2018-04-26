@@ -152,7 +152,6 @@ export class AlertsPage {
             if (result != ""){
                 this.httpProvider.updateFollowers(this.followSingleEndpoint + result[0].id);
                 // this.updateFireRecord(this.badgeCount - 1 );
-                this.presentToast('You got a new follower!');
                 
             }
         }
@@ -173,16 +172,8 @@ export class AlertsPage {
      removeNotification(id){
        console.log(id);
       this.httpProvider.unfollowOrganization(this.endpoint, id);
-      this.presentToast('Notification removed');
      }
  
-     presentToast(message) {
-      let toast = this.toastCtrl.create({
-        message: message,
-        duration: 3000
-      });
-      toast.present();
-    }
 
     // getSenderPhoto(sender_id){
     //   this.httpProvider.getJsonData(this.userEndpoint + sender_id).subscribe(

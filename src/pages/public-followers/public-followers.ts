@@ -102,14 +102,6 @@ ionViewDidLoad() {
     }
   }
 
-  presentToast(message) {
-    let toast = this.toastCtrl.create({
-      message: message,
-      duration: 3000
-    });
-    toast.present();
-  }
-
   addFollowRecordFirebase(friendID){ 
     let user:any = firebase.auth().currentUser;
     let followRef = this.db.database.ref('follow/'+user['uid']+'/'+friendID);
@@ -117,12 +109,10 @@ ionViewDidLoad() {
       if (snapshot.hasChildren()) {
         console.log('You already follow this user');
         this.getFollowRecordID(friendID);
-        this.presentToast('You are not following this user anymore');
 
       }else{
         this.followFriend(friendID);
         // this.getDeviceID(friendID);
-        this.presentToast('Follow user successfully');
       }
     });
    }

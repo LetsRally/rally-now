@@ -67,13 +67,6 @@ export class RepFollowersPage {
    });
   }
 
-  presentToast(message) {
-    let toast = this.toastCtrl.create({
-      message: message,
-      duration: 3000
-    });
-    toast.present();
-  }
   addFollowRecordFirebase(friendID, $event){ 
     let user:any = firebase.auth().currentUser;
     let followRef = this.db.database.ref('follow/'+user['uid']+'/'+friendID);
@@ -81,7 +74,6 @@ export class RepFollowersPage {
       if (snapshot.hasChildren()) {
         console.log('You already follow this user');
         this.getFollowRecordID(friendID);
-        this.presentToast('You are not following this user anymore');
         $event.srcElement.innerHTML = "Follow";
         $event.srcElement.innerText = "FOLLOW";
 
@@ -127,7 +119,6 @@ export class RepFollowersPage {
       console.log(data);
       this.httpProvider.saveFollowRecordID(data.following_id, data.id, 'follow');
       this.getDeviceID(friendID);
-      this.presentToast('Follow user successfully');
       $event.srcElement.innerHTML = "Following";
       $event.srcElement.innerText = "FOLLOWING";
     }, error => {

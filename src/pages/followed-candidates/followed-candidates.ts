@@ -116,14 +116,6 @@ export class FollowedCandidatesPage {
         }
     }
 
-    presentToast(message) {
-        let toast = this.toastCtrl.create({
-            message: message,
-            duration: 3000
-        });
-        toast.present();
-    }
-
     addFollowRecordFirebase(friendID) {
         let user: any = firebase.auth().currentUser;
         let followRef = this.db.database.ref('follow/' + user['uid'] + '/' + friendID);
@@ -135,7 +127,6 @@ export class FollowedCandidatesPage {
             } else {
                 this.followFriend(friendID);
                 // this.getDeviceID(friendID);
-                this.presentToast('Follow user successfully');
             }
         });
     }
@@ -220,7 +211,6 @@ export class FollowedCandidatesPage {
                     role: 'destructive',
                     handler: () => {
                         this.unFollowFriend(id, parameter);
-                        this.presentToast('You are not following this user anymore');
 
                     }
                 }, {

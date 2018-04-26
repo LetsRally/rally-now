@@ -134,14 +134,6 @@ export class OrganizationsListPage {
         }
     }
 
-    presentToast(message) {
-        let toast = this.toastCtrl.create({
-            message: message,
-            duration: 3000
-        });
-        toast.present();
-    }
-
     addFollowRecordFirebase(organizationID, $event) {
         let user: any = firebase.auth().currentUser;
         let followRef = this.db.database.ref('organizations/' + user['uid'] + '/' + organizationID);
@@ -150,12 +142,8 @@ export class OrganizationsListPage {
                 console.log('You already follow this org');
                 this.unFollowActionSheet(organizationID, $event);
 
-                //this.presentToast('You are not following this organization anymore');
-
             } else {
                 this.followOrg(organizationID, $event);
-
-                this.presentToast('Follow Organization successfully');
             }
         });
     }
