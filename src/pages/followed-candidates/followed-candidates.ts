@@ -5,7 +5,7 @@ import {
     NavParams,
     LoadingController,
     ToastController,
-    ActionSheetController
+    ActionSheetController, Platform
 } from 'ionic-angular';
 import {FeedPage} from '../feed/feed';
 import {AlertsPage} from '../alerts/alerts';
@@ -18,6 +18,7 @@ import {AngularFireDatabase} from 'angularfire2/database';
 import firebase from 'firebase';
 import {DomSanitizer} from '@angular/platform-browser';
 import {PublicProfilePage} from '../public-profile/public-profile';
+import {Keyboard} from "@ionic-native/keyboard";
 
 
 @IonicPage()
@@ -42,6 +43,8 @@ export class FollowedCandidatesPage {
     constructor(
         public navCtrl: NavController,
         public navParams: NavParams,
+        private platform: Platform,
+        private keyboard: Keyboard,
         public popoverCtrl: PopoverController,
         private httpProvider: OrganizationsProvider,
         private userProvider: UsersProvider,
@@ -222,5 +225,11 @@ export class FollowedCandidatesPage {
         actionSheet.present();
     }
 
-
+    cancel() {
+        if (this.platform.is('ios')) {
+            this.keyboard.onKeyboardShow().take(1).subscribe(() => {
+                this.keyboard.close();
+            });
+        }
+    }
 }

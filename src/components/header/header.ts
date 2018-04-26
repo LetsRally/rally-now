@@ -19,9 +19,13 @@ import firebase from 'firebase';
 export class HeaderComponent {
 
     organizationPhoto: any = '../assets/img/avatar.png';
+    parameter: string;
+    testPhoto: any = '../assets/img/avatar.png';
     searching: any = false;
     shouldShowCancel: any = false;
     searchTerm: string = '';
+    login:any = true;
+    buttonFollowTest:string;
     private searchTerm$: Subject<string>;
     endpoint: string = 'search/';
     followEndpoint: any = 'following_representative';
@@ -52,6 +56,7 @@ export class HeaderComponent {
             this.usersProvider.returnRallyUserId().then(
                 user => {
                     this.currentRallyID = user.apiRallyID;
+                    this.checkUserStatus();
                 })
         });
     }
@@ -59,6 +64,26 @@ export class HeaderComponent {
     presentResultsPage() {
         let modal = this.modalCtrl.create(SearchResultsPage);
         modal.present();
+    }
+
+
+    checkUserStatus(){
+        let user:any = firebase.auth().currentUser;
+        if (user) {
+            let orgRef = this.db.database.ref('follow/'+user['uid']+'/'+this.parameter);
+            orgRef.on('value', snapshot=>{
+                if (snapshot.hasChildren()) {
+                    console.log('Unfollow');
+                    this.buttonFollowTest = 'Following';
+
+                } else{
+                    console.log('Follow');
+                    this.buttonFollowTest = 'Follow';
+                }
+            });
+        } else{
+            this.login = false;
+        }
     }
 
     onSearchInput() {
@@ -215,6 +240,23 @@ export class HeaderComponent {
                 this.followOrg(organizationID, $event);
             }
         });
+    }
+
+    addFollowUserRecordFirebase(friendID){
+        // let user:any = firebase.auth().currentUser;
+        // let followRef = this.db.database.ref('follow/'+user['uid']+'/'+friendID);
+        // followRef.once('value', snapshot=>{
+        //     if (snapshot.hasChildren()) {
+        //         console.log('You already follow this user');
+        //         this.unFollowActionSheet();
+        //         //this.presentToast('You are not following this user anymore');
+        //
+        //     }else{
+        //         //this.followFriend(friendID);
+        //         this.followFriend(friendID);
+        //         this.presentToast('Follow user successfully');
+        //     }
+        // });
     }
 
     followOrg(organizationID, el) {

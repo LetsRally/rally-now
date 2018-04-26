@@ -234,7 +234,8 @@ firebase.initializeApp(config);
     imports: [
         BrowserModule,
         IonicModule.forRoot(MyApp, {
-            backButtonText: 'Back'
+            backButtonText: 'Back',
+            backButtonIcon: 'my-back-button',
         }),
         AngularFireModule.initializeApp(config),
         IonicStorageModule.forRoot(),

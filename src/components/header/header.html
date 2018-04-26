@@ -8,7 +8,7 @@
                            name="searchField"
                            [debounce]="800"
                            [(ngModel)]="searchTerm"
-                           [showCancelButton]="shouldShowCancel"
+                           [showCancelButton]="true"
                            (ionCancel)="cancel()"
             ></ion-searchbar>
         </form>
@@ -125,9 +125,18 @@
                         <ion-avatar item-start (click)="goToPublicProfile(user.id)">
                             <img [src]="user.photo_url ? user.photo_url : testPhoto" style="width: 70px; height: 70px;">
                         </ion-avatar>
-                        <button (click)="goToPublicProfile(user.id)" style="background: none;"><h2>{{user.name}}</h2>
-                        </button>
 
+                        <h2 (click)="goToPublicProfile(user.id)" text-wrap>{{user.name}}</h2>
+                        <p class="text-wrap">
+                            <small>{{user.state}}</small>
+                        </p>
+
+                        <main-button clear
+                                     item-end
+                                     *ngIf="login"
+                                     (click)="addFollowUserRecordFirebase(id)"
+                                     class="blue"
+                                     btnText="{{user.followers == currentRallyID ? 'Following' : 'Follow'}}"></main-button>
                     </ion-item>
                 </div>
             </div>

@@ -2,13 +2,6 @@ rally-header {
 
   background: #fff !important;
   .rally-search {
-    .searchbar-input {
-      border-radius: 20px !important;
-      padding: 2px 55px !important;
-      background-color: #be3d0f !important;
-      box-shadow: none !important;
-    }
-
     .spinner-container {
       width: 100%;
       text-align: center;
@@ -61,6 +54,13 @@ rally-header {
       padding-right: 10px;
     }
   }
+}
+
+.searchbar-input {
+  border-radius: 20px !important;
+  padding: 2px 55px !important;
+  background-color: #be3d0f !important;
+  box-shadow: none !important;
 }
 
 .searchbar-ios-cancel {

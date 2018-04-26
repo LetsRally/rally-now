@@ -11,7 +11,7 @@
     <ion-searchbar (ionInput)="onSearchInput()"
                    [(ngModel)]="searchTerm"
                    [formControl]="searchControl"
-                   [showCancelButton]="shouldShowCancel"
+                   [showCancelButton]="true"
                    [debounce]="800"
                    (ionCancel)="cancel()"></ion-searchbar>
   

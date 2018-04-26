@@ -7,6 +7,7 @@ import {OrganizationsProvider} from '../../providers/organizations/organizations
 import {FormControl} from '@angular/forms';
 import {DomSanitizer} from '@angular/platform-browser';
 import {Subject} from "rxjs/Subject";
+import {Keyboard} from "@ionic-native/keyboard";
 
 
 @IonicPage()
@@ -39,6 +40,7 @@ export class RepresentivesListPage {
                 public toastCtrl: ToastController,
                 private storage: Storage,
                 private platform: Platform,
+                private keyboard: Keyboard,
                 private orgProvider: OrganizationsProvider,
                 public actionSheetCtrl: ActionSheetController,
                 private sanitizer: DomSanitizer) {
@@ -219,6 +221,11 @@ export class RepresentivesListPage {
     }
 
     cancel() {
+        if (this.platform.is('ios')) {
+            this.keyboard.onKeyboardShow().take(1).subscribe(() => {
+                this.keyboard.close();
+            });
+        }
         this.start = 1;
         this.items = [];
         this.enablePlaceholder = true;

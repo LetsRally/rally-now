@@ -42,8 +42,8 @@ export class AdressModalPage {
         console.log('ionViewDidLoad AdressModalPage');
     }
 
-    dismiss() {
-        this.viewCtrl.dismiss({cancel: true});
+    dismiss(data) {
+        this.viewCtrl.dismiss(data);
     }
 
 
@@ -90,7 +90,7 @@ export class AdressModalPage {
             result => {
                 console.log("Your sen", result.data);
                 this.storage.set('senators', result.data);
-                this.dismiss();
+                this.dismiss({cancel: false});
                 //this.getStatesReps(lat, lng);
             });
     }
@@ -100,7 +100,7 @@ export class AdressModalPage {
             result => {
                 console.log("Your State reps", result);
                 this.storage.set('statesReps', result);
-                this.dismiss();
+                this.dismiss({cancel: false});
             });
     }
 

@@ -236,3 +236,35 @@
 .Card .card-content *:last-child {
   margin-bottom: 0 !important;
 }
+
+.header-ios .title-ios {
+  height: 44px !important;
+  min-height: 0 !important;
+  padding-top: 0 !important;
+}
+
+.back-button {
+  font-family: 'Conv_SF-Pro-Display-Regular';
+}
+
+.bar-button-ios {
+  padding: 0 !important;
+}
+
+.action-btn.red-btn {
+  height: auto;
+  padding: 5px 10px;
+  color: #f2f2f2;
+  border: 1px solid #4e4e4e;
+  font-size: 14px;
+  text-transform: uppercase;
+  background: #F4512C;
+  border-radius: 5px;
+  line-height: 22px;
+}
+.back-button-text-ios {
+  font-family:'San Francisco Text',Sans-Serif !important;
+}
+ion-searchbar {
+  background-color: #f4512c !important;
+}

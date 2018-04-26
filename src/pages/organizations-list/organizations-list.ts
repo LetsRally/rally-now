@@ -5,7 +5,7 @@ import {
     NavParams,
     LoadingController,
     ToastController,
-    ActionSheetController
+    ActionSheetController, Platform
 } from 'ionic-angular';
 import {UsersProvider} from '../../providers/users/users';
 import {OrganizationProfilePage} from '../organization-profile/organization-profile';
@@ -16,6 +16,7 @@ import {OrganizationsProvider} from '../../providers/organizations/organizations
 import {FormControl} from '@angular/forms';
 import {DomSanitizer} from '@angular/platform-browser';
 import {Subject} from "rxjs/Subject";
+import {Keyboard} from "@ionic-native/keyboard";
 
 
 @IonicPage()
@@ -47,6 +48,8 @@ export class OrganizationsListPage {
     constructor(
         public navCtrl: NavController,
         public navParams: NavParams,
+        private platform: Platform,
+        private keyboard: Keyboard,
         private httpProvider: UsersProvider,
         public loadingCtrl: LoadingController,
         public toastCtrl: ToastController,
@@ -236,6 +239,11 @@ export class OrganizationsListPage {
     }
 
     cancel() {
+        if (this.platform.is('ios')) {
+            this.keyboard.onKeyboardShow().take(1).subscribe(() => {
+                this.keyboard.close();
+            });
+        }
         this.start = 1;
         this.items = [];
         this.enablePlaceholder = true;
