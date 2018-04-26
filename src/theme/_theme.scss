@@ -246,6 +246,19 @@
 .back-button {
   font-family: 'Conv_SF-Pro-Display-Regular';
 }
+
 .bar-button-ios {
-  padding: 0!important;
+  padding: 0 !important;
+}
+
+.action-btn.red-btn {
+  height: auto;
+  padding: 5px 10px;
+  color: #f2f2f2;
+  border: 1px solid #4e4e4e;
+  font-size: 14px;
+  text-transform: uppercase;
+  background: #F4512C;
+  border-radius: 5px;
+  line-height: 22px;
 }
