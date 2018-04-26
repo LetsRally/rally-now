@@ -236,3 +236,16 @@
 .Card .card-content *:last-child {
   margin-bottom: 0 !important;
 }
+
+.header-ios .title-ios {
+  height: 44px !important;
+  min-height: 0 !important;
+  padding-top: 0 !important;
+}
+
+.back-button {
+  font-family: 'Conv_SF-Pro-Display-Regular';
+}
+.bar-button-ios {
+  padding: 0!important;
+}
