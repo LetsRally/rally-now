@@ -197,11 +197,12 @@ ion-card-header {
 }
 
 .toolbar-title .white{
-    font-family:'Conv_SanFranciscoDisplay-Semibold',Sans-Serif !important;
+    font-family:'San Francisco Text',Sans-Serif !important;
     letter-spacing: -0.41px;
     color: #f2f2f2;
     line-height: 22px;
     font-size: 17px;
+    font-weight: 600;
 }
 
 .ios ion-tab > .ion-page > ion-header > .toolbar.statusbar-padding:first-child, .toolbar-ios, .toolbar-md{
