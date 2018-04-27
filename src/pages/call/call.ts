@@ -86,7 +86,7 @@ export class CallPage {
 
     this.offices.forEach(office => {
 
-      phoneArr.push(office.phone);
+      this.phoneArr.push(office.phone);
 
       actionSheet.addButton({
         text: office.phone, 
