@@ -13,6 +13,7 @@ import { Storage } from '@ionic/storage';
 // import { FirebaseListObservable} from 'angularfire2/database';
 import { AngularFireDatabase } from 'angularfire2/database/database';
 import { UsersProvider } from '../../providers/users/users';
+import {NativeGeocoder, NativeGeocoderForwardResult} from '@ionic-native/native-geocoder';
 
 
 
@@ -69,6 +70,7 @@ export class EditProfilePage {
     public alertCtrl: AlertController, 
     public popoverCtrl: PopoverController,
     public userData: UserData,
+    private nativeGeocoder: NativeGeocoder,
     private camera: Camera,
     public storage: Storage,
     public af:AngularFireDatabase,
@@ -116,8 +118,19 @@ export class EditProfilePage {
              }else{
                this.toggle = true;
              }
+             this.getCoordinates(this.user.address);
            });
        });
+     }
+
+     getCoordinates(address) {
+        const self = this;
+        this.nativeGeocoder.forwardGeocode(address)
+            .then((coordinates: NativeGeocoderForwardResult) => {
+                self.user.lat = coordinates.latitude;
+                self.user.lon = coordinates.longitude;
+            })
+            .catch((error: any) => console.log(error));
      }
 
 

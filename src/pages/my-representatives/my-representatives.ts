@@ -66,7 +66,7 @@ export class MyRepresentativesPage {
   getReps(){
     this.storage.get('representatives').then((val) => {
       console.log('GET REPS');
-      console.log(val);
+      console.log(val, 9999999);
         if (val && typeof(val) === 'object'){
           this.reps = val;
         } 

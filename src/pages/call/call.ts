@@ -31,6 +31,7 @@ export class CallPage {
   offices:any;
   objetiveID:any;
   phoneArr:any = [];
+  isNotYourRep:boolean = false;
 
   constructor(
     public navCtrl: NavController, 
@@ -44,16 +45,23 @@ export class CallPage {
       console.log("offices", navParams.get('offices'));
       this.offices = navParams.get('offices');
       this.rep = navParams.get('rep');
+      console.log(this.rep, 99999999)
       this.talkingPoints = navParams.get('talkingPoints');
       this.data.representative_id = navParams.get('repID');
       this.data.goal_id = navParams.get('goalID');
       this.objetiveID = navParams.get('objectiveID');
       this.data.action_type_id = '2afa6869-7ee5-436e-80a9-4fee7c871212';
       this.data.title = 'call';
+      this.isNotYourRep = navParams.get('yourRep');
+      console.log(this.isNotYourRep)
       this.httpProvider.returnRallyUserId().then( user => {
         this.data.user_id = user.apiRallyID;
       });
       this.showCallAlert(this.rep.phone);
+
+      this.offices.forEach(office => {
+        this.phoneArr.push(office.phone);
+      });
   }
 
   ionViewDidLoad() {
@@ -84,16 +92,19 @@ export class CallPage {
     
     });
 
-    this.offices.forEach(office => {
 
-      this.phoneArr.push(office.phone);
+    const realPhones = this.phoneArr.filter(function(elem, index, self) {
+        return index == self.indexOf(elem);
+    });
+
+    realPhones.forEach(phone => {
 
       actionSheet.addButton({
-        text: office.phone, 
+        text: phone, 
         handler: ()=> {
-          console.log("Phone Number", this.offices);
-          console.log("Iterator", office.phone);
-          this.makeCall(office.phone);
+          // console.log("Phone Number", this.offices);
+          // console.log("Iterator", office.phone);
+          this.makeCall(phone);
 
         } 
       });

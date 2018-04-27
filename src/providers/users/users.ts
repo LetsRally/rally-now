@@ -9,6 +9,7 @@ import { NotiModel } from '../../models/notifications';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest} from '@angular/common/http';
 
+
 @Injectable()
 export class UsersProvider{
 	base:string = 'https://api.letsrally.us/api/';
@@ -149,6 +150,7 @@ export class UsersProvider{
 			
 	}
 
+
 	updateUser(endpoint, data):void{
 		  var headers = new Headers();
     	headers.append('Content-Type', 'application/json' );
@@ -166,8 +168,12 @@ export class UsersProvider{
         searchable: data.searchable,
         hide_activity: data.hide_activity,
         email: data.email,
-        username: data.username
+        username: data.username,
+        address: data.address,
+        lon: data.lon,
+        lat: data.lat
     		});
+
     	let options = new RequestOptions({ headers: headers });
 		this.http.put(encodeURI(this.base + endpoint), userData, options)
 			.subscribe(data => {

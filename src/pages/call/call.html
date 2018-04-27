@@ -13,7 +13,19 @@
         <div class="bob-headshot" [ngStyle]="{ 'background-image' : 'url(' + rep.photo_url +')'}"></div>
     </ion-col>
     <ion-col col-12 >
-        This is your {{rep.title}}
+        This is your 
+        <span *ngIf="!isNotYourRep">
+            <span>This is your local representative in the House</span>
+            <span>This is one of your two US Senators</span>
+        </span>
+        <span *ngIf="isNotYourRep">
+            <span *ngIf="rep.rep_type === 'sen'">
+                US Senator for {{rep.state}}
+            </span>
+            <span *ngIf="rep.rep_type !== 'sen'">
+                US Representative for {{rep.state}}  District [District number]
+            </span>
+        </span>
     </ion-col>
    
 </ion-row>

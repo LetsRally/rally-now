@@ -107,7 +107,7 @@ export class OrganizationActionPage {
           text: 'Call', 
           handler: () => { 
             //this.showCallAlert(rep, repID, offices);
-            this.navCtrl.push(CallPage, {rep: rep, repID: repID, talkingPoints: this.objShort, offices: offices, goalID: this.goal_id, objectiveID: this.objectiveID});
+            this.navCtrl.push(CallPage, {rep: rep, repID: repID, talkingPoints: this.objShort, offices: offices, goalID: this.goal_id, objectiveID: this.objectiveID, yourRep: this.enableSpecificRep});
 
       
           }
@@ -409,6 +409,7 @@ addShareAction(goal_id, action_type_id){
 getReps(){
   this.storage.get('representatives').then((val) => {
     console.log(val);
+          console.log(val, 'representatives');
       if (val != null){
         this.enable = true;
         if(val !== 'sorry'){
@@ -432,6 +433,7 @@ getSenator(){
   this.storage.get('senators').then((val) => {
     if(val != null){
       this.senators = val; 
+      console.log(val, 'senators');
     }
   });
 }
