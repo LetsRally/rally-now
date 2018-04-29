@@ -30,6 +30,8 @@ export class CallRepPage {
   talkingPoints:any;
   offices:any;
   objetiveID:any;
+  isRep: any;
+  user: any;
 
   constructor(
     public navCtrl: NavController, 
@@ -52,6 +54,8 @@ export class CallRepPage {
       this.httpProvider.returnRallyUserId().then( user => {
         this.data.user_id = user.apiRallyID;
       });
+      this.user = navParams.get('user');
+      this.isRep = this.rep.title === 'representative';
       this.showCallAlert(this.rep.phone);
   }
 

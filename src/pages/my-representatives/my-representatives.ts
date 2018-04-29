@@ -35,6 +35,7 @@ export class MyRepresentativesPage {
   myrallyID:any;
   followEndpoint:any = 'following_representative';
   statereps:any;
+  user: any;
 
 
   constructor(
@@ -50,6 +51,7 @@ export class MyRepresentativesPage {
       this.httpProvider.returnRallyUserId()
       .then(user => {
         console.log(" Usuario",user);
+        this.user = user;
         this.myrallyID = user.apiRallyID;
         this.data.user_id = user.apiRallyID;
         this.getAddress();
@@ -66,7 +68,7 @@ export class MyRepresentativesPage {
   getReps(){
     this.storage.get('representatives').then((val) => {
       console.log('GET REPS');
-      console.log(val, 9999999);
+      console.log(val);
         if (val && typeof(val) === 'object'){
           this.reps = val;
         } 
@@ -130,7 +132,7 @@ export class MyRepresentativesPage {
     let buttonsArray = [{
           text: 'Call', 
           handler: () => { 
-            this.navCtrl.push(CallRepPage, {rep: rep, repID: repID, offices: offices});
+            this.navCtrl.push(CallRepPage, {rep: rep, repID: repID, offices: offices, user: this.user});
           }
         }];
 

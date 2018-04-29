@@ -32,6 +32,8 @@ export class CallPage {
   objetiveID:any;
   phoneArr:any = [];
   isNotYourRep:boolean = false;
+  isRep: any;
+  isSen: any;
 
   constructor(
     public navCtrl: NavController, 
@@ -45,7 +47,6 @@ export class CallPage {
       console.log("offices", navParams.get('offices'));
       this.offices = navParams.get('offices');
       this.rep = navParams.get('rep');
-      console.log(this.rep, 99999999)
       this.talkingPoints = navParams.get('talkingPoints');
       this.data.representative_id = navParams.get('repID');
       this.data.goal_id = navParams.get('goalID');
@@ -53,10 +54,11 @@ export class CallPage {
       this.data.action_type_id = '2afa6869-7ee5-436e-80a9-4fee7c871212';
       this.data.title = 'call';
       this.isNotYourRep = navParams.get('yourRep');
-      console.log(this.isNotYourRep)
       this.httpProvider.returnRallyUserId().then( user => {
         this.data.user_id = user.apiRallyID;
       });
+      this.isRep = this.rep.title && this.rep.title.indexOf('representative') !== - 1;
+      this.isSen = this.rep.rep_type && this.rep.rep_type === 'sen';
       this.showCallAlert(this.rep.phone);
 
       this.offices.forEach(office => {
