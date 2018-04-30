@@ -1,6 +1,6 @@
 {
   "name": "rally-up-now",
-  "version": "0.0.1",
+  "version": "0.0.10",
   "author": "Ionic Framework",
   "homepage": "http://ionicframework.com/",
   "private": true,
@@ -107,8 +107,8 @@
         "PHOTO_LIBRARY_USAGE_DESCRIPTION": "choose profile picture"
       },
       "cordova-plugin-camera": {
-        "CAMERA_USAGE_DESCRIPTION": " ",
-        "PHOTOLIBRARY_USAGE_DESCRIPTION": " "
+        "CAMERA_USAGE_DESCRIPTION": "$(PRODUCT_NAME) camera use",
+        "PHOTOLIBRARY_USAGE_DESCRIPTION": "$(PRODUCT_NAME) media library use"
       },
       "cordova-plugin-facebook4": {
         "APP_ID": "163624830854172",
@@ -120,7 +120,7 @@
         "TWITTER_SECRET": "RkghHyvOiYsLLDhynTGm1gjZUBtEyn0OMNzmt61rmWGqfnSb0Y"
       },
       "cordova-plugin-customurlscheme": {
-        "URL_SCHEME": "com.senorcoders.rallyup",
+        "URL_SCHEME": "com.letsrallyus.rallyup",
         "ANDROID_SCHEME": " ",
         "ANDROID_HOST": " ",
         "ANDROID_PATHPREFIX": "/"
