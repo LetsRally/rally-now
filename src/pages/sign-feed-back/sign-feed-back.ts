@@ -102,7 +102,7 @@ export class SignFeedBackPage {
   errorModal(){
     let modal = this.modalCtrl.create(IssueScreenPage);
       modal.onDidDismiss((val) => {
-          this.navCtrl.popTo(this.navCtrl.getByIndex(1), {animate:true,animation:'transition',duration:500,direction:'back'});
+          this.navCtrl.popTo(this.navCtrl.getByIndex(0), {animate:true,animation:'transition',duration:500,direction:'back'});
       });
     modal.present();
   }

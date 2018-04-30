@@ -1,15 +1,15 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.letsrallyus.rallyup" version="0.0.10" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.senorcoders.rallyup" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>Rally</name>
     <description>An awesome Ionic/Cordova app.</description>
     <author email="hi@ionicframework" href="http://ionicframework.com/">Ionic Framework Team</author>
     <universal-links>
-        <host name="eq7vf.app.goo.gl" scheme="https" />
+        <host name="https://eq7vf.app.goo.gl/" scheme="https" />
         <host name="rally-up-12c9b.firebaseapp.com" scheme="https">
             <path url="/__/auth/callback" />
         </host>
     </universal-links>
-    <content src="index.html" />
+    <content original-src="index.html" src="http://192.168.12.43:8100" />
     <access origin="*" />
     <allow-navigation href="*" />
     <allow-navigation href="http://ionic.local/*" />
@@ -124,8 +124,8 @@
         <variable name="PHOTO_LIBRARY_USAGE_DESCRIPTION" value="choose profile picture" />
     </plugin>
     <plugin name="cordova-plugin-camera" spec="~2.4.1">
-        <variable name="CAMERA_USAGE_DESCRIPTION" value="$(PRODUCT_NAME) camera use" />
-        <variable name="PHOTOLIBRARY_USAGE_DESCRIPTION" value="$(PRODUCT_NAME) media library use" />
+        <variable name="CAMERA_USAGE_DESCRIPTION" value=" " />
+        <variable name="PHOTOLIBRARY_USAGE_DESCRIPTION" value=" " />
     </plugin>
     <plugin name="cordova-plugin-network-information" spec="~1.3.3" />
     <plugin name="com-sarriaroman-photoviewer" spec="~1.1.11" />
@@ -252,7 +252,7 @@
     <allow-navigation href="http://10.100.35.27:8101" />
     <allow-navigation href="http://192.168.14.157:8100" />
     <allow-navigation href="http://192.168.0.100:8100" />
-    <allow-navigation href="http://192.168.0.102:8100" />
-    <engine name="ios" spec="~4.5.4" />
-    <engine name="android" spec="~6.3.0" />
+    <allow-navigation href="http://192.168.12.43:8100" />
+    <engine name="ios" spec="4.5.4" />
+    <engine name="android" spec="6.3.0" />
 </widget>
