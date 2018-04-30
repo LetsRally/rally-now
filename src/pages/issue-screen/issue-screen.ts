@@ -24,8 +24,6 @@ export class IssueScreenPage {
   }
 
   dismiss(val?) {
-      console.log('888888');
-      console.log(val);
    this.viewCtrl.dismiss(val);
  }
 

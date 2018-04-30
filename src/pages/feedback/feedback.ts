@@ -78,10 +78,6 @@ export class FeedbackPage {
   errorModal(){
     let modal = this.modalCtrl.create(IssueScreenPage);
     modal.onDidDismiss((val) => {
-      console.log('FEEDBACK');
-      console.log(val);
-      console.log(this.navCtrl.getViews());
-        // this.navCtrl.setRoot(TakeactionPage, {animate:true,animation:'transition',duration:500,direction:'back'});
       this.navCtrl.popTo(this.navCtrl.getByIndex(1), {animate:true,animation:'transition',duration:500,direction:'back'});
     });
     modal.present();
