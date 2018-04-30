@@ -23,8 +23,10 @@ export class IssueScreenPage {
     console.log('ionViewDidLoad IssueScreenPage');
   }
 
-  dismiss() {
-   this.viewCtrl.dismiss();
+  dismiss(val?) {
+      console.log('888888');
+      console.log(val);
+   this.viewCtrl.dismiss(val);
  }
 
 }

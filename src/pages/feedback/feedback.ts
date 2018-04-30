@@ -4,6 +4,7 @@ import { ThankYouPage } from '../thank-you/thank-you';
 import { IssueScreenPage } from '../issue-screen/issue-screen';
 import { UsersProvider } from '../../providers/users/users';
 import { OrganizationActionPage } from '../organization-action/organization-action';
+import {TakeactionPage} from "../takeaction/takeaction";
 
 
 @IonicPage()
@@ -47,12 +48,6 @@ export class FeedbackPage {
     // console.log('ionViewDidLoad FeedbackPage');
   }
 
-  // sendActions($event){
-  //   console.log($event);
-  //   $event.srcElement.style.opacity = 0.4;
-  //   this.isenabled = true;
-  // }
-
   sendActions($event){
     this.isenabled = true;
     // console.log($event);
@@ -82,7 +77,11 @@ export class FeedbackPage {
 
   errorModal(){
     let modal = this.modalCtrl.create(IssueScreenPage);
-    modal.onDidDismiss(() => {
+    modal.onDidDismiss((val) => {
+      console.log('FEEDBACK');
+      console.log(val);
+      console.log(this.navCtrl.getViews());
+        // this.navCtrl.setRoot(TakeactionPage, {animate:true,animation:'transition',duration:500,direction:'back'});
       this.navCtrl.popTo(this.navCtrl.getByIndex(1), {animate:true,animation:'transition',duration:500,direction:'back'});
     });
     modal.present();

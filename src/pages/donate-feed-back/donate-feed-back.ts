@@ -102,9 +102,13 @@ export class DonateFeedBackPage {
 
   errorModal(){
     let modal = this.modalCtrl.create(IssueScreenPage);
-    modal.onDidDismiss(() => {
-      this.navCtrl.popTo(this.navCtrl.getByIndex(0), {animate:true,animation:'transition',duration:500,direction:'back'});
-    });
+      modal.onDidDismiss((val) => {
+          console.log('DONATE FEEDBACK');
+          console.log(val);
+          console.log(this.navCtrl.getViews());
+          // this.navCtrl.setRoot(TakeactionPage, {animate:true,animation:'transition',duration:500,direction:'back'});
+          this.navCtrl.popTo(this.navCtrl.getByIndex(0), {animate:true,animation:'transition',duration:500,direction:'back'});
+      });
     modal.present();
   }
 

@@ -9,6 +9,7 @@ import {Subject} from "rxjs/Subject";
 @Injectable()
 export class OrganizationsProvider {
     base: string = 'https://api.letsrally.us/rallyapi/';
+    // base: string = 'http://192.168.14.84:3000/rallyapi/';
     data: any = {};
     private data$: Observable<any>;
     private  dataService: Subject<any>;

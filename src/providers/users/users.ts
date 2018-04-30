@@ -13,6 +13,7 @@ import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest} from '@angular/co
 @Injectable()
 export class UsersProvider{
 	base:string = 'https://api.letsrally.us/api/';
+    // base: string = 'http://192.168.14.84:3000/rallyapi/';
 	data:any = {};
   recordID:any;
   senorcodersEndpoint:any = 'http://senorcoders.com/rally/';
