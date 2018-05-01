@@ -116,11 +116,6 @@ export class TakeactionPage {
       console.log("Log", data);
     });
   }
-  
-    ionViewWillEnter(){
-   
-      this.viewCtrl.setBackButtonText("My Feeds");
-    }
 
     doRefresh(refresher) {
       this.objectives = [];

@@ -66,7 +66,6 @@ export class AlertsPage {
           }else{
             this.public = false;
           }
-
         });
      }
 

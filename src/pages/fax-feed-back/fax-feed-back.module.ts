@@ -8,6 +8,6 @@ import { FaxFeedBackPage } from './fax-feed-back';
   ],
   imports: [
     IonicPageModule.forChild(FaxFeedBackPage),
-  ],
+  ]
 })
 export class FaxFeedBackPageModule {}
