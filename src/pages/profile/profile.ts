@@ -26,6 +26,7 @@ import { OrganizationActionPage } from '../organization-action/organization-acti
 import { OrganizationProfilePage } from '../organization-profile/organization-profile';
 import { RepresentativeProfilePage } from '../representative-profile/representative-profile';
 import { Facebook } from '@ionic-native/facebook';
+import {DonateFeedBackPage} from "../donate-feed-back/donate-feed-back";
 
 
 
@@ -537,16 +538,25 @@ goToOrganizationProfile(organizationID){
 }, {animate:true,animation:'transition',duration:500,direction:'forward'});
 }
 
-goToActionPage(objectiveID, goal_type, source, goalID, repID){ 
-  if(goal_type !== "sign"){
-   this.navCtrl.push(OrganizationActionPage, {
-     objectiveID: objectiveID,
-     pageName: 'My Profile'
- }, {animate:true,animation:'transition',duration:500,direction:'forward'});
-  } else{
-   this.navCtrl.push(SignFeedBackPage, {iframeUrl: source, repID:repID, goalID: goalID}, {animate:true,animation:'transition',duration:500,direction:'forward'});
-  }  
- 
+goToActionPage(objectiveID, goal_type, source, goalID, repID){
+ //  if(goal_type !== "sign"){
+ //   this.navCtrl.push(OrganizationActionPage, {
+ //     objectiveID: objectiveID,
+ //     pageName: 'My Profile'
+ // }, {animate:true,animation:'transition',duration:500,direction:'forward'});
+ //  } else{
+ //   this.navCtrl.push(SignFeedBackPage, {iframeUrl: source, repID:repID, goalID: goalID}, {animate:true,animation:'transition',duration:500,direction:'forward'});
+ //  }
+    if(goal_type === "contact"){
+        this.navCtrl.push(OrganizationActionPage, {
+            objectiveID: objectiveID,
+            pageName: 'My Profile'
+        }, {animate:true,animation:'transition',duration:500,direction:'forward'});
+    } else if(goal_type === 'sign'){
+        this.navCtrl.push(SignFeedBackPage, {iframeUrl: source, repID:repID, goalID:goalID}, {animate:true,animation:'transition',duration:500,direction:'forward'});
+    }  else if(goal_type === 'donate'){
+        this.navCtrl.push(DonateFeedBackPage, {iframeUrl: source, repID:repID, goalID:goalID}, {animate:true,animation:'transition',duration:500,direction:'forward'});
+    }
 }
 
 transform(value: any) {

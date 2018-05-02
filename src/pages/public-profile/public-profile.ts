@@ -11,6 +11,7 @@ import { SignFeedBackPage } from '../sign-feed-back/sign-feed-back';
 import { RepresentativeProfilePage } from '../representative-profile/representative-profile';
 import { PublicFollowersPage } from '../public-followers/public-followers';
 import { PublicFollowingPage } from '../public-following/public-following';
+import {DonateFeedBackPage} from "../donate-feed-back/donate-feed-back";
 
 
 @IonicPage()
@@ -458,15 +459,24 @@ goToOrganizationProfile(organizationID){
 }
 
 goToActionPage(objectiveID, goal_type, source, goalID, repID){ 
-  if(goal_type !== "sign"){
-   this.navCtrl.push(OrganizationActionPage, {
-     objectiveID: objectiveID,
-     pageName: 'Public Profile'
- }, {animate:true,animation:'transition',duration:500,direction:'forward'});
-  } else{
-   this.navCtrl.push(SignFeedBackPage, {iframeUrl: source, repID:repID, goalID: goalID}, {animate:true,animation:'transition',duration:500,direction:'forward'});
-  }  
- 
+ //  if(goal_type !== "sign"){
+ //   this.navCtrl.push(OrganizationActionPage, {
+ //     objectiveID: objectiveID,
+ //     pageName: 'Public Profile'
+ // }, {animate:true,animation:'transition',duration:500,direction:'forward'});
+ //  } else{
+ //   this.navCtrl.push(SignFeedBackPage, {iframeUrl: source, repID:repID, goalID: goalID}, {animate:true,animation:'transition',duration:500,direction:'forward'});
+ //  }
+    if(goal_type === "contact"){
+        this.navCtrl.push(OrganizationActionPage, {
+            objectiveID: objectiveID,
+            pageName: 'Public Profile'
+        }, {animate:true,animation:'transition',duration:500,direction:'forward'});
+    } else if(goal_type === 'sign'){
+        this.navCtrl.push(SignFeedBackPage, {iframeUrl: source, repID:repID, goalID:goalID}, {animate:true,animation:'transition',duration:500,direction:'forward'});
+    }  else if(goal_type === 'donate'){
+        this.navCtrl.push(DonateFeedBackPage, {iframeUrl: source, repID:repID, goalID:goalID}, {animate:true,animation:'transition',duration:500,direction:'forward'});
+    }
 }
 
 transform(value: any) {
