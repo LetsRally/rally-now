@@ -11,7 +11,7 @@
         </ion-col>
         <ion-col col-8 class="profile-counts">
             <ion-row>
-                <ion-col>
+                <ion-col (click)="goToActions()">
                     <h4>{{actions_taken}}</h4>
                     <p class="small">Actions</p>
                 </ion-col>
@@ -31,7 +31,7 @@
         </ion-col>
         
     </ion-row>
-    <div *ngIf="hidden == '0' || amifollowing">
+    <div *ngIf="hidden == '0' || amifollowing"  #activity>
        
             <ion-list-header class="simple-title">
                     ACTIVITY FEED

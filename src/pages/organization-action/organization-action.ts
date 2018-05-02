@@ -70,6 +70,7 @@ export class OrganizationActionPage {
   enableSen:boolean;
   enableSpecificRep:boolean;
   reps_goals:any;
+  objective: any;
 
 
   constructor(public navCtrl: NavController, 
@@ -187,6 +188,7 @@ export class OrganizationActionPage {
   getdata(){
   this.httpProvider.getJsonData(this.endpoint + this.objectiveID).subscribe(
     result => {
+      this.objective = result;
       this.orgName=result.organization['name'];
       this.objTitle = result.title;
       this.orgPhoto = result.organization['image_url'];
@@ -343,8 +345,6 @@ const actionSheet = this.actionSheetCtrl.create({
        this.addShareAction(reference_id, like_type);
        $event.srcElement.lastChild.data++;
        this.disable = false;
-       this.streakModal();
-
      }
    }, 
    {
@@ -354,7 +354,6 @@ const actionSheet = this.actionSheetCtrl.create({
         this.addShareAction(reference_id, like_type);
         $event.srcElement.lastChild.data++;
         this.disable = false;
-        this.streakModal();
        }).catch((error) => {
         console.error("shareViaWhatsapp: failed", error);
         this.disable = false;
@@ -484,6 +483,24 @@ getID(bioguide){
 
 goToRepProfile(repID){
   this.navCtrl.push(RepresentativeProfilePage, {repID: repID}, {animate:true,animation:'transition',duration:500,direction:'forward'});
+}
+
+getIcon(actions){
+  if (actions != null){
+    var found = actions.some(el => { 
+        return el == this.myrallyID;
+      
+    });
+    
+    if (!found){
+      return 'md-heart-outline';
+      
+    }else{
+      return 'md-heart';
+      
+    }
+  }
+
 }
 
 

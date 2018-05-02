@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, ViewController, NavParams, ToastController, ActionSheetController } from 'ionic-angular';
+import { ViewChild , Component } from '@angular/core';
+import { IonicPage, NavController, ViewController, NavParams, ToastController, ActionSheetController, Content } from 'ionic-angular';
 import { UsersProvider } from '../../providers/users/users';
 import {AngularFireDatabase} from 'angularfire2/database';
 import firebase from 'firebase';
@@ -49,6 +49,8 @@ export class PublicProfilePage {
   public records:any = [];
   status:boolean;
   amifollowing:boolean;
+  @ViewChild(Content) content: Content;
+  @ViewChild('activity') target: any;  
 
   constructor(
     public navCtrl: NavController, 
@@ -502,5 +504,10 @@ goToFollowing(){
   }, {animate:true,animation:'transition',duration:500,direction:'forward'});
 }
 }
+
+  goToActions() {
+    let activityContent = document.getElementById('activity');
+    this.content.scrollTo(0, activityContent.offsetTop, 500);
+  }
 
 }
