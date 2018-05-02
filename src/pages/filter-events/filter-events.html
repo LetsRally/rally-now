@@ -1,7 +1,7 @@
 <ion-header>
     <ion-toolbar>
         <ion-title style="text-align: left !important; order: 1;">
-            <p>Filter Events</p>
+            <p style="padding-left: 16px;">Filter Events</p>
 
         </ion-title>
         <ion-buttons end>
@@ -14,15 +14,15 @@
 </ion-header>
 <ion-content>
     <ion-list>
-        <ion-item style="background: #f2f2f2">
-            <ion-label style="color: #6b6b6b;">ZIPCODE</ion-label>
+        <ion-item style="padding-left: 0; background: #f2f2f2">
+            <ion-label style="padding-left: 16px; color: #6b6b6b;">ZIPCODE</ion-label>
             <ion-input [(ngModel)]="filterState.zipcode" style="color: #6b6b6b; font-size:40px;" class="zip-input"
                        (input)="checkZipCode()"></ion-input>
         </ion-item>
         <p class="error-message"
            *ngIf="invalidZip && filterState.zipcode.length">Enter valid code</p>
 
-        <ion-list-header style=" background-color: #f2f2f2; color: #6b6b6b; text-transform: uppercase;">
+        <ion-list-header style="border-bottom: 0; background-color: #f2f2f2; color: #6b6b6b; text-transform: uppercase;">
             Distance from me
 
             <p item-end>{{text}}</p>
@@ -87,6 +87,6 @@
 </ion-content>
 <ion-footer padding style="background:#4a90e2;">
     <button style="background:#4a90e2; color: #fff" ion-button full class="filter-btn" (click)="goToEvents()">APPLY
-        FILTER
+        FILTERS
     </button>
 </ion-footer>
