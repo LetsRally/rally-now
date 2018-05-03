@@ -31,6 +31,7 @@ export class RepresentativeProfilePage {
   tweetLike:any = 'ab860ccb-9713-49e5-b844-34d18f92af21';
   favEndpoint:any = 'actions';
   shareAction:any = '875b4997-f4e0-4014-a808-2403e0cf24f0';
+  isFollowing:boolean = false;
 
 
   constructor(
@@ -63,6 +64,13 @@ export class RepresentativeProfilePage {
       this.followers = result.followers;
       this.post_count = result.post_count;
       this.posts = result.posts;
+
+      this.followers.some(el => { 
+          if (el == this.currentRallyID) {
+            this.isFollowing = true;
+          }
+        
+      });
     });
   }
 
@@ -136,13 +144,13 @@ export class RepresentativeProfilePage {
         result => {
           
           if (result != ""){              
-            this.unFollowRep(result[0].id);
-            $event.srcElement.innerHTML = "Follow";
-            $event.srcElement.innerText = "FOLLOW";
+            this.unFollowRep(result[0].id, $event.srcElement);
+
           } else{
             this.saveRepInApi(repID);
             $event.srcElement.innerHTML = "Following";
             $event.srcElement.innerText = "FOLLOWING";
+            this.isFollowing = true;
           }
         },
     err =>{
@@ -159,8 +167,30 @@ export class RepresentativeProfilePage {
 }
 
 
-  unFollowRep(recordID){
-    this.httpProvider.unfollowOrganization(this.followEndpoint, recordID);
+  unFollowRep(recordID, el){
+      let actionSheet = this.actionSheetCtrl.create({
+          title: 'Unfollow this representative?',
+          cssClass: 'title-img',
+          buttons: [
+              {
+                  text: 'Unfollow',
+                  role: 'destructive',
+                  handler: () => {
+                    el.innerHTML = "Follow";
+                    el.innerText = "FOLLOW";
+                    this.httpProvider.unfollowOrganization(this.followEndpoint, recordID);
+                    this.isFollowing = false;
+                  }
+              }, {
+                  text: 'Cancel',
+                  role: 'cancel',
+                  handler: () => {
+                      console.log('Cancel clicked');
+                  }
+              }
+          ]
+      });
+      actionSheet.present();
   }
 
   findInLoop(actions){
