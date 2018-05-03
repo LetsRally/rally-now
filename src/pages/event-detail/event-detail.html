@@ -19,7 +19,8 @@
                     </div>
                     <p><small>Event Location: {{locations}} {{state ? state : 'Unlisted'}}</small></p>
                 </ion-item>
-                <div class="events-bg"  [ngStyle]="{'background-image': 'url('+ image_url + ')'}">
+                <div class="events-bg">
+                    <ion-img src="{{image_url}}"></ion-img>
                     <div class="events-filter"></div>
                     <div class="events-railled" *ngIf="attending > 0">
                         <p class="white"><strong>{{attending}}</strong><br> Attending</p>
@@ -33,15 +34,14 @@
                 <ion-card-content>
                     <ion-card-title>{{title}}</ion-card-title>
                     <p class="event-description">{{venue}}</p>
-                    <p class="event-description">{{eventTime}} {{eventEndTime}}</p>
+                    <p class="event-description">{{eventTime}} {{eventEndTime}}  {{abbrTimezone}}</p>
                 </ion-card-content>
                
                 <ion-list>
                     <ion-list-header style="margin-bottom:0; text-transform:uppercase;">
                       Event Detail
                     </ion-list-header>
-                        <div class="text-wrap" padding>{{description}}</div>
-                    
+                        <div class="text-wrap" padding [innerHTML]="formattedDescription"></div>
                   </ion-list>
                   <button (click)="openWebpage()" class="count-me-in" ion-button full icon-left>
                         <ion-icon ios="md-thumbs-up" md="md-thumbs-up"></ion-icon>
