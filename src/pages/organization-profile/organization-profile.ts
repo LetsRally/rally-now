@@ -49,6 +49,7 @@ export class OrganizationProfilePage {
   eventLike:any = 'd5d1b115-dbb6-4894-8935-322c336ae951';
   notify:any;
   followersArr:any;
+  isFollowing:boolean = false;
 
 
 
@@ -140,10 +141,12 @@ getShortDate(day){
       if (snapshot.hasChildren()) {
        console.log('Unfollow');
        this.buttonFollowTest = 'Following';
+       this.isFollowing = true;
        
       } else{
         console.log('Follow');
         this.buttonFollowTest = 'Follow';
+        this.isFollowing = false;
           
       }
     });
@@ -199,12 +202,11 @@ getShortDate(day){
       cssClass: 'title-img',      
       buttons: [
         {
-          text: 'Following',
+          text: 'Unfollow',
           role: 'destructive',
           handler: () => {
             console.log('Destructive clicked');
             this.getOrganizationFollowRecordID();
-            
           }
         },{
           text: 'Cancel',
