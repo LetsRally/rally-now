@@ -1219,3 +1219,41 @@ html:hover [class^="ss-"] {
     content: url('../assets/img/chevron.svg');
     height: 20px;
 }
+
+.multi-ellipsys-box {
+    overflow: hidden;
+    position: relative;
+    line-height: 1.2em;
+    max-height: 3.6em;
+    margin-right: -1em;
+    padding-right: 1em;
+    text-align: justify;
+    &:before {
+        content: '... ';
+        position: absolute;
+        right: 4em;
+        bottom: 0;
+        padding: 0 3px 0 2px;
+        background-color: #fff;
+    }
+    &:after {
+        content: '';
+        position: absolute;
+        right: 0;
+        width: 5.8em;
+        height: 1em;
+        margin-top: 0.2em;
+        background: #fff;
+    }
+}
+.see-more {
+    position: absolute;
+    right: 54px;
+    bottom: 13px;
+    font-size: 17px;
+    font-family: "San Francisco Text";
+    color: #adadad;
+    letter-spacing: -0.41px;
+    background-color: #fff;
+    padding-left: 4px;
+}

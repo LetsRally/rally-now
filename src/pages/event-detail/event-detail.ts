@@ -122,6 +122,7 @@ export class EventDetailPage {
     }
 
     formatDescription() {
+        let that = this;
         let splittedByBR = this.description.split('\n');
         let formattedDescription = '';
         for (let i = 0; i < splittedByBR.length; i++) {
@@ -144,7 +145,7 @@ export class EventDetailPage {
 
     openLinkInappBrowser(event) {
         event.preventDefault();
-        this.openWebpage(event.target.href);
+        this.openWebpage(event.target.innerText);
     }
 
     getButtonColor() {

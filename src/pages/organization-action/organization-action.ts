@@ -106,16 +106,13 @@ export class OrganizationActionPage {
   presentActionSheet(rep, fax, twitter, email, repID, offices) {
     let buttonsArray = [{
           text: 'Call', 
-          handler: () => { 
-            //this.showCallAlert(rep, repID, offices);
+          handler: () => {
             this.navCtrl.push(CallPage, {rep: rep, repID: repID, talkingPoints: this.objShort, offices: offices, goalID: this.goal_id, objectiveID: this.objectiveID, yourRep: this.enableSpecificRep});
-
-      
           }
         }];
 
 
-    if (fax) {
+    if (fax && fax !== '') {
       buttonsArray.push(
         {
           text: 'Fax',
@@ -130,7 +127,7 @@ export class OrganizationActionPage {
       );
     }
 
-    if(email) {
+    if(email && email !== '') {
       buttonsArray.push(
         {  
           text: 'Email',
@@ -144,7 +141,7 @@ export class OrganizationActionPage {
       )
     }
 
-    if(twitter) {
+    if(twitter && twitter !== '') {
       buttonsArray.push(
         {
           text: 'Post message via Twitter',
