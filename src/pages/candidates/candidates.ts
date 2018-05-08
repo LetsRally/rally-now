@@ -1,17 +1,14 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController, ActionSheetController, ModalController, ToastController } from 'ionic-angular';
-import { FeedPage } from '../feed/feed';
-import { AlertsPage } from '../alerts/alerts';
-import { ProfilePage } from '../profile/profile';
 import { PopoverController } from 'ionic-angular';
 import { OrganizationsProvider } from '../../providers/organizations/organizations';
 import { UsersProvider } from '../../providers/users/users';
 import { RepresentativeProfilePage } from '../representative-profile/representative-profile';
 import { ThanksPage } from '../thanks/thanks';
 import { SocialShareProvider } from '../../providers/social-share/social-share';
-import { InAppBrowser, InAppBrowserOptions } from '@ionic-native/in-app-browser';
 import { DomSanitizer } from '@angular/platform-browser';
-
+import {ThemeableBrowser} from "@ionic-native/themeable-browser";
+import * as constants from '../../constants/constants';
 
 
 @IonicPage()
@@ -48,7 +45,7 @@ export class CandidatesPage {
     private shareProvider:SocialShareProvider,
     public modalCtrl: ModalController,
     private sanitizer: DomSanitizer,
-    private inAppBrowser: InAppBrowser,
+    private themeableBrowser: ThemeableBrowser,
     public toastCtrl: ToastController
     ) {
       this.enablePlaceholder = true;
@@ -237,28 +234,23 @@ export class CandidatesPage {
 
     openWebpage(username, tweetID) {
       var url:string = 'https://twitter.com/' + username + '/status/' + tweetID;
-      const options: InAppBrowserOptions = {
-        zoom: 'no',
-        toolbarposition: 'top',
-        location: 'no'
-      }
-  
-      // Opening a URL and returning an InAppBrowserObject
-      const browser = this.inAppBrowser.create(url, '_blank', options);
+      const options = constants.themeAbleOptions;
+      const browser = this.themeableBrowser.create(url, '_blank', options);
 
-      // Add styles for browser page
-      browser.on("loadstop")
-          .subscribe(
-          () => {
-              browser.insertCSS({
-                  code: "header .rn-ipm5af{top: 16px !important; margin-top: 0 !important;} main{overflow:hidden}"
-              })
-          },
-          err => {
-              console.log("InAppBrowser Loadstop Event Error: " + err);
-          });
-  
-     // Inject scripts, css and more with browser.X
+        browser.on("loadstop")
+            .subscribe(
+                () => {
+                    browser.insertCss({
+                        code: "body, html {padding-top: 20px!important;} header .rn-ipm5af{top: 16px !important; margin-top: 0 !important;} main{overflow:hidden}"
+                    })
+                },
+                err => {
+                    console.log("InAppBrowser Loadstop Event Error: " + err);
+                });
+
+        browser.on('closePressed').subscribe(data => {
+            browser.close();
+        })
     }
 
     getLikeStatus($event, reference_id, like_type, likes){

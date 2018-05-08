@@ -112,6 +112,7 @@ import { PublicFollowersPage } from '../pages/public-followers/public-followers'
 import { PublicFollowingPage } from '../pages/public-following/public-following';
 import { ButtonComponent } from '../components/main-button/main-button';
 import { EventLoggerProvider } from '../providers/event-logger/event-logger';
+import {ThemeableBrowser} from "@ionic-native/themeable-browser";
 
 
 //import { FCM } from '@ionic-native/fcm';
@@ -350,6 +351,7 @@ firebase.initializeApp(config);
         Contacts,
         Keyboard,
         FCM,
+        ThemeableBrowser,
     EventLoggerProvider
        
         

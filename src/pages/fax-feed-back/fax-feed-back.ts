@@ -1,12 +1,12 @@
 import {Component} from '@angular/core';
 import {IonicPage, NavController, NavParams, ModalController} from 'ionic-angular';
 import {ThankYouPage} from '../thank-you/thank-you';
-import {InAppBrowser, InAppBrowserOptions} from "@ionic-native/in-app-browser";
 import {UsersProvider} from '../../providers/users/users';
 import {IssueScreenPage} from '../issue-screen/issue-screen';
 import {Storage} from '@ionic/storage';
 import {ViewController} from 'ionic-angular/navigation/view-controller';
-
+import {ThemeableBrowser} from "@ionic-native/themeable-browser";
+import * as constants from '../../constants/constants';
 
 @IonicPage()
 @Component({
@@ -37,7 +37,7 @@ export class FaxFeedBackPage {
         public navParams: NavParams,
         public modalCtrl: ModalController,
         private storage: Storage,
-        private inAppBrowser: InAppBrowser,
+        private themeableBrowser: ThemeableBrowser,
         private httpProvider: UsersProvider,
         public viewCtrl: ViewController) {
         this.url = navParams.get('iframeUrl');
@@ -66,22 +66,16 @@ export class FaxFeedBackPage {
     }
 
     openWebpage(url: string) {
-        const options: InAppBrowserOptions = {
-            zoom: 'no',
-            toolbarposition: 'top',
-            location: 'no'
-        };
-
+        const options = constants.themeAbleOptions;
         let that = this;
-        // Opening a URL and returning an InAppBrowserObject
-        const browser = this.inAppBrowser.create(url, '_blank', options);
+        const browser = this.themeableBrowser.create(url, '_blank', options);
 
         browser.on("loadstop")
             .subscribe(
                 () => {
-                    browser.insertCSS({
-                        code: "header .rn-ipm5af{top: 16px !important; margin-top: 0 !important;} main{overflow:hidden}"
-                    });
+                    browser.insertCss({
+                        code: "body, html {padding-top: 20px!important;} header .rn-ipm5af{top: 16px !important; margin-top: 0 !important;} main{overflow:hidden}"
+                    })
 
                     if (url.indexOf('https://faxzero.com/') !== -1) {
                         browser.executeScript({
@@ -99,7 +93,9 @@ export class FaxFeedBackPage {
                     console.log("InAppBrowser Loadstop Event Error: " + err);
                 });
 
-        // Inject scripts, css and more with browser.X
+        browser.on('closePressed').subscribe(data => {
+            browser.close();
+        })
     }
 
     sendActions($event) {

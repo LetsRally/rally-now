@@ -4,11 +4,11 @@ import { UsersProvider } from '../../providers/users/users';
 import { OrganizationsProvider } from '../../providers/organizations/organizations';
 import { SocialShareProvider } from '../../providers/social-share/social-share';
 import { DomSanitizer } from '@angular/platform-browser';
-import { InAppBrowser, InAppBrowserOptions } from '@ionic-native/in-app-browser';
 import { RepresentativeProfilePage } from '../representative-profile/representative-profile';
 import { ThanksPage } from '../thanks/thanks';
 import { OrganizationProfilePage } from '../organization-profile/organization-profile';
-
+import {ThemeableBrowser} from "@ionic-native/themeable-browser";
+import * as constants from '../../constants/constants';
 
 
 @IonicPage()
@@ -43,7 +43,7 @@ export class NewsPage {
     private shareProvider:SocialShareProvider,
     public modalCtrl: ModalController,
     private sanitizer: DomSanitizer,
-    private inAppBrowser: InAppBrowser,
+    private themeableBrowser: ThemeableBrowser,
     public toastCtrl: ToastController) {
     this.enablePlaceholder = true;
 
@@ -228,29 +228,23 @@ export class NewsPage {
 
   openWebpage(username, tweetID) {
     var url:string = 'https://twitter.com/' + username + '/status/' + tweetID;
-    const options: InAppBrowserOptions = {
-      zoom: 'no',
-      toolbarposition: 'top',
-      location: 'no'
-    }
+    const options = constants.themeAbleOptions;
+    const browser = this.themeableBrowser.create(url, '_blank', options);
 
-    // Opening a URL and returning an InAppBrowserObject
-    const browser = this.inAppBrowser.create(url, '_blank', options);
+      browser.on("loadstop")
+          .subscribe(
+              () => {
+                  browser.insertCss({
+                      code: "body, html {padding-top: 20px!important;} header .rn-ipm5af{top: 16px !important; margin-top: 0 !important;} main{overflow:hidden}"
+                  })
+              },
+              err => {
+                  console.log("InAppBrowser Loadstop Event Error: " + err);
+              });
 
-
-    // Add styles for browser page
-    browser.on("loadstop")
-        .subscribe(
-        () => {
-            browser.insertCSS({
-                code: "header .rn-ipm5af{top: 16px !important; margin-top: 0 !important;} main{overflow:hidden}"
-            })
-        },
-        err => {
-            console.log("InAppBrowser Loadstop Event Error: " + err);
-        });
-
-   // Inject scripts, css and more with browser.X
+      browser.on('closePressed').subscribe(data => {
+          browser.close();
+      })
   }
 
   getLikeStatus($event, reference_id, like_type, likes){

@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
 import { ThankYouPage } from '../thank-you/thank-you';
-import { InAppBrowser, InAppBrowserOptions } from '@ionic-native/in-app-browser';
 import { UsersProvider } from '../../providers/users/users';
 import { IssueScreenPage } from '../issue-screen/issue-screen';
+import {ThemeableBrowser} from "@ionic-native/themeable-browser";
+import * as constants from '../../constants/constants';
 
 
 @IonicPage()
@@ -30,7 +31,7 @@ export class DonateFeedBackPage {
     public navCtrl: NavController, 
     public navParams: NavParams,
     public modalCtrl: ModalController,
-    private inAppBrowser: InAppBrowser,
+    private themeableBrowser: ThemeableBrowser,
     private httpProvider: UsersProvider) {
       this.url = navParams.get('iframeUrl');
       this.openWebpage(this.url);
@@ -76,28 +77,23 @@ export class DonateFeedBackPage {
   }
 
   openWebpage(url: string) {
-    const options: InAppBrowserOptions = {
-      zoom: 'no',
-      toolbarposition: 'top',
-      location: 'no'
-    }
+    const options = constants.themeAbleOptions;
+    const browser = this.themeableBrowser.create(url, '_blank', options);
 
-    // Opening a URL and returning an InAppBrowserObject
-    const browser = this.inAppBrowser.create(url, '_blank', options);
-
-    // Add styles for browser page
     browser.on("loadstop")
         .subscribe(
         () => {
-            browser.insertCSS({
-                code: "header .rn-ipm5af{top: 16px !important; margin-top: 0 !important;} main{overflow:hidden}"
+            browser.insertCss({
+                code: "body, html {padding-top: 20px!important;} header .rn-ipm5af{top: 16px !important; margin-top: 0 !important;} main{overflow:hidden}"
             })
         },
         err => {
             console.log("InAppBrowser Loadstop Event Error: " + err);
         });
 
-   // Inject scripts, css and more with browser.X
+      browser.on('closePressed').subscribe(data => {
+          browser.close();
+      })
   }
 
   errorModal(){

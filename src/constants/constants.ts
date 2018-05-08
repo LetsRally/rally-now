@@ -1,3 +1,5 @@
+import {ThemeableBrowserOptions} from "@ionic-native/themeable-browser";
+
 export const virginZipCodes = [
     '00801',
     '00802',
@@ -16,3 +18,42 @@ export const virginZipCodes = [
     '00850',
     '00851'
 ];
+
+export const themeAbleOptions: ThemeableBrowserOptions = {
+    zoom: 'no',
+    toolbarposition: 'top',
+    location: 'yes',
+    transitionstyle: 'fliphorizontal',
+    statusbar: {
+        color: '#f4512c'
+    },
+    toolbar: {
+        height: 44,
+        color: '#f4512c'
+    },
+    title: {
+        color: 'transparent',
+        showPageTitle: false
+    },
+    closeButton: {
+        wwwImage: 'assets/img/done.png',
+        wwwImagePressed: 'assets/img/done_pressed.png',
+        wwwImageDensity: 1,
+        align: 'left',
+        event: 'closePressed'
+    },
+    backButton: {
+        wwwImage: 'assets/img/arr_left.png',
+        wwwImagePressed: 'assets/img/arr_left_inactive.png',
+        wwwImageDensity: 1,
+        align: 'right',
+        event: 'backPressed'
+    },
+    forwardButton: {
+        wwwImage: 'assets/img/arr_right.png',
+        wwwImagePressed: 'assets/img/arr_right_inactive.png',
+        wwwImageDensity: 1,
+        align: 'right',
+        event: 'forwardPressed'
+    }
+};

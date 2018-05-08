@@ -28,10 +28,10 @@ import {DomSanitizer} from '@angular/platform-browser';
 import {OrganizationsProvider} from '../../providers/organizations/organizations';
 import {DonateFeedBackPage} from '../donate-feed-back/donate-feed-back';
 import {FriendsRequestPage} from '../friends-request/friends-request';
-import {FilterEventsPage} from '../filter-events/filter-events';
 import {Storage} from '@ionic/storage';
 import {DataProvider} from "../../providers/data/data";
-import {InAppBrowser, InAppBrowserOptions} from "@ionic-native/in-app-browser";
+import {ThemeableBrowser, ThemeableBrowserObject} from "@ionic-native/themeable-browser";
+import * as constants from '../../constants/constants';
 
 
 @IonicPage()
@@ -77,7 +77,7 @@ export class TakeactionPage {
         public modalCtrl: ModalController,
         public loadingCtrl: LoadingController,
         private sanitizer: DomSanitizer,
-        private inAppBrowser: InAppBrowser,
+        private themeAbleBrowser: ThemeableBrowser,
         public orgProvider: OrganizationsProvider,
         private storage: Storage
     ) {
@@ -121,31 +121,28 @@ export class TakeactionPage {
 
     openLinkInappBrowser(event) {
         event.preventDefault();
+        event.stopPropagation();
         this.openWebpage(event.target.href);
     }
 
     openWebpage(url?) {
-        const options: InAppBrowserOptions = {
-            zoom: 'no',
-            toolbarposition: 'top',
-            location: 'no'
-        }
+        let options = constants.themeAbleOptions;
+        const browser: ThemeableBrowserObject = this.themeAbleBrowser.create(url, '_blank', options);
 
-        const browser = this.inAppBrowser.create(url, '_blank', options);
-
-        // Add styles for browser page
         browser.on("loadstop")
             .subscribe(
                 () => {
-                    browser.insertCSS({
-                        code: "header .rn-ipm5af{top: 16px !important; margin-top: 0 !important;} main{overflow:hidden}"
+                    browser.insertCss({
+                        code: "body, html {padding-top: 20px!important;} header .rn-ipm5af{top: 16px !important; margin-top: 0 !important;} main{overflow:hidden}"
                     })
                 },
                 err => {
                     console.log("InAppBrowser Loadstop Event Error: " + err);
                 });
 
-        // Inject scripts, css and more with browser.X
+        browser.on('closePressed').subscribe(data => {
+            browser.close();
+        })
     }
 
     goToRequests() {

@@ -4,12 +4,11 @@ import {Platform, ActionSheetController} from 'ionic-angular';
 import {UsersProvider} from '../../providers/users/users';
 import {OrganizationProfilePage} from '../organization-profile/organization-profile';
 import {SocialShareProvider} from '../../providers/social-share/social-share';
-import {InAppBrowser, InAppBrowserOptions} from '@ionic-native/in-app-browser';
 import {ThanksPage} from '../thanks/thanks';
 import {DataProvider} from "../../providers/data/data";
 import {DomSanitizer, SafeHtml} from "@angular/platform-browser";
-import * as moment from 'moment';
-import * as momentTz from "moment-timezone";
+import {ThemeableBrowser} from "@ionic-native/themeable-browser";
+import * as constants from '../../constants/constants';
 
 
 @IonicPage()
@@ -73,7 +72,7 @@ export class EventDetailPage {
         private shareProvider: SocialShareProvider,
         public actionSheetCtrl: ActionSheetController,
         public modalCtrl: ModalController,
-        private inAppBrowser: InAppBrowser) {
+        private themeableBrowser: ThemeableBrowser) {
         this.eventID = navParams.get('eventID');
         this.eventPageName = navParams.get('eventPageName');
         console.log("Evento ID", navParams.get('eventID'));
@@ -517,28 +516,23 @@ export class EventDetailPage {
             url = 'https://www.facebook.com/events/' + this.fbID;
         }
 
-        const options: InAppBrowserOptions = {
-            zoom: 'no',
-            toolbarposition: 'top',
-            location: 'no'
-        }
+        const options = constants.themeAbleOptions;
+        const browser = this.themeableBrowser.create(url, '_blank', options);
 
-        // Opening a URL and returning an InAppBrowserObject
-        const browser = this.inAppBrowser.create(url, '_blank', options);
-
-        // Add styles for browser page
         browser.on("loadstop")
             .subscribe(
                 () => {
-                    browser.insertCSS({
-                        code: "header .rn-ipm5af{top: 16px !important; margin-top: 0 !important;} main{overflow:hidden}"
+                    browser.insertCss({
+                        code: "body, html {padding-top: 20px!important;} header .rn-ipm5af{top: 16px !important; margin-top: 0 !important;} main{overflow:hidden}"
                     })
                 },
                 err => {
                     console.log("InAppBrowser Loadstop Event Error: " + err);
                 });
 
-        // Inject scripts, css and more with browser.X
+        browser.on('closePressed').subscribe(data => {
+            browser.close();
+        })
     }
 
     tConvert(time) {
