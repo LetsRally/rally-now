@@ -6,57 +6,70 @@
             <ion-avatar item-start class="profile-img">
                 <img [src]="photo_url ? photo_url : 'assets/img/user.svg' ">
             </ion-avatar>
-          
+
         </ion-col>
         <ion-col col-8 class="profile-counts">
-            <ion-row>
+            <ion-row *ngIf="twitter_id && twitter_id !== '' && twitter_id !== 'not available'">
                 <ion-col>
                     <h4>{{post_count}}</h4>
                     <p class="small">Posts</p>
-                </ion-col> 
+                </ion-col>
                 <ion-col (click)="goToFollowers()">
                     <h4>{{followers_count}}</h4>
                     <p class="small">Followers</p>
                 </ion-col>
-               
             </ion-row>
             <ion-row>
-                <main-button *ngIf="twitter_id !== 'not available'" [ngClass]="!isFollowing ? 'blue' : 'grey'" (click)="followRep(repID, $event)" btnText={{findInLoop(followers)}} full outline></main-button>
+                <main-button *ngIf="twitter_id && twitter_id !== '' && twitter_id !== 'not available'"
+                             [ngClass]="!isFollowing ? 'blue' : 'grey'"
+                             (click)="followRep(repID, $event)"
+                             btnText={{findInLoop(followers)}}
+                             full
+                             outline></main-button>
             </ion-row>
- 
-        </ion-col>
-            <ion-col col-12>
-                <h4 text-wrap class="username-h4">{{name}}</h4>
-            </ion-col>
-            <ion-col col-12 style="padding:0;">
-                <p style="margin:0; color: gray;" *ngIf="twitter_id != null" (click)="tweetRep(twitter_id)"> <ion-icon style="color: #2196F3" name="logo-twitter"></ion-icon>
-                    @{{twitter_id}}</p>
-            </ion-col>
-           
-           
-        <ion-col col-12 >
-            <p text-wrap style="margin-top: 0;">{{description}}</p>
+
         </ion-col>
         <ion-col col-12>
+            <h4 text-wrap class="username-h4">{{name}}</h4>
+        </ion-col>
+        <ion-col col-12 style="padding:0;">
+            <p style="margin:0; color: gray;"
+               *ngIf="twitter_id && twitter_id !== '' && twitter_id !== 'not available'"
+               (click)="tweetRep(twitter_id)">
+                <ion-icon style="color: #2196F3" name="logo-twitter"></ion-icon>
+                @{{twitter_id}}
+            </p>
+        </ion-col>
+
+
+        <ion-col col-12>
+            <p text-wrap style="margin-top: 0;">{{description}}</p>
+        </ion-col>
+        <ion-col col-12
+                 *ngIf="twitter_id && twitter_id !== '' && twitter_id !== 'not available'">
             <p style="color: gray;">ACTIVITY FEED</p>
         </ion-col>
-       
+
     </ion-row>
 
-        <!-- Tweet Cards -->
+    <!-- Tweet Cards -->
+    <div *ngIf="twitter_id && twitter_id !== '' && twitter_id !== 'not available'">
         <ion-card class="reps-card Card has-footer" *ngFor="let record of posts">
             <ion-item>
                 <ion-fab>
-                    <button ion-fab color="light" (click)="tweetRepEllipsisController(name, repID, record.tweet, record.notify)">
+                    <button ion-fab color="light"
+                            (click)="tweetRepEllipsisController(name, repID, record.tweet, record.notify)">
                         <ion-icon name="ios-more"></ion-icon>
                     </button>
                 </ion-fab>
                 <ion-avatar item-start>
-                  <img [src]="photo_url">
+                    <img [src]="photo_url">
                 </ion-avatar>
                 <!-- only show icon on verified accounts <h2 style="display: flex;">Senator Bob Jones <img *ngIf="{{rep.verified === true}}" style="width: 12px; height: 12px; margin-left: 5px;" src="assets/img/TwtterVerified.svg" alt=""></h2> -->
                 <h2>{{name}}</h2>
-                <p><small>@{{record.twitter_username}} . {{record.tweet_created_at | amTimeAgo}}</small></p>
+                <p>
+                    <small>@{{record.twitter_username}} . {{record.tweet_created_at | amTimeAgo}}</small>
+                </p>
             </ion-item>
 
             <ion-card-content (click)="openWebpage(record.twitter_username, record.tweet_id)">
@@ -67,18 +80,21 @@
             </ion-card-content>
 
             <ion-row class="card-footer">
-                <button [disabled]="disable" class="btn-50 right-border" ion-button icon-left clear full (click)="getLikeStatus($event, record.id, tweetLike)" [ngStyle]="{'background-color': findInLoopColor(record.likes), 'color': getColor(record.likes)}">
-                    <ion-icon name="{{getIcon(record.likes)}}" ></ion-icon>
+                <button [disabled]="disable" class="btn-50 right-border" ion-button icon-left clear full
+                        (click)="getLikeStatus($event, record.id, tweetLike)"
+                        [ngStyle]="{'background-color': findInLoopColor(record.likes), 'color': getColor(record.likes)}">
+                    <ion-icon name="{{getIcon(record.likes)}}"></ion-icon>
                     {{record.likes_count}}
                 </button>
-                <button [disabled]="disable" class="btn-50" ion-button icon-left clear full (click)="shareController(record.tweet, record.photo_url, record.id, shareAction, $event)">
+                <button [disabled]="disable" class="btn-50" ion-button icon-left clear full
+                        (click)="shareController(record.tweet, record.photo_url, record.id, shareAction, $event)">
                     <!-- <ion-icon name="ios-share-alt"></ion-icon> -->
                     <img src="assets/img/Share-white.svg" style="width: 17px; margin-right:8px;">
                     {{record.shares_count}}
                 </button>
             </ion-row>
         </ion-card>
-
-        <!-- End Twitter Card -->
+    </div>
+    <!-- End Twitter Card -->
 
 </ion-content>

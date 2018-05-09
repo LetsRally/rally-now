@@ -3,7 +3,6 @@ import { IonicPage, NavController, NavParams, ViewController, ModalController, A
 import { Storage } from '@ionic/storage';
 import { AdressModalPage } from '../adress-modal/adress-modal';
 import { UsersProvider } from '../../providers/users/users';
-import { WebviewPage } from '../webview/webview';
 import { FaxFeedBackPage } from '../fax-feed-back/fax-feed-back';
 import { EmailFeedBackPage } from '../email-feed-back/email-feed-back';
 import { CallStatePage } from '../call-state/call-state';
@@ -67,10 +66,10 @@ export class MyRepresentativesPage {
 
   getReps(){
     this.storage.get('representatives').then((val) => {
-      console.log('GET REPS');
-      console.log(val);
         if (val && typeof(val) === 'object'){
           this.reps = val;
+          console.log('REPS');
+          console.log(this.reps);
         } 
     });
 
@@ -78,15 +77,15 @@ export class MyRepresentativesPage {
 
   getSenators(){
     this.storage.get('senators').then((val) => {
-      console.log(val);
         if (val){
           this.senators = val;
+            console.log('SENATORS');
+            console.log(this.senators);
         } 
     });
   }
   getStateReps(){
     this.storage.get('statesReps').then((val) => {
-      console.log(val);
         if (val){
           this.statereps = val;
         } 

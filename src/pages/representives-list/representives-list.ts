@@ -77,6 +77,8 @@ export class RepresentivesListPage {
     getArray(array) {
         for (let person of array) {
             this.items.push(person);
+            console.log('PERSON');
+            console.log(person);
         }
         this.enablePlaceholder = false;
     }
@@ -89,17 +91,6 @@ export class RepresentivesListPage {
         });
 
     }
-
-    // getItems(ev: any) {
-    //     let val = ev.target.value;
-    //
-    //     // if the value is an empty string don't filter the items
-    //     if (val && val.trim() != '') {
-    //         this.items = this.items.filter((item) => {
-    //             return (item.name.toLowerCase().indexOf(val.toLowerCase()) > -1);
-    //         })
-    //     }
-    // }
 
     findInLoop(actions) {
         if (actions != null) {

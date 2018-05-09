@@ -317,7 +317,6 @@ getStreaks(){
 
   goToMyReps(){
     this.navCtrl.push(MyRepresentativesPage,  {}, {animate:true,animation:'transition',duration:500,direction:'forward'});
-
   }
 
   getLongest(){

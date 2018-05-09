@@ -10,19 +10,19 @@
             <ion-avatar item-start class="profile-img">
                 <img [src]="data?.image_url ? data?.image_url : testPhoto">
             </ion-avatar>
-          
+
         </ion-col>
         <ion-col col-8 class="profile-counts">
             <ion-row>
                 <ion-col>
                     <h4>{{posts}}</h4>
                     <p class="small">Posts</p>
-                </ion-col> 
+                </ion-col>
                 <ion-col (click)="goToFollowers()">
                     <h4>{{followers}}</h4>
                     <p class="small">Followers</p>
                 </ion-col>
-               
+
             </ion-row>
             <ion-row>
                 <main-button *ngIf="login" [ngClass]="!isFollowing ? 'blue' : 'grey'" (click)="addFollowRecordFirebase(dataID)" btnText={{buttonFollowTest}} full outline></main-button>
@@ -37,19 +37,19 @@
                     @{{twitter}}</p>
             </ion-col>
             <ion-col col-6 style="padding:0;">
-              <p class="link">This is my organization</p>      
+              <p class="link">This is my organization</p>
             </ion-col>
-           
+
         <ion-col col-12 >
             <p text-wrap style="margin-top: 0;">{{description}}</p>
         </ion-col>
         <ion-col col-12>
             <p style="color: gray;">ACTIVITY FEED</p>
         </ion-col>
-       
+
     </ion-row>
 
-  
+
 
       <ion-card style="position: relative;" *ngFor="let objective of objectives,let i = index" class="objectives-card Card">
         <ion-item>
@@ -77,18 +77,14 @@
             <div class="railled-excerpt" *ngIf="objective.rallies > 0">
                 <p class="white"><strong>{{objective.rallies}}</strong><br> Rallied</p>
                 <div class="btn-objectives-contact">
-                    <main-button  *ngIf="objective?.goals[0]?.goal_type !== 'sign'" class="red" btnText="Contact"></main-button>
-                    <main-button  *ngIf="objective?.goals[0]?.goal_type !== 'sign'" class="red" btnTex="Sign"></main-button>
+                    <main-button  *ngIf="objective?.goals[0]?.goal_type === 'contact'" class="red" btnText="Contact"></main-button>
+                    <main-button  *ngIf="objective?.goals[0]?.goal_type === 'sign'" class="red" btnText="Sign"></main-button>
+                    <main-button  *ngIf="objective?.goals[0]?.goal_type === 'donate'" class="red" btnText="Donate"></main-button>
                 </div>
             </div>
             <div class="bottom-excerpt">
                 <p class="white">{{objective?.title}}</p>
             </div>
-            <div class="btn-objectives-contact">
-                <main-button  *ngIf="objective?.goals[0]?.goal_type === 'contact'" class="red" btnTex="Contact"></main-button>
-                <main-button  *ngIf="objective?.goals[0]?.goal_type === 'sign'" class="red" btnTex="Sign"></main-button>
-                <main-button  *ngIf="objective?.goals[0]?.goal_type === 'donate'" class="red" btnTex="Donate"></main-button>
-              </div>
         </div>
 
 

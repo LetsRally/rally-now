@@ -47,7 +47,9 @@
                 <p class="text-wrap" *ngIf="rep.rep_type === 'rep'">
                     <small>US Representative for {{rep.state}}</small>
                 </p>
-                <main-button clear item-end *ngIf="rep.twitter_id !== 'not available'"
+                <main-button clear
+                             item-end
+                             *ngIf="rep.twitter_id && rep.twitter_id !== '' && rep.twitter_id !== 'not available'"
                              (click)="followRep(rep.id, $event)" class="blue"
                              btnText={{findInLoop(rep.followers)}}></main-button>
             </ion-item>

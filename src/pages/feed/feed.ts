@@ -226,13 +226,9 @@ export class FeedPage {
 } 
 
 getArray(array){
-  // console.log(array);
   for(let person of array) {
-    // console.log(person);
     this.records.push(person);
-    console.log("Records", this.records);
   }
-
 }
 
 doInfinite(infiniteScroll:any) {

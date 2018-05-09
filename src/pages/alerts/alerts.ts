@@ -90,7 +90,6 @@ export class AlertsPage {
 
      getArray(array){
       for(let person of array) {
-        console.log(person);
         this.getSingleUsersData(person.sender_id);
       }
      }

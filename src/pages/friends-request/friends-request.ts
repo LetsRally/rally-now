@@ -9,7 +9,6 @@ import {
 } from 'ionic-angular';
 import {FeedPage} from '../feed/feed';
 import {AlertsPage} from '../alerts/alerts';
-import {ProfilePage} from '../profile/profile';
 import {PopoverController} from 'ionic-angular';
 import {OverlayPage} from '../overlay/overlay';
 import {DataProvider} from '../../providers/data/data';
@@ -102,10 +101,6 @@ export class FriendsRequestPage {
                 .then(data => {
                     this.getArray(data['not_following']);
                     this.enablePlaceholder = false;
-console.log('GET SUGGESTED FRIENDS');
-
-                    //this.organizations = data;
-
                     resolve(true);
                 });
         });
