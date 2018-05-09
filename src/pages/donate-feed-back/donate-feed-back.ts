@@ -78,7 +78,7 @@ export class DonateFeedBackPage {
 
   openWebpage(url: string) {
     const options = constants.themeAbleOptions;
-    const browser = this.themeableBrowser.create(url, '_blank', options);
+    const browser = this.themeableBrowser.create(url, '_system', options);
 
     browser.on("loadstop")
         .subscribe(
