@@ -1257,3 +1257,7 @@ html:hover [class^="ss-"] {
     background-color: #fff;
     padding-left: 4px;
 }
+.tabs-ios .tabbar {
+    padding-bottom: constant(safe-area-inset-bottom); /* iOS 11.0 */
+    padding-bottom: env(safe-area-inset-bottom); /* iOS 11.2 */
+}

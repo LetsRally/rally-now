@@ -119,7 +119,6 @@
     <plugin name="cordova-universal-links-plugin" spec="^1.2.1" />
     <plugin name="cordova-plugin-browsertab" spec="^0.2.0" />
     <plugin name="cordova-plugin-console" spec="^1.0.5" />
-    <plugin name="cordova-plugin-splashscreen" spec="^4.0.3" />
     <plugin name="com.synconset.imagepicker" spec="~2.1.8">
         <variable name="PHOTO_LIBRARY_USAGE_DESCRIPTION" value="choose profile picture" />
     </plugin>
@@ -254,6 +253,7 @@
     <allow-navigation href="http://192.168.0.100:8100" />
     <allow-navigation href="http://192.168.12.43:8100" />
     <allow-navigation href="http://192.168.0.102:8100" />
-    <engine name="ios" spec="4.5.4" />
+    <plugin name="cordova-plugin-splashscreen" spec="^5.0.2" />
     <engine name="android" spec="6.3.0" />
+    <engine name="ios" spec="4.5.4" />
 </widget>
