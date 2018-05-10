@@ -3,21 +3,20 @@
         <ion-title>
             <p class="white">Organizations</p>
         </ion-title>
-      
     </ion-navbar>
-</ion-header>
 
-<ion-content>
     <ion-searchbar (ionInput)="onSearchInput()"
                    [(ngModel)]="searchTerm"
                    [formControl]="searchControl"
                    [showCancelButton]="true"
                    [debounce]="800"
                    (ionCancel)="cancel()"></ion-searchbar>
-  
+</ion-header>
+
+<ion-content class="fixed-search-bar">
     <ion-list>
-        <ion-list-header> 
-          All Organizations
+        <ion-list-header>
+            All Organizations
         </ion-list-header>
 
         <div class="timeline-wrapper" *ngIf="enablePlaceholder">
@@ -33,21 +32,34 @@
                 </div>
             </div>
         </div>
+    </ion-list>
 
-        <ion-item *ngFor="let organization of items">
-             <ion-avatar item-start (click)="goToOrganizationProfile(organization.id)">
-              <img [src]="organization.image_url ? organization.image_url : testPhoto" style="border:2px solid #ada8a8;">
-            </ion-avatar> 
+    <ion-alpha-scroll *ngIf="items.length"
+                      [listData]="items"
+                      key="name"
+                      [itemTemplate]="alphaScrollItemTemplateRef"
+                      [currentPageClass]="currentPageClass"
+                      [highlight]="true"
+                      [triggerChange]="triggerAlphaScrollChange">
+    </ion-alpha-scroll>
+
+    <ng-template #alphaScrollItemTemplateRef let-organization>
+        <ion-item>
+            <ion-avatar item-start (click)="goToOrganizationProfile(organization.id)">
+                <img [src]="organization.image_url ? organization.image_url : testPhoto"
+                     style="border:2px solid #ada8a8;">
+            </ion-avatar>
             <h2 text-wrap (click)="goToOrganizationProfile(organization.id)">{{organization.name}}</h2>
-           <main-button clear item-end class="blue" (click)="addFollowRecordFirebase(organization.id, $event)" btnText={{findInLoop(organization.followers)}}></main-button>
-          </ion-item>
-      </ion-list> 
+            <main-button clear item-end class="blue" (click)="addFollowRecordFirebase(organization.id, $event)"
+                         btnText={{findInLoop(organization.followers)}}></main-button>
+        </ion-item>
+    </ng-template>
 
-      <ion-infinite-scroll (ionInfinite)="doInfinite($event)"
-                           *ngIf="enableInfiniteScroll"
-                           threshold="500px">
-            <ion-infinite-scroll-content
-            loadingSpinner="bubbles"
-            loadingText="Loading more..."></ion-infinite-scroll-content>
-          </ion-infinite-scroll>
+    <ion-infinite-scroll (ionInfinite)="doInfinite($event)"
+                         *ngIf="enableInfiniteScroll"
+                         threshold="500px">
+        <ion-infinite-scroll-content
+                loadingSpinner="bubbles"
+                loadingText="Loading more..."></ion-infinite-scroll-content>
+    </ion-infinite-scroll>
 </ion-content> 

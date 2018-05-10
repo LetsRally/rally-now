@@ -86,11 +86,15 @@ export class OrganizationsListPage {
         });
     }
 
+    triggerAlphaScrollChange() {
+        console.log('TRIGGER--------');
+    }
+
     getArray(array) {
-        for (let person of array) {
-            this.items.push(person);
-        }
+        let temp = JSON.parse(JSON.stringify(this.items));
+        temp = temp.concat(array);
         this.enablePlaceholder = false;
+        this.items = temp;
     }
 
     doInfinite(infiniteScroll: any) {

@@ -404,7 +404,7 @@ export class OrganizationProfilePage {
         const actionSheet = this.actionSheetCtrl.create({
             buttons: [
                 {
-                    text: 'Share this event via...',
+                    text: 'Share post via...',
                     handler: () => {
                         console.log("test");
                         this.shareProvider.otherShare(name, desc);

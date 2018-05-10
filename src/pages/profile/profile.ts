@@ -31,8 +31,6 @@ import * as constants from "../../constants/constants";
 import {ThemeableBrowser, ThemeableBrowserObject} from "@ionic-native/themeable-browser";
 
 
-
-
 @Component({
   selector: 'page-profile',
   templateUrl: 'profile.html'

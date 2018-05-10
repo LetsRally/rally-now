@@ -268,3 +268,13 @@
 ion-searchbar {
   background-color: #f4512c !important;
 }
+.fixed-search-bar {
+  .fixed-content, .scroll-content {
+    margin-top: 88px!important;
+  }
+}
+.ion-alpha-scroll {
+  .fixed-content, .scroll-content {
+    margin-top: 0!important;
+  }
+}
