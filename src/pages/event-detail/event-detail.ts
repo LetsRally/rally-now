@@ -56,7 +56,6 @@ export class EventDetailPage {
     textColor: any;
     icon: any;
     notify: any;
-    public abbrTimezone = '';
 
 
     constructor(
@@ -108,7 +107,6 @@ export class EventDetailPage {
                 this.notify = result.organization.notify;
                 this.getTime();
                 this.getEndTime();
-                this.setAbbrTimezone();
                 this.formatDescription();
             },
             err => {
@@ -498,17 +496,6 @@ export class EventDetailPage {
             this.eventEndTime = "- " + startTime;
         }
 
-    }
-
-    setAbbrTimezone() {
-        if (this.end_date != null) {
-            var time = this.end_date.split("T");
-            if(time[1].indexOf('-') !== -1) {
-                this.abbrTimezone = 'UTC -' + time[1].split("-")[1];
-            } else {
-                this.abbrTimezone = 'UTC +' + time[1].split("+")[1];
-            }
-        }
     }
 
     openWebpage(url?) {
