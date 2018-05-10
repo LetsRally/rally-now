@@ -125,24 +125,31 @@ export class TakeactionPage {
         this.openWebpage(event.target.href);
     }
 
-    openWebpage(url?) {
-        let options = constants.themeAbleOptions;
-        const browser: ThemeableBrowserObject = this.themeAbleBrowser.create(url, '_blank', options);
+    openWebpage(url?, target?) {
+        return new Promise((resolve, reject) => {
+            let options = constants.themeAbleOptions;
+            if(!target) {
+                target = '_blank';
+            }
+            const browser: ThemeableBrowserObject = this.themeAbleBrowser.create(url, target, options);
+            resolve(true);
 
-        browser.on("loadstop")
-            .subscribe(
-                () => {
-                    browser.insertCss({
-                        code: "body, html {padding-top: 20px!important;} header .rn-ipm5af{top: 16px !important; margin-top: 0 !important;} main{overflow:hidden}"
-                    })
-                },
-                err => {
-                    console.log("InAppBrowser Loadstop Event Error: " + err);
-                });
+            browser.on("loadstop")
+                .subscribe(
+                    () => {
+                        browser.insertCss({
+                            code: "body, html {padding-top: 20px!important;} header .rn-ipm5af{top: 16px !important; margin-top: 0 !important;} main{overflow:hidden}"
+                        })
+                    },
+                    err => {
+                        reject();
+                        console.log("InAppBrowser Loadstop Event Error: " + err);
+                    });
 
-        browser.on('closePressed').subscribe(data => {
-            browser.close();
-        })
+            browser.on('closePressed').subscribe(data => {
+                browser.close();
+            })
+        });
     }
 
     goToRequests() {
@@ -296,15 +303,18 @@ export class TakeactionPage {
                 direction: 'forward'
             });
         } else if (goal_type === 'donate') {
-            this.navCtrl.push(DonateFeedBackPage, {iframeUrl: source, repID: repID, goalID: goalID}, {
-                animate: true,
-                animation: 'transition',
-                duration: 500,
-                direction: 'forward'
-            });
-
+            this.openWebpage(source, '_system')
+                .then(() => {
+                    this.navCtrl.push(DonateFeedBackPage, {iframeUrl: source, repID: repID, goalID: goalID}, {
+                        animate: true,
+                        animation: 'transition',
+                        duration: 500,
+                        direction: 'forward'
+                    });
+                }, err => {
+                    console.log(err);
+                })
         }
-
     }
 
 

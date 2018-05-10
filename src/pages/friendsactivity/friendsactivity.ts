@@ -17,7 +17,6 @@ import {PublicProfilePage} from '../public-profile/public-profile';
 import {OrganizationsProvider} from '../../providers/organizations/organizations';
 import {UsersProvider} from '../../providers/users/users';
 import {SocialShareProvider} from '../../providers/social-share/social-share';
-import {ThankYouPage} from '../thank-you/thank-you';
 import {ModalController} from 'ionic-angular/components/modal/modal-controller';
 import {RepresentativeProfilePage} from '../representative-profile/representative-profile';
 import {OrganizationProfilePage} from '../organization-profile/organization-profile';
@@ -28,6 +27,8 @@ import {DomSanitizer} from '@angular/platform-browser';
 import {AngularFireDatabase} from 'angularfire2/database';
 import firebase from 'firebase';
 import {DonateFeedBackPage} from "../donate-feed-back/donate-feed-back";
+import * as constants from "../../constants/constants";
+import {ThemeableBrowser, ThemeableBrowserObject} from "@ionic-native/themeable-browser";
 
 
 @IonicPage()
@@ -37,18 +38,14 @@ import {DonateFeedBackPage} from "../donate-feed-back/donate-feed-back";
 })
 export class FriendsactivityPage {
 
-    activitiesData: any;
     myRallyID: any;
     endpoint: string = 'community_feed/all/';
     all: string = "all";
-    objectivesAction: any;
     disable: boolean = false;
     activityLike: any = 'd32c1cb5-b076-4353-ad9c-1c8f81d812e3';
     likeendpoint: any = 'likes';
     favEndpoint: any = 'actions';
     shareAction: any = '875b4997-f4e0-4014-a808-2403e0cf24f0';
-    activitiesPersonal: any;
-    objectivesPersonal: any;
     enable: boolean = true;
     public records: any = [];
     public following: any = [];
@@ -67,6 +64,7 @@ export class FriendsactivityPage {
         public navParams: NavParams,
         public popoverCtrl: PopoverController,
         private httpProvider: OrganizationsProvider,
+        private themeAbleBrowser: ThemeableBrowser,
         public viewCtrl: ViewController,
         private usersProvider: UsersProvider,
         public toastCtrl: ToastController,
@@ -78,24 +76,8 @@ export class FriendsactivityPage {
         private db: AngularFireDatabase) {
         this.all = "all";
         this.enable = false;
-        //   let svg = `<div id="Rallycontainer">
-        //   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><title>Loading</title>
-        //     <path id="arrow" class="bounce" d="M79.1,44.3c-2.4-0.5-4.1-2.6-4-5V22.6H58.7c-2.4,0.1-4.5-1.6-5-4C53.2,16,55,13.5,57.6,13c0.3,0,0.5-0.1,0.8-0.1h21.5
-        //       c2.7,0,4.8,2.2,4.8,4.8v21.8c0,2.7-2.2,4.8-4.8,4.8C79.7,44.4,79.4,44.4,79.1,44.3z"/>
-        //     <path id="R" d="M67.5,87H52.8L41.4,66.3h-4V87H24.8V33h19.4c6,0,10.7,1.3,14.3,3.8c3.9,2.9,6.1,7.5,5.9,12.4c0,10.3-6.6,14.3-10.6,15.5
-        //       L67.5,87z M48.9,44.2c-1.6-1.2-3.6-1.4-6.5-1.4h-5v13.9h5c2.9,0,4.9-0.3,6.5-1.5c1.8-1.2,2.9-3.3,2.7-5.5
-        //       C51.8,47.5,50.7,45.4,48.9,44.2z"/></svg>
-        //   </div>`;
-
-        // this.safeSvg = this.sanitizer.bypassSecurityTrustHtml(svg);
-        //   this.loading = this.loadingCtrl.create({
-        //      spinner: 'hide',
-        //     content: this.safeSvg,
-        //   });
-        //   this.loading.present();
         this.enablePlaceholder = true;
 
-        console.log(this.enable);
         this.usersProvider.returnRallyUserId().then(user => {
             this.myRallyID = user.apiRallyID;
             this.getdata();
@@ -133,29 +115,9 @@ export class FriendsactivityPage {
         });
     }
 
-//       getdata(){
-//   this.httpProvider.getJsonData(this.endpoint).subscribe(
-//     result => {
-//       this.activitiesPersonal=result['Direct_Actions'];
-//       this.objectivesPersonal=result['Objectives_Actions'];
-//     },
-//     err =>{
-//       console.error("Error : "+err);
-//     } ,
-//     () => {
-//       console.log('getData completed');
-//     }
-//   );
-// }
-
     doRefresh(refresher) {
         this.records = [];
         this.following = []
-        // this.loading = this.loadingCtrl.create({
-        //   spinner: 'hide',
-        //   content: this.safeSvg,
-        //   });
-        //   this.loading.present();
         this.loader = true;
         this.getdata();
         this.getPersonaldata();
@@ -376,28 +338,6 @@ export class FriendsactivityPage {
 
                     }
                 },
-                //  {
-                //   text: 'Copy Link',
-                //   handler: () => {
-                //     this.disable = false;
-
-                //   }
-                // },
-                // {
-                //   text: 'SMS Message',
-                //   handler: () => {
-                //     this.disable = false;
-
-                //   }
-                // },
-                // {
-                //   text: 'Email',
-                //   handler: () => {
-
-                //     this.disable = false;
-
-                //   }
-                // },
                 {
                     text: 'Cancel',
                     role: 'cancel',
@@ -441,14 +381,6 @@ export class FriendsactivityPage {
     }
 
     goToActionPage(objectiveID, goal_type, source, goalID, repID) {
-        //  if(goal_type !== "sign"){
-        //   this.navCtrl.push(OrganizationActionPage, {
-        //     objectiveID: objectiveID,
-        //     pageName: 'Community'
-        // }, {animate:true,animation:'transition',duration:500,direction:'forward'});
-        //  } else{
-        //   this.navCtrl.push(SignFeedBackPage, {iframeUrl: source, repID:repID, goalID: goalID}, {animate:true,animation:'transition',duration:500,direction:'forward'});
-        //  }
 
         if (goal_type === 'sign') {
             this.navCtrl.push(SignFeedBackPage, {iframeUrl: source, repID: repID, goalID: goalID}, {
@@ -458,18 +390,50 @@ export class FriendsactivityPage {
                 direction: 'forward'
             });
         } else if (goal_type === 'donate') {
-            this.navCtrl.push(DonateFeedBackPage, {iframeUrl: source, repID: repID, goalID: goalID}, {
-                animate: true,
-                animation: 'transition',
-                duration: 500,
-                direction: 'forward'
-            });
+            this.openWebpage(source, '_system')
+                .then(() => {
+                    this.navCtrl.push(DonateFeedBackPage, {iframeUrl: source, repID: repID, goalID: goalID}, {
+                        animate: true,
+                        animation: 'transition',
+                        duration: 500,
+                        direction: 'forward'
+                    });
+                }, err => {
+                    console.log(err);
+                })
         } else {
             this.navCtrl.push(OrganizationActionPage, {
                 objectiveID: objectiveID,
                 pageName: 'Community'
             }, {animate: true, animation: 'transition', duration: 500, direction: 'forward'});
         }
+    }
+
+    openWebpage(url?, target?) {
+        return new Promise((resolve, reject) => {
+            let options = constants.themeAbleOptions;
+            if(!target) {
+                target = '_blank';
+            }
+            const browser: ThemeableBrowserObject = this.themeAbleBrowser.create(url, target, options);
+            resolve(true);
+
+            browser.on("loadstop")
+                .subscribe(
+                    () => {
+                        browser.insertCss({
+                            code: "body, html {padding-top: 20px!important;} header .rn-ipm5af{top: 16px !important; margin-top: 0 !important;} main{overflow:hidden}"
+                        })
+                    },
+                    err => {
+                        reject();
+                        console.log("InAppBrowser Loadstop Event Error: " + err);
+                    });
+
+            browser.on('closePressed').subscribe(data => {
+                browser.close();
+            })
+        });
     }
 
     transform(value: any) {

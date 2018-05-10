@@ -27,6 +27,8 @@ import { OrganizationProfilePage } from '../organization-profile/organization-pr
 import { RepresentativeProfilePage } from '../representative-profile/representative-profile';
 import { Facebook } from '@ionic-native/facebook';
 import {DonateFeedBackPage} from "../donate-feed-back/donate-feed-back";
+import * as constants from "../../constants/constants";
+import {ThemeableBrowser, ThemeableBrowserObject} from "@ionic-native/themeable-browser";
 
 
 
@@ -77,7 +79,6 @@ export class ProfilePage {
   objectiveActions:any;
   favEndpoint:any = 'actions';
   shareAction:any = '875b4997-f4e0-4014-a808-2403e0cf24f0';
-  activitiesData:any;
   public records:any = [];
 
 
@@ -87,6 +88,7 @@ export class ProfilePage {
     public userData: UserData,
     public af:AngularFireDatabase,
     private httpProvider:UsersProvider,
+    private themeAbleBrowser: ThemeableBrowser,
     private photoViewer: PhotoViewer,
     public modalCtrl: ModalController,
     private storage: Storage,
@@ -484,28 +486,6 @@ const actionSheet = this.actionSheetCtrl.create({
 
      }
    },
-  //  {
-  //   text: 'Copy Link',
-  //   handler: () => {
-  //     this.disable = false;
-
-  //   }
-  // },
-  // {
-  //   text: 'SMS Message',
-  //   handler: () => {
-  //     this.disable = false;
-
-  //   }
-  // },
-  // {
-  //   text: 'Email',
-  //   handler: () => {
-      
-  //     this.disable = false;
-
-  //   }
-  // },
    {
      text: 'Cancel',
      role: 'cancel',
@@ -538,14 +518,6 @@ goToOrganizationProfile(organizationID){
 }
 
 goToActionPage(objectiveID, goal_type, source, goalID, repID){
- //  if(goal_type !== "sign"){
- //   this.navCtrl.push(OrganizationActionPage, {
- //     objectiveID: objectiveID,
- //     pageName: 'My Profile'
- // }, {animate:true,animation:'transition',duration:500,direction:'forward'});
- //  } else{
- //   this.navCtrl.push(SignFeedBackPage, {iframeUrl: source, repID:repID, goalID: goalID}, {animate:true,animation:'transition',duration:500,direction:'forward'});
- //  }
     if(goal_type === "contact"){
         this.navCtrl.push(OrganizationActionPage, {
             objectiveID: objectiveID,
@@ -554,9 +526,46 @@ goToActionPage(objectiveID, goal_type, source, goalID, repID){
     } else if(goal_type === 'sign'){
         this.navCtrl.push(SignFeedBackPage, {iframeUrl: source, repID:repID, goalID:goalID}, {animate:true,animation:'transition',duration:500,direction:'forward'});
     }  else if(goal_type === 'donate'){
-        this.navCtrl.push(DonateFeedBackPage, {iframeUrl: source, repID:repID, goalID:goalID}, {animate:true,animation:'transition',duration:500,direction:'forward'});
+        this.openWebpage(source, '_system')
+            .then(() => {
+                this.navCtrl.push(DonateFeedBackPage, {iframeUrl: source, repID: repID, goalID: goalID}, {
+                    animate: true,
+                    animation: 'transition',
+                    duration: 500,
+                    direction: 'forward'
+                });
+            }, err => {
+                console.log(err);
+            })
     }
 }
+
+    openWebpage(url?, target?) {
+        return new Promise((resolve, reject) => {
+            let options = constants.themeAbleOptions;
+            if(!target) {
+                target = '_blank';
+            }
+            const browser: ThemeableBrowserObject = this.themeAbleBrowser.create(url, target, options);
+            resolve(true);
+
+            browser.on("loadstop")
+                .subscribe(
+                    () => {
+                        browser.insertCss({
+                            code: "body, html {padding-top: 20px!important;} header .rn-ipm5af{top: 16px !important; margin-top: 0 !important;} main{overflow:hidden}"
+                        })
+                    },
+                    err => {
+                        reject();
+                        console.log("InAppBrowser Loadstop Event Error: " + err);
+                    });
+
+            browser.on('closePressed').subscribe(data => {
+                browser.close();
+            })
+        });
+    }
 
 transform(value: any) {
   if (value) {

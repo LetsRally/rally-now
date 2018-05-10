@@ -3,8 +3,6 @@ import {IonicPage, NavController, NavParams, ModalController} from 'ionic-angula
 import {ThankYouPage} from '../thank-you/thank-you';
 import {UsersProvider} from '../../providers/users/users';
 import {IssueScreenPage} from '../issue-screen/issue-screen';
-import {ThemeableBrowser} from "@ionic-native/themeable-browser";
-import * as constants from '../../constants/constants';
 
 
 @IonicPage()
@@ -31,10 +29,8 @@ export class DonateFeedBackPage {
         public navCtrl: NavController,
         public navParams: NavParams,
         public modalCtrl: ModalController,
-        private themeableBrowser: ThemeableBrowser,
         private httpProvider: UsersProvider) {
         this.url = navParams.get('iframeUrl');
-        this.openWebpage(this.url);
         this.data.goal_id = navParams.get('goalID');
         this.data.representative_id = navParams.get('repID');
         this.data.action_type_id = '500f35fc-9338-4f1d-bdc8-13302afa33e7';
@@ -79,26 +75,6 @@ export class DonateFeedBackPage {
             });
         });
         modal.present();
-    }
-
-    openWebpage(url: string) {
-        const options = constants.themeAbleOptions;
-        const browser = this.themeableBrowser.create(url, '_system', options);
-
-        browser.on("loadstop")
-            .subscribe(
-                () => {
-                    browser.insertCss({
-                        code: "body, html {padding-top: 20px!important;} header .rn-ipm5af{top: 16px !important; margin-top: 0 !important;} main{overflow:hidden}"
-                    })
-                },
-                err => {
-                    console.log("InAppBrowser Loadstop Event Error: " + err);
-                });
-
-        browser.on('closePressed').subscribe(data => {
-            browser.close();
-        })
     }
 
     errorModal() {
