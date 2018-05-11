@@ -19,7 +19,6 @@ import firebase from 'firebase';
 export class HeaderComponent {
 
     organizationPhoto: any = '../assets/img/avatar.png';
-    parameter: string;
     testPhoto: any = '../assets/img/avatar.png';
     searching: any = false;
     shouldShowCancel: any = false;
@@ -29,8 +28,11 @@ export class HeaderComponent {
     private searchTerm$: Subject<string>;
     endpoint: string = 'search/';
     followEndpoint: any = 'following_representative';
+    followUserEndpoint: string = 'following_users';
     currentRallyID: any;
     organizationEndpoint: any = 'following_organizations';
+    private alertsEndpoint: any = 'ux_events';
+    private notificationsEndpoint: any = 'devices';
     public currentTabName = 'all';
     public actions: any = [];
     public users: any = [];
@@ -39,6 +41,7 @@ export class HeaderComponent {
     public reps: any = [];
     public events: any = [];
     public enablePlaceholder = false;
+    private status: boolean;
 
 
     constructor(public modalCtrl: ModalController,
@@ -56,7 +59,6 @@ export class HeaderComponent {
             this.usersProvider.returnRallyUserId().then(
                 user => {
                     this.currentRallyID = user.apiRallyID;
-                    this.checkUserStatus();
                 })
         });
     }
@@ -66,23 +68,38 @@ export class HeaderComponent {
         modal.present();
     }
 
+    findInLoop(actions) {
+        if (actions != null) {
+            var found = actions.some(el => {
+                return el.id == this.currentRallyID;
 
-    checkUserStatus(){
-        let user:any = firebase.auth().currentUser;
-        if (user) {
-            let orgRef = this.db.database.ref('follow/'+user['uid']+'/'+this.parameter);
-            orgRef.on('value', snapshot=>{
-                if (snapshot.hasChildren()) {
-                    console.log('Unfollow');
-                    this.buttonFollowTest = 'Following';
-
-                } else{
-                    console.log('Follow');
-                    this.buttonFollowTest = 'Follow';
-                }
             });
-        } else{
-            this.login = false;
+
+            if (!found) {
+                return 'Follow';
+
+            } else {
+                return 'Following';
+
+            }
+        }
+    }
+
+    findInLoopUser(data) {
+        let followers = [];
+        data["my_activity"].map((el) => {
+            followers.push(...el['followers']);
+        });
+
+        let found = followers.some(el => {
+            return el == this.currentRallyID;
+        });
+
+        if (!found) {
+            return 'Follow';
+
+        } else {
+            return 'Following';
         }
     }
 
@@ -114,6 +131,13 @@ export class HeaderComponent {
                     this.organizations = result['organizations'] || [];
                     this.reps = result['reps'] || [];
                     this.events = result['events'] || [];
+
+
+
+                    this.organizations.map((el) => {
+                        console.log('-----');
+                        console.log(this.currentRallyID, el['followers']);
+                    });
                 },
                 err => {
                     this.enablePlaceholder = false;
@@ -242,21 +266,104 @@ export class HeaderComponent {
         });
     }
 
-    addFollowUserRecordFirebase(friendID){
-        // let user:any = firebase.auth().currentUser;
-        // let followRef = this.db.database.ref('follow/'+user['uid']+'/'+friendID);
-        // followRef.once('value', snapshot=>{
-        //     if (snapshot.hasChildren()) {
-        //         console.log('You already follow this user');
-        //         this.unFollowActionSheet();
-        //         //this.presentToast('You are not following this user anymore');
-        //
-        //     }else{
-        //         //this.followFriend(friendID);
-        //         this.followFriend(friendID);
-        //         this.presentToast('Follow user successfully');
-        //     }
-        // });
+    addFollowUserRecordFirebase(friend, $event){
+        let user:any = firebase.auth().currentUser;
+        let followRef = this.db.database.ref('follow/'+user['uid']+'/'+friend.id);
+        followRef.once('value', snapshot=>{
+            if (snapshot.hasChildren()) {
+                console.log('You already follow this user');
+                this.unFollowUserActionSheet(friend, $event);
+                //this.presentToast('You are not following this user anymore');
+
+            }else{
+                //this.followFriend(friendID);
+                this.followFriend(friend.id, $event);
+            }
+        });
+    }
+
+    unFollowUserActionSheet(friend, el) {
+        let actionSheet = this.actionSheetCtrl.create({
+            title: 'Unfollow ' + friend.name + '?' ,
+            cssClass: 'title-img',
+            buttons: [
+                {
+                    text: 'Unfollow',
+                    role: 'destructive',
+                    handler: () => {
+                        console.log('Destructive clicked');
+                        el.srcElement.innerText = 'Follow';
+                        this.getFollowRecordID(friend);
+                    }
+                },{
+                    text: 'Cancel',
+                    role: 'cancel',
+                    handler: () => {
+                        console.log('Cancel clicked');
+                    }
+                }
+            ]
+        });
+        actionSheet.present();
+    }
+
+    getFollowRecordID(friend){
+        console.log('THIS IS FUCK');
+        this.usersProvider.getJsonData(this.followUserEndpoint+'?follower_id='+this.currentRallyID+'&following_id='+friend.id).subscribe(
+            result => {
+                console.log("Delete User ID : "+ result[0].id);
+                this.unFollowFriend(result[0].id, friend);
+            },
+            err =>{
+                console.error("Error : "+err);
+            } ,
+            () => {
+                console.log('getData completed');
+            });
+    }
+
+    unFollowFriend(recordID, friend) {
+        this.usersProvider.unfollowOrganization(this.followUserEndpoint, recordID);
+        this.usersProvider.removeFollowRecordID(friend.id, 'follow');
+    }
+
+    followFriend(friendID, el){
+        this.usersProvider.followFriend(this.followUserEndpoint, this.currentRallyID, friendID, true).subscribe(data => {
+            console.log(data);
+            el.srcElement.innerText = 'Following';
+            this.usersProvider.saveFollowRecordID(data.following_id, data.id, 'follow');
+            this.getDeviceID(friendID);
+        }, error => {
+            console.log("Error", error);
+        });
+    }
+
+    getDeviceID(user_id) {
+        console.log("Friend ID", user_id);
+        //Reemplazar por parametro despues
+        this.usersProvider.getJsonData(this.notificationsEndpoint + '?user_id=' + user_id)
+            .subscribe(result => {
+                console.log("Devices", result);
+                this.saveNotification(user_id, result[0].id, this.currentRallyID);
+                this.sendPushNotification(result[0].registration_id);
+            }, err => {
+                console.error("Error: " + err);
+            }, () => {
+                console.log("Data Completed");
+            });
+    }
+
+    saveNotification(user_id, registration_id, sender_id) {
+        this.usersProvider.returnRallyUserId().then(user => {
+            this.usersProvider.saveNotification(user_id, registration_id, user.displayName + " wants to follow you", this.alertsEndpoint, sender_id);
+        });
+    }
+
+    sendPushNotification(device) {
+        this.usersProvider.sendPushNotification(device, 'New Follow Request')
+            .subscribe(result => {
+                console.log("Noti", result);
+            });
     }
 
     followOrg(organizationID, el) {

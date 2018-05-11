@@ -134,9 +134,9 @@
                         <main-button clear
                                      item-end
                                      *ngIf="login"
-                                     (click)="addFollowUserRecordFirebase(id)"
+                                     (click)="addFollowUserRecordFirebase(user, $event)"
                                      class="blue"
-                                     btnText="{{user.followers == currentRallyID ? 'Following' : 'Follow'}}"></main-button>
+                                     btnText="{{findInLoopUser(user)}}"></main-button>
                     </ion-item>
                 </div>
             </div>
@@ -161,7 +161,7 @@
                                      item-end
                                      class="blue"
                                      (click)="addFollowRecordFirebase(organization.id, $event)"
-                                     btnText="{{organization.followers == currentRallyID ? 'Following' : 'Follow'}}"></main-button>
+                                     btnText="{{findInLoop(organization.followers)}}"></main-button>
                         <!--<p>{{organization.short_desc}}</p>-->
 
                     </ion-item>
@@ -213,7 +213,7 @@
 
                         <main-button clear item-end *ngIf="rep.twitter_id !== 'not available'"
                                      (click)="followRep(rep.id, $event)" class="blue"
-                                     btnText="{{rep.followers == currentRallyID ? 'Following' : 'Follow'}}"></main-button>
+                                     btnText="{{findInLoop(rep.followers)}}"></main-button>
                     </ion-item>
                 </div>
             </div>
