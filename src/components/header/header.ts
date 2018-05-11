@@ -86,21 +86,20 @@ export class HeaderComponent {
     }
 
     findInLoopUser(data) {
-        let followers = [];
-        data["my_activity"].map((el) => {
-            followers.push(...el['followers']);
-        });
+        let user: any = firebase.auth().currentUser;
+        let buttonText = 'Follow';
+        if (user) {
+            let orgRef = this.db.database.ref('follow/' + user['uid'] + '/' + data.id);
+            orgRef.on('value', snapshot => {
+                if (snapshot.hasChildren()) {
+                    buttonText = 'Following';
 
-        let found = followers.some(el => {
-            return el == this.currentRallyID;
-        });
-
-        if (!found) {
-            return 'Follow';
-
-        } else {
-            return 'Following';
+                } else {
+                    buttonText = 'Follow';
+                }
+            });
         }
+        return buttonText;
     }
 
     onSearchInput() {
