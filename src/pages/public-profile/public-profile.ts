@@ -408,28 +408,6 @@ const actionSheet = this.actionSheetCtrl.create({
 
      }
    },
-  //  {
-  //   text: 'Copy Link',
-  //   handler: () => {
-  //     this.disable = false;
-
-  //   }
-  // },
-  // {
-  //   text: 'SMS Message',
-  //   handler: () => {
-  //     this.disable = false;
-
-  //   }
-  // },
-  // {
-  //   text: 'Email',
-  //   handler: () => {
-      
-  //     this.disable = false;
-
-  //   }
-  // },
    {
      text: 'Cancel',
      role: 'cancel',
@@ -460,16 +438,7 @@ goToOrganizationProfile(organizationID){
 }, {animate:true,animation:'transition',duration:500,direction:'forward'});
 }
 
-goToActionPage(objectiveID, goal_type, source, goalID, repID){ 
- //  if(goal_type !== "sign"){
- //   this.navCtrl.push(OrganizationActionPage, {
- //     objectiveID: objectiveID,
- //     pageName: 'Public Profile'
- // }, {animate:true,animation:'transition',duration:500,direction:'forward'});
- //  } else{
- //   this.navCtrl.push(SignFeedBackPage, {iframeUrl: source, repID:repID, goalID: goalID}, {animate:true,animation:'transition',duration:500,direction:'forward'});
- //  }
-
+goToActionPage(objectiveID, goal_type, source, goalID, repID){
     if(goal_type === 'sign'){
         this.navCtrl.push(SignFeedBackPage, {iframeUrl: source, repID:repID, goalID:goalID}, {animate:true,animation:'transition',duration:500,direction:'forward'});
     }  else if(goal_type === 'donate'){
@@ -507,8 +476,9 @@ goToFollowing(){
 }
 
   goToActions() {
-    let activityContent = document.getElementById('activity');
-    this.content.scrollTo(0, activityContent.offsetTop, 500);
+    if(this.target) {
+        this.content.scrollTo(0, this.target.nativeElement.offsetTop, 500);
+    }
   }
 
 }
