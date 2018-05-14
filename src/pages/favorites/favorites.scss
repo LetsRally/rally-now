@@ -25,7 +25,9 @@ page-favorites {
     ion-content {
         background-color: #f2f2f2 !important;
         top:45px;
-         .fab-md-light,
+        height: calc(100vh - 45px);
+
+        .fab-md-light,
         .fab-ios-light {
             background: none;
             border: none;

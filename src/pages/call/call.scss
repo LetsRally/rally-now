@@ -9,8 +9,9 @@ page-call {
     }
 
     ion-content{
-    top: 45px;
-}
+        top: 45px;
+        height: calc(100vh - 45px);
+    }
     .bordered {
         border-bottom: 1px solid #000;
     }

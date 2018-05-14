@@ -24,6 +24,7 @@ page-events-result {
     ion-content {
         top: 45px;
         background: #d8d8d8 !important;
+        height: calc(100vh - 45px);
         
     }
     .events-card{
