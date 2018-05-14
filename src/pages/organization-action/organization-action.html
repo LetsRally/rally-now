@@ -55,7 +55,10 @@
                         </ion-avatar>
                         <h2 (click)="getID(rep.bioguide)">{{rep.name}}</h2>
                         <p><small>US Representative for {{rep.state_name}} District {{rep.district}} </small></p>
-                        <button (click)="getRepID(rep, rep.civil_services_url ,rep.twitter_url,rep.contact_page, rep.bioguide)" item-end ion-button color="dark" class="action-btn">Contact</button>
+                        <button (click)="getRepID(rep, rep.civil_services_url ,rep.twitter_url,rep.contact_page, rep.bioguide)"
+                                item-end
+                                ion-button
+                                class="action-btn red">Contact</button>
                     </ion-item>
                     
                 </div>
@@ -67,7 +70,10 @@
                     </ion-avatar>
                     <h2 (click)="getID(rep.bioguide)">{{rep.name}}</h2>
                     <p><small>US Senator for {{rep.state_name}}</small></p>
-                    <button (click)="getRepID(rep, rep.civil_services_url ,rep.twitter_url,rep.contact_page, rep.bioguide)" item-end ion-button color="dark" class="action-btn">Contact</button>
+                    <button (click)="getRepID(rep, rep.civil_services_url ,rep.twitter_url,rep.contact_page, rep.bioguide)"
+                            item-end
+                            ion-button
+                            class="action-btn red">Contact</button>
                 </ion-item>
                 
             </div>
@@ -93,7 +99,10 @@
                         </ion-avatar>
                         <h2 (click)="goToRepProfile(rep.id)">{{rep.name}}</h2>
                         <p><small>US Senator for {{rep.state}}</small></p>
-                        <button (click)="presentActionSheet(rep, rep.fax_url, rep.twitter_id, rep.url, rep.id, rep.offices)" item-end ion-button color="dark" class="action-btn">Contact</button>
+                        <button (click)="presentActionSheet(rep, rep.fax_url, rep.twitter_id, rep.url, rep.id, rep.offices)"
+                                item-end
+                                ion-button
+                                class="action-btn">Contact</button>
                     </ion-item>
                 </div>
     </ion-list>

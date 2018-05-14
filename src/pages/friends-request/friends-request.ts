@@ -77,21 +77,16 @@ export class FriendsRequestPage {
 
     }
 
-    // ionViewDidLoad() {
-    //   console.log('ionViewDidLoad FriendsRequestPage');
-    //   this.setFilteredItems();
-    //    this.searchControl.valueChanges.debounceTime(700).subscribe(search => {
-    //         this.searching = false;
-    //         this.setFilteredItems();
-
-    //       });
-
-    // }
     getDiscoverOrganizations() {
         this.orgProvider.getJsonData(this.discoverEndpoint).subscribe(result => {
             this.mapOrgs(result);
             console.log('GET DISCOVER ORGANIZATIONS');
         });
+    }
+
+    hide(id) {
+        console.log('HIDE');
+        console.log(id);
     }
 
     getSuggestedFriend() {
@@ -124,9 +119,7 @@ export class FriendsRequestPage {
     }
     mapFacebookUsers(array) {
         for (let person of array) {
-            // console.log("From FB", person.id);
             this.getRallyData(person.id);
-
         }
     }
 
@@ -142,8 +135,6 @@ export class FriendsRequestPage {
     getFacebookFriendsList() {
         this.facebook.api('me/friends', ['user_friends']).then(
             list => {
-                // console.log("Lista de amigos", list['data']);
-                // this.items = list['data'];
                 this.mapFacebookUsers(list['data']);
             }, error => {
                 console.log("error", error);
@@ -151,10 +142,8 @@ export class FriendsRequestPage {
     }
 
     getRallyData(fbID) {
-        console.log(fbID);
         this.httpProvicer.getJsonData(this.profileEndpoint + fbID).subscribe(
             result => {
-
                 if (result != "") {
                     console.log(result);
                     this.sortFacebookFriends(result[0]);
@@ -177,7 +166,6 @@ export class FriendsRequestPage {
                 }
             });
     }
-
 
     sortOrgs(org) {
         this.httpProvicer.getJsonData(this.organizationEndpoint + '?follower_id=' + this.myRallyID + '&organization_id=' + org[0])

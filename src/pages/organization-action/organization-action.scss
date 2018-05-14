@@ -63,6 +63,10 @@ page-organization-action {
             font-family:'Conv_SanFranciscoDisplay-Semibold',Sans-Serif !important;
             font-size: 14px !important;
         }
+        &:active, &:focus {
+            background: #f4512c!important;
+            color: #f2f2f2!important;
+        }
     }
     ion-card {
         margin-right: 0 !important;
