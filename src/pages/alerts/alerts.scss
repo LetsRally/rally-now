@@ -4,8 +4,9 @@ page-alerts {
         text-align: center;
     }
     ion-content{
-    top: 45px;
-}
+        top: 45px;
+        height: calc(100vh - 45px);
+    }
     .toolbar-background {
         background-color: #4a90e2;
         color: #fff;

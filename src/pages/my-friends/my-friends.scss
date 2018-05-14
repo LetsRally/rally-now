@@ -9,6 +9,7 @@ page-my-friends {
     }
     ion-content {
         top: 45px;
+        height: calc(100vh - 45px);
         p {
             font-size: 12px;
             text-align: center;
