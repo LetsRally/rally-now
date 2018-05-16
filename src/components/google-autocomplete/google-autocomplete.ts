@@ -37,7 +37,7 @@ export class GoogleAutocompleteComponent {
         } else {
             this.places = [];
             this.enablePlaceholder = true;
-            this.searchTerm$.next(`${proxyurl}${this.endpoint}${this.searchTerm}&types=address&components=country:us|country:pr|country:vi&key=${this.key}`);
+            this.searchTerm$.next(`${proxyurl}${this.endpoint}${this.searchTerm}&types=address&language=en&components=country:us|country:pr|country:vi&key=${this.key}`);
             this.getSubjectJson(this.searchTerm$).subscribe((res) => {
                 this.places = res.predictions;
                 this.showMessage(res);
