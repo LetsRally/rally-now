@@ -27,6 +27,7 @@ page-news {
 
     ion-content {
         top:45px;
+        height: calc(100vh - 45px);
         background: #d8d8d8 !important;
 
         ion-card {
