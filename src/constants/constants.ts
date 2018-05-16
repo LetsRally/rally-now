@@ -23,7 +23,7 @@ export const themeAbleOptions: ThemeableBrowserOptions = {
     zoom: 'no',
     toolbarposition: 'top',
     location: 'yes',
-    transitionstyle: 'fliphorizontal',
+    transitionstyle: 'coververtical',
     statusbar: {
         color: '#f4512c'
     },
