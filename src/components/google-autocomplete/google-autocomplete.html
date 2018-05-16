@@ -1,0 +1,15 @@
+<div class="autocomplete-box">
+  <ion-searchbar (ionInput)="onSearchInput()"
+                 [(ngModel)]="searchTerm"
+                 [name]="place"
+                 [showCancelButton]="true"
+                 [debounce]="800"
+                 (ionCancel)="cancel()"></ion-searchbar>
+</div>
+
+<div class="places-box" *ngIf="displayPlaces">
+  <p class="place-row"
+     *ngFor="let place of places"
+     (click)="selectPlace(place.description)">{{place.description}}</p>
+</div>
+<h3 *ngIf="noResults" class="no-results-message">No results</h3>

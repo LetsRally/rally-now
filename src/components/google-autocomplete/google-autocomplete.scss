@@ -1,0 +1,15 @@
+.place-row {
+  background-color: #fff;
+  border-bottom: 1px solid gray;
+  border-right: 1px solid gray;
+  margin: 0;
+  padding: 9px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: left;
+  border-left: 1px solid gray;
+}
+.no-results-message {
+  text-align: center;
+}

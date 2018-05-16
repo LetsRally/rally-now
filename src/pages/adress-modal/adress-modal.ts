@@ -46,6 +46,9 @@ export class AdressModalPage {
         this.viewCtrl.dismiss(data);
     }
 
+    searchResult(e) {
+        this.searchTerm = e;
+    }
 
     public getLocation() {
         console.log('SEARCH ADDRESS');

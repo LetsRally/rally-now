@@ -114,6 +114,7 @@ import { ButtonComponent } from '../components/main-button/main-button';
 import { EventLoggerProvider } from '../providers/event-logger/event-logger';
 import {ThemeableBrowser} from "@ionic-native/themeable-browser";
 import {IonAlphaScrollModule} from "ionic2-alpha-scroll";
+import {GoogleAutocompleteComponent} from "../components/google-autocomplete/google-autocomplete";
 
 
 //import { FCM } from '@ionic-native/fcm';
@@ -231,7 +232,8 @@ firebase.initializeApp(config);
         NewsPage,
         PublicFollowersPage,
         PublicFollowingPage,
-        ButtonComponent
+        ButtonComponent,
+        GoogleAutocompleteComponent
     ],
     imports: [
         BrowserModule,

@@ -5,6 +5,7 @@ import { RallyFooterComponent } from './rally-footer/rally-footer';
 import { RallyOrangeHeaderComponent } from './rally-orange-header/rally-orange-header';
 import { RallyNameHeaderComponent } from './rally-name-header/rally-name-header';
 import { ButtonComponent } from './main-button/main-button';
+import { GoogleAutocompleteComponent } from './google-autocomplete/google-autocomplete';
 @NgModule({
 	declarations: [
     HeaderComponent,
@@ -12,7 +13,8 @@ import { ButtonComponent } from './main-button/main-button';
     RallyFooterComponent,
     RallyOrangeHeaderComponent,
     RallyNameHeaderComponent,
-    ButtonComponent
+    ButtonComponent,
+    GoogleAutocompleteComponent
     ],
 	imports: [
         
@@ -23,7 +25,8 @@ import { ButtonComponent } from './main-button/main-button';
     RallyFooterComponent,
     RallyOrangeHeaderComponent,
     RallyNameHeaderComponent,
-    ButtonComponent
+    ButtonComponent,
+    GoogleAutocompleteComponent
     ],
    
 })
