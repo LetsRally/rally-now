@@ -33,7 +33,7 @@ export class OrganizationFollowersPage {
 
     getFollowers(orgID) {
         this.httpProvider.getJsonData(this.endpoint + orgID).subscribe(result => {
-            this.followers = result['organization'][0].followers;
+            this.followers = result['organization'][0].followers || [];
             this.initializeItems();
             this.enablePlaceholder = false;
             console.log(result['organization'][0].followers);
@@ -51,9 +51,15 @@ export class OrganizationFollowersPage {
         // set val to the value of the searchbar
         let val = ev.target.value;
 
-        // if the value is an empty string don't filter the items
+        if(val === '') {
+            return;
+        }
+
         if (val && val.trim() != '') {
             this.items = this.items.filter((item) => {
+                if(!item.name || !item.name.length) {
+                    return false;
+                }
                 return (item.name.toLowerCase().indexOf(val.toLowerCase()) > -1);
             })
         }

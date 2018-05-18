@@ -119,7 +119,10 @@ export class EventDetailPage {
     }
 
     formatDescription() {
-        let that = this;
+        if(!this.description || !this.description.length) {
+            this.formattedDescription = this.sanitaizer.bypassSecurityTrustHtml('');
+            return;
+        }
         let splittedByBR = this.description.split('\n');
         let formattedDescription = '';
         for (let i = 0; i < splittedByBR.length; i++) {

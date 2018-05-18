@@ -562,7 +562,10 @@ export class OrganizationProfilePage {
         this.httpProvider.addShareAction(this.favEndpoint, goal_id, action_type_id, this.myrallyID);
     }
 
-    goToFollowers() {
+    goToFollowers(followers) {
+        if(!followers || followers == 0) {
+            return;
+        }
         this.navCtrl.push(OrganizationFollowersPage, {orgID: this.organizationID});
     }
 

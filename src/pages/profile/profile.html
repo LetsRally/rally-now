@@ -93,8 +93,11 @@
                     <!-- <ion-icon item-end [name]="secondToggleBtn ? 'ios-arrow-up' : 'ios-arrow-down'"></ion-icon> -->
                 </ion-item>
                 <div *ngIf="secondToggleBtn">
-                    <ion-item *ngFor="let action of actions">{{action.name}} <span item-end>{{action.count}}</span>
-                    </ion-item>
+                    <div *ngFor="let action of actions">
+                        <ion-item *ngIf="action.name !== 'Share'">{{action.name}} <span item-end>{{action.count}}</span>
+                        </ion-item>
+                    </div>
+
                 </div>
             </ion-list>
         </ion-col>
