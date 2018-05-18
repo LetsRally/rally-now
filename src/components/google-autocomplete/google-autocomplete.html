@@ -11,5 +11,8 @@
   <p class="place-row"
      *ngFor="let place of places"
      (click)="selectPlace(place.description)">{{place.description}}</p>
+  <div style="margin: 10px 0">
+    <img width="170" height="17" src="assets/img/powered_by_google_on_white.png" />
+  </div>
 </div>
 <h3 *ngIf="noResults" class="no-results-message">No results</h3>

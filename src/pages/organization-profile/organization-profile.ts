@@ -19,6 +19,7 @@ import {EventDetailPage} from '../event-detail/event-detail';
 import {DonateFeedBackPage} from '../donate-feed-back/donate-feed-back';
 import {ThemeableBrowser} from "@ionic-native/themeable-browser";
 import * as constants from '../../constants/constants';
+import {PhotoViewer} from "@ionic-native/photo-viewer";
 
 
 @IonicPage()
@@ -67,6 +68,7 @@ export class OrganizationProfilePage {
         private orgProvider: OrganizationsProvider,
         public toastCtrl: ToastController,
         private db: AngularFireDatabase,
+        private photoViewer: PhotoViewer,
         public actionSheetCtrl: ActionSheetController,
         public viewCtrl: ViewController,
         private shareProvider: SocialShareProvider,
@@ -165,6 +167,9 @@ export class OrganizationProfilePage {
 
     }
 
+    showPhotoViewer(path) {
+        this.photoViewer.show(path);
+    }
 
     addFollowRecordFirebase(organizationID) {
         let user: any = firebase.auth().currentUser;

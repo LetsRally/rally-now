@@ -40,12 +40,8 @@ rally-header {
     display: block;
     white-space: nowrap;
     font-size: 0;
-    overflow: auto;
-    &::-webkit-scrollbar {
-      width: 0;
-      height: 0;
-      display: none;
-    }
+    overflow-x: scroll;
+    //-webkit-overflow-scrolling: touch;
     ion-segment-button.segment-button {
       display: inline-block;
       min-width: 60px;
