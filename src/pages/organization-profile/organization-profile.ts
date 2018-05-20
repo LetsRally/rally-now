@@ -563,14 +563,25 @@ export class OrganizationProfilePage {
     }
 
     goToFollowers(followers) {
-        if(!followers || followers == 0) {
+        if (!followers || followers == 0) {
             return;
         }
         this.navCtrl.push(OrganizationFollowersPage, {orgID: this.organizationID});
     }
 
     tweetOrg(username) {
-        this.shareProvider.twitterShare(username);
+        this.shareProvider.twitterShare(username)
+            .then((res) => {
+                console.log('twitter shared');
+                console.log(res);
+            }, err => {
+                console.log('Twitter error');
+                console.log(err);
+            })
+            .catch((err) => {
+                console.log('Twitter catch error');
+                console.log(err);
+            });
     }
 
     getOrganizationFollowStatus(actions) {
