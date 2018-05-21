@@ -34,13 +34,17 @@ rally-header {
 }
 
 .swipeable-segment {
-  margin-left: -16px;
-  margin-right: -16px;
   ion-segment {
     display: block;
     white-space: nowrap;
     font-size: 0;
     overflow-x: scroll;
+    padding-bottom: 10px;
+    &::-webkit-scrollbar {
+      width: 0;
+      height: 0;
+      display: none;
+    }
     //-webkit-overflow-scrolling: touch;
     ion-segment-button.segment-button {
       display: inline-block;
@@ -87,4 +91,9 @@ rally-header {
   top: -40px;
   bottom: 40px;
   font-size: 60px;
+}
+
+.rally-search {
+  padding-left: 10px!important;
+  padding-right: 10px!important;
 }
