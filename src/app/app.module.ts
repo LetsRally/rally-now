@@ -113,7 +113,6 @@ import { PublicFollowingPage } from '../pages/public-following/public-following'
 import { ButtonComponent } from '../components/main-button/main-button';
 import { EventLoggerProvider } from '../providers/event-logger/event-logger';
 import {ThemeableBrowser} from "@ionic-native/themeable-browser";
-import {IonAlphaScrollModule} from "ionic2-alpha-scroll";
 import {GoogleAutocompleteComponent} from "../components/google-autocomplete/google-autocomplete";
 
 
@@ -244,7 +243,6 @@ firebase.initializeApp(config);
         AngularFireModule.initializeApp(config),
         IonicStorageModule.forRoot(),
         HttpModule,
-        IonAlphaScrollModule,
         AngularFireAuthModule,
         CloudModule.forRoot(cloudSettings),
         MomentModule,

@@ -31,37 +31,31 @@
                 </div>
             </div>
         </div>
+
+        <ion-item-group *ngFor="let group of groupedItems">
+            <ion-item-divider light>{{group.letter}}</ion-item-divider>
+            <div *ngFor="let rep of group.data, let i = index">
+                <ion-item *ngIf="rep.openstate != true">
+                    <ion-avatar item-start (click)="goToRepProfile(rep.id)">
+                        <img [src]="rep.photo_url ? rep.photo_url : 'assets/img/blank-person.jpg'"
+                             style="border:2px solid #ada8a8;">
+                    </ion-avatar>
+                    <h2 text-wrap (click)="goToRepProfile(rep.id)">{{rep.name}}</h2>
+                    <p class="text-wrap" *ngIf="rep.rep_type === 'sen'">
+                        <small>US Senator for {{rep.state}}</small>
+                    </p>
+                    <p class="text-wrap" *ngIf="rep.rep_type === 'rep'">
+                        <small>US Representative for {{rep.state}}</small>
+                    </p>
+                    <main-button clear
+                                 item-end
+                                 *ngIf="rep.twitter_id && rep.twitter_id !== '' && rep.twitter_id !== 'not available'"
+                                 (click)="followRep(rep.id, $event)" class="blue"
+                                 btnText={{findInLoop(rep.followers)}}></main-button>
+                </ion-item>
+            </div>
+        </ion-item-group>
     </ion-list>
-
-    <ion-alpha-scroll *ngIf="items.length"
-                      [listData]="items"
-                      key="name"
-                      [itemTemplate]="alphaScrollItemTemplateRef"
-                      [currentPageClass]="currentPageClass"
-                      [highlight]="true"
-                      [triggerChange]="triggerAlphaScrollChange">
-    </ion-alpha-scroll>
-
-    <ng-template #alphaScrollItemTemplateRef let-rep>
-        <ion-item *ngIf="rep.openstate != true">
-            <ion-avatar item-start (click)="goToRepProfile(rep.id)">
-                <img [src]="rep.photo_url ? rep.photo_url : 'assets/img/blank-person.jpg'"
-                     style="border:2px solid #ada8a8;">
-            </ion-avatar>
-            <h2 text-wrap (click)="goToRepProfile(rep.id)">{{rep.name}}</h2>
-            <p class="text-wrap" *ngIf="rep.rep_type === 'sen'">
-                <small>US Senator for {{rep.state}}</small>
-            </p>
-            <p class="text-wrap" *ngIf="rep.rep_type === 'rep'">
-                <small>US Representative for {{rep.state}}</small>
-            </p>
-            <main-button clear
-                         item-end
-                         *ngIf="rep.twitter_id && rep.twitter_id !== '' && rep.twitter_id !== 'not available'"
-                         (click)="followRep(rep.id, $event)" class="blue"
-                         btnText={{findInLoop(rep.followers)}}></main-button>
-        </ion-item>
-    </ng-template>
 
     <ion-infinite-scroll (ionInfinite)="doInfinite($event)"
                          *ngIf="enableInfiniteScroll"

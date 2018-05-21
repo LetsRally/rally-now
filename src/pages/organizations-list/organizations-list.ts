@@ -31,6 +31,7 @@ export class OrganizationsListPage {
     public enableInfiniteScroll = true;
     loading: any;
     public items: any = [];
+    public groupedItems = [];
     currentRallyID: any;
     favEndpoint: any = 'actions';
     likeAction: any = '1e006561-8691-4052-bef8-35cc2dcbd54e';
@@ -69,11 +70,9 @@ export class OrganizationsListPage {
     }
 
     ionViewDidLoad() {
-        console.log('ionViewDidLoad FriendsRequestPage');
         this.searchControl.valueChanges.debounceTime(700).subscribe(search => {
             this.shouldShowCancel = false;
         });
-
     }
 
     getOrganizations() {
@@ -86,15 +85,43 @@ export class OrganizationsListPage {
         });
     }
 
-    triggerAlphaScrollChange() {
-        console.log('TRIGGER--------');
-    }
-
     getArray(array) {
         let temp = JSON.parse(JSON.stringify(this.items));
         temp = temp.concat(array);
         this.enablePlaceholder = false;
         this.items = temp;
+        this.groupItems(this.items);
+    }
+
+    groupItems(data) {
+        this.groupedItems = [];
+
+        function compare(a,b) {
+            if (a.name < b.name)
+                return -1;
+            if (a.name > b.name)
+                return 1;
+            return 0;
+        }
+
+        // let sortedData = data.sort(compare);
+        let sortedData = data;
+        let currentLetter = false;
+        let currentData = [];
+
+        sortedData.forEach((value, index) => {
+            if(value.name.charAt(0) != currentLetter){
+                currentLetter = value.name.charAt(0);
+                let newGroup = {
+                    letter: currentLetter,
+                    data: []
+                };
+
+                currentData = newGroup.data;
+                this.groupedItems.push(newGroup);
+            }
+            currentData.push(value);
+        });
     }
 
     doInfinite(infiniteScroll: any) {
@@ -110,17 +137,6 @@ export class OrganizationsListPage {
             OrgPageName: "Discover"
         }, {animate: true, animation: 'transition', duration: 500, direction: 'forward'});
     }
-
-    // getItems(ev: any) {
-    //     let val = ev.target.value;
-    //
-    //     // if the value is an empty string don't filter the items
-    //     if (val && val.trim() != '') {
-    //         this.items = this.items.filter((item) => {
-    //             return (item.name.toLowerCase().indexOf(val.toLowerCase()) > -1);
-    //         })
-    //     }
-    // }
 
     findInLoop(actions) {
         if (actions != null) {

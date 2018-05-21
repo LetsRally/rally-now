@@ -21,6 +21,7 @@ export class RepresentivesListPage {
     public enableInfiniteScroll = true;
     loading: any;
     items: any = [];
+    public groupedItems = [];
     currentRallyID: any;
     followEndpoint: any = 'following_representative';
     newEndpoint: any = 'reps_pagination/';
@@ -64,6 +65,37 @@ export class RepresentivesListPage {
 
     }
 
+    groupItems(data) {
+        this.groupedItems = [];
+
+        function compare(a,b) {
+            if (a.name < b.name)
+                return -1;
+            if (a.name > b.name)
+                return 1;
+            return 0;
+        }
+
+        // let sortedData = data.sort(compare);
+        let sortedData = data;
+        let currentLetter = false;
+        let currentData = [];
+
+        sortedData.forEach((value, index) => {
+            if(value.name.charAt(0) != currentLetter){
+                currentLetter = value.name.charAt(0);
+                let newGroup = {
+                    letter: currentLetter,
+                    data: []
+                };
+
+                currentData = newGroup.data;
+                this.groupedItems.push(newGroup);
+            }
+            currentData.push(value);
+        });
+    }
+
     getReps() {
         return new Promise(resolve => {
             this.orgProvider.load(this.newEndpoint, this.start)
@@ -74,15 +106,12 @@ export class RepresentivesListPage {
         });
     }
 
-    triggerAlphaScrollChange() {
-        console.log('TRIGGER--------');
-    }
-
     getArray(array) {
         let temp = JSON.parse(JSON.stringify(this.items));
         temp = temp.concat(array);
         this.enablePlaceholder = false;
         this.items = temp;
+        this.groupItems(this.items);
     }
 
 
