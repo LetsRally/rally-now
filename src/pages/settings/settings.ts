@@ -185,21 +185,14 @@ export class SettingsPage {
 
       Logout(){
         this.fire.auth.signOut().then(() =>{
+          let loginFrom = this.storage.get('loginFrom');
+          console.log('LOGIN FROM');
+          console.log(loginFrom);
+          this.httpProvider.logout(loginFrom);
           this.storage.clear();
           //this.navCtrl.setRoot(HomePage);
           this.app.getRootNav().setRoot(HomePage);
         });
-        // this.storage.remove('UID');
-        // this.storage.remove('DISPLAYNAME');
-        // this.storage.remove('USERNAME');
-        // this.storage.remove('PHOTOURL');
-        // this.storage.remove('PROVIDER');
-        // this.storage.remove('EMAIL');
-        // this.storage.remove('LOCATION');
-        // this.storage.remove('GENDER');
-        // this.storage.remove('DESCRIPTION');
-        // this.storage.set(this.HAS_LOGGED_IN, false);
-       
   } 
 
   goToEditProfile(){

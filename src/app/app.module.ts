@@ -114,6 +114,7 @@ import { ButtonComponent } from '../components/main-button/main-button';
 import { EventLoggerProvider } from '../providers/event-logger/event-logger';
 import {ThemeableBrowser} from "@ionic-native/themeable-browser";
 import {GoogleAutocompleteComponent} from "../components/google-autocomplete/google-autocomplete";
+import {GooglePlus} from "@ionic-native/google-plus";
 
 
 //import { FCM } from '@ionic-native/fcm';
@@ -343,6 +344,7 @@ firebase.initializeApp(config);
         NotificationProvider,
         Device,
         SocialShareProvider,
+        GooglePlus,
         SocialSharing,
         CallNumber,
         Network,

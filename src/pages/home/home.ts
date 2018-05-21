@@ -17,6 +17,7 @@ import {WelcomePage} from '../welcome/welcome';
 import {HelloPage} from '../hello/hello';
 import {TermsPage} from '../terms/terms';
 import {PrivacyPolicyPage} from '../privacy-policy/privacy-policy';
+import {GooglePlus} from "@ionic-native/google-plus";
 
 
 @Component({
@@ -57,6 +58,7 @@ export class HomePage {
         public alertCtrl: AlertController,
         public storage: Storage,
         private facebook: Facebook,
+        private googlePlus: GooglePlus,
         private db: AngularFireDatabase,
         private httpProvider: UsersProvider,
         private readonly ngZone: NgZone
@@ -90,78 +92,61 @@ export class HomePage {
 
     }
 
+    googleLogin() {
+        this.googlePlus.login({})
+            .then(res => {
+                console.log('GOOGLE LOGIN');
+                console.log(res);
+                this.storage.set('loginFrom', 'google');
+                this.firebaseLogin(res);
+            })
+            .catch(err => console.error(err));
+    }
+
 
     facebookLogin(): void {
         console.log("Hola Facebook API");
 
-
         this.facebook.login(["email", "public_profile", "user_friends"]).then((loginResponse) => {
-            let credential = firebase.auth.FacebookAuthProvider.credential(loginResponse.authResponse.accessToken);
-            firebase.auth().signInWithCredential(credential).then((res) => {
-                this.storage.set('UID', res.uid);
-                this.user.uid = res.uid;
-                this.storage.set('DISPLAYNAME', res.displayName);
-                this.user.displayName = res.displayName;
-                let username = res.displayName.split(" ");
-                var nickname;
-                if (username[2] != null) {
-                    nickname = (username[0] + username[2]).toLowerCase();
-                } else {
-                    nickname = (username[0] + username[1]).toLowerCase();
-
-                }
-
-                this.storage.set('USERNAME', nickname);
-                this.user.username = nickname;
-                this.storage.set('PHOTOURL', res.photoURL);
-                this.user.photoURL = res.photoURL;
-                this.storage.set('PROVIDER', 'twitter.com');
-                this.user.provider = 'facebook.com';
-                this.storage.set('EMAIL', res.email);
-                this.user.email = res.email;
-                this.storage.set('LOCATION', res.location);
-                this.storage.set('DESCRIPTION', res.description);
-                this.user.facebook_id = res.providerData[0].uid;
-                this.storage.set(this.HAS_LOGGED_IN, true);
-                this.checkIfUserExists(res.uid);
-            })
+            this.firebaseLogin(loginResponse);
+            this.storage.set('loginFrom', 'facebook');
         }, error => {
             console.log("Error connecting to Facebook", error);
         });
 
     }
 
+    firebaseLogin(response) {
+        let credential = firebase.auth.FacebookAuthProvider.credential(response.authResponse.accessToken);
+        firebase.auth().signInWithCredential(credential).then((res) => {
+            this.storage.set('UID', res.uid);
+            this.user.uid = res.uid;
+            this.storage.set('DISPLAYNAME', res.displayName);
+            this.user.displayName = res.displayName;
+            let username = res.displayName.split(" ");
+            var nickname;
+            if (username[2] != null) {
+                nickname = (username[0] + username[2]).toLowerCase();
+            } else {
+                nickname = (username[0] + username[1]).toLowerCase();
 
-// twLogin(): void {
-//   this.twitter.login().then( response => {
-//     const twitterCredential = firebase.auth.TwitterAuthProvider
-//         .credential(response.token, response.secret);
+            }
 
-//     firebase.auth().signInWithCredential(twitterCredential)
-//     .then( res => {
-//           console.log(JSON.stringify(res));
-//           this.storage.set('UID', res.uid);
-//           this.user.uid = res.uid;
-//           this.storage.set('DISPLAYNAME', res.displayName);
-//           this.user.displayName = res.displayName;
-//           this.storage.set('USERNAME', res.username);
-//           this.storage.set('PHOTOURL', res.photoURL);
-//           this.user.photoURL = res.photoURL;
-//           this.storage.set('PROVIDER', 'twitter.com');
-//           this.user.provider = 'twitter.com';
-//           this.storage.set('EMAIL', res.email);
-//           this.user.email = res.email;
-//           this.storage.set('LOCATION', res.location);
-//           this.storage.set('DESCRIPTION', res.description);
-//           this.storage.set(this.HAS_LOGGED_IN, true);
-//           this.checkIfUserExists(res.uid);
-
-//     });
-//   }, error => {
-//     console.log("Error connecting to twitter: ", error);
-//   });
-// }
-
+            this.storage.set('USERNAME', nickname);
+            this.user.username = nickname;
+            this.storage.set('PHOTOURL', res.photoURL);
+            this.user.photoURL = res.photoURL;
+            this.storage.set('PROVIDER', 'twitter.com');
+            this.user.provider = 'facebook.com';
+            this.storage.set('EMAIL', res.email);
+            this.user.email = res.email;
+            this.storage.set('LOCATION', res.location);
+            this.storage.set('DESCRIPTION', res.description);
+            this.user.facebook_id = res.providerData[0].uid;
+            this.storage.set(this.HAS_LOGGED_IN, true);
+            this.checkIfUserExists(res.uid);
+        })
+    }
 
     Logout() {
         this.fire.auth.signOut();

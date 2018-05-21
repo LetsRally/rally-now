@@ -29,10 +29,11 @@
     "@ionic-native/call-number": "^4.3.2",
     "@ionic-native/camera": "^4.2.1",
     "@ionic-native/contacts": "^4.5.2",
-    "@ionic-native/core": "3.12.1",
+    "@ionic-native/core": "^4.7.0",
     "@ionic-native/device": "^4.3.1",
     "@ionic-native/facebook": "^4.1.0",
     "@ionic-native/fcm": "^4.5.3",
+    "@ionic-native/google-plus": "^4.7.0",
     "@ionic-native/image-picker": "^4.2.1",
     "@ionic-native/in-app-browser": "^4.5.2",
     "@ionic-native/keyboard": "^4.5.3",
@@ -66,6 +67,7 @@
     "cordova-plugin-device": "^1.1.7",
     "cordova-plugin-facebook4": "^1.9.1",
     "cordova-plugin-fcm": "^2.1.2",
+    "cordova-plugin-googleplus": "^5.3.0",
     "cordova-plugin-inappbrowser": "^1.7.2",
     "cordova-plugin-nativegeocoder": "^2.0.5",
     "cordova-plugin-network-information": "^1.3.4",
@@ -143,7 +145,10 @@
       "cordova-plugin-appsee": {},
       "cordova-plugin-fcm": {},
       "cordova-plugin-themeablebrowser": {},
-      "cordova-plugin-splashscreen": {}
+      "cordova-plugin-splashscreen": {},
+      "cordova-plugin-googleplus": {
+        "REVERSED_CLIENT_ID": "com.googleusercontent.apps.1017475098724-6db20gecnqlgvvjn1eto3568nusc5hu5"
+      }
     },
     "platforms": [
       "android",
