@@ -98,7 +98,7 @@ export class HomePage {
                 console.log('GOOGLE LOGIN');
                 console.log(res);
                 this.storage.set('loginFrom', 'google');
-                this.firebaseLogin(res);
+                this.firebaseGoogleLogin(res);
             })
             .catch(err => console.error(err));
     }
@@ -108,7 +108,7 @@ export class HomePage {
         console.log("Hola Facebook API");
 
         this.facebook.login(["email", "public_profile", "user_friends"]).then((loginResponse) => {
-            this.firebaseLogin(loginResponse);
+            this.firebaseFacebookLogin(loginResponse);
             this.storage.set('loginFrom', 'facebook');
         }, error => {
             console.log("Error connecting to Facebook", error);
@@ -116,7 +116,7 @@ export class HomePage {
 
     }
 
-    firebaseLogin(response) {
+    firebaseFacebookLogin(response) {
         let credential = firebase.auth.FacebookAuthProvider.credential(response.authResponse.accessToken);
         firebase.auth().signInWithCredential(credential).then((res) => {
             this.storage.set('UID', res.uid);
@@ -148,8 +148,49 @@ export class HomePage {
         })
     }
 
-    Logout() {
-        this.fire.auth.signOut();
+    firebaseGoogleLogin(response) {
+        console.log(response);
+        let credential = firebase.auth.GoogleAuthProvider.credential(response.accessToken, response.idToken);
+        console.log('000000000');
+        console.log(credential);
+        firebase.auth().signInWithCredential(credential)
+            .then((res) => {
+                console.log('RES=======');
+                console.log(res);
+                // this.storage.set('UID', res.uid);
+                // this.user.uid = res.uid;
+                this.storage.set('DISPLAYNAME', res.displayName);
+                this.user.displayName = res.displayName;
+                let username = [res.familyName, res.givenName];
+                var nickname;
+                if (username[2] != null) {
+                    nickname = (username[0] + username[2]).toLowerCase();
+                } else {
+                    nickname = (username[0] + username[1]).toLowerCase();
+
+                }
+
+                this.storage.set('USERNAME', nickname);
+                this.user.username = nickname;
+                this.storage.set('PHOTOURL', res.imageURL);
+                this.user.photoURL = res.imageURL;
+                this.storage.set('PROVIDER', 'google.com');
+                this.user.provider = 'google.com';
+                this.storage.set('EMAIL', res.email);
+                this.user.email = res.email;
+                // this.storage.set('LOCATION', res.location);
+                // this.storage.set('DESCRIPTION', res.description);
+                // this.user.facebook_id = res.providerData[0].uid;
+                this.storage.set(this.HAS_LOGGED_IN, true);
+                this.checkIfUserExists(res.userId);
+            }, err => {
+                console.log('ERROR');
+                console.log(err);
+            })
+            .catch((err) => {
+                console.log('CATCH ERROR');
+                console.log(err);
+            })
     }
 
 
