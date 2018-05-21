@@ -125,8 +125,6 @@ export class MyRepresentativesPage {
     });
   }
 
-  
-
   presentActionSheet(rep, fax, twitter, email, repID, offices) {
     let buttonsArray = [{
           text: 'Call', 

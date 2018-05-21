@@ -420,12 +420,12 @@ export class OrganizationsPage {
 
                     }
                 },
-                {
-                    text: 'Hide post',
-                    handler: () => {
-                        this.hideItem(id, index);
-                    }
-                },
+                // {
+                //     text: 'Hide post',
+                //     handler: () => {
+                //         this.hideItem(id, index);
+                //     }
+                // },
                 {
                     text: this.notifyExist(notify) + name,
                     handler: () => {

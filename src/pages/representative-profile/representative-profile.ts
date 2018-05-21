@@ -13,6 +13,9 @@ import {RepFollowersPage} from '../rep-followers/rep-followers';
 import {ThanksPage} from '../thanks/thanks';
 import {ThemeableBrowser} from "@ionic-native/themeable-browser";
 import * as constants from '../../constants/constants';
+import {EmailFeedBackPage} from "../email-feed-back/email-feed-back";
+import {CallRepPage} from "../call-rep/call-rep";
+import {FaxFeedBackPage} from "../fax-feed-back/fax-feed-back";
 
 
 @IonicPage()
@@ -22,6 +25,13 @@ import * as constants from '../../constants/constants';
 })
 export class RepresentativeProfilePage {
 
+    data:any = [{
+        user_id: '',
+        title: '',
+        short_desc: '',
+        representative_id: '',
+        action_type_id: ''
+    }];
     endpoint: any = 'reps/';
     name: any;
     twitter_id: any;
@@ -40,6 +50,8 @@ export class RepresentativeProfilePage {
     favEndpoint: any = 'actions';
     shareAction: any = '875b4997-f4e0-4014-a808-2403e0cf24f0';
     isFollowing: boolean = false;
+    private representative: any;
+    private user: any;
 
 
     constructor(
@@ -51,11 +63,12 @@ export class RepresentativeProfilePage {
         private themeableBrowser: ThemeableBrowser,
         public actionSheetCtrl: ActionSheetController,
         public modalCtrl: ModalController) {
-        console.log("Rep ID", navParams.get('repID'));
         this.getRepData(navParams.get('repID'));
         this.httpProvider.returnRallyUserId().then(
             user => {
                 this.currentRallyID = user.apiRallyID;
+                this.user = user;
+                this.data.user_id = user.apiRallyID;
             });
     }
 
@@ -63,12 +76,14 @@ export class RepresentativeProfilePage {
     getRepData(repID) {
         this.httpProvider.getJsonData(this.endpoint + repID).subscribe(result => {
             console.log(result);
+            this.representative = result;
             this.name = result.name;
             this.twitter_id = result.twitter_id;
             this.followers_count = result.followers_count;
             this.description = result.description;
             this.photo_url = result.photo_url;
             this.repID = result.id;
+            this.data.representative_id = result.id;
             this.followers = result.followers;
             this.post_count = result.post_count;
             this.posts = result.posts;
@@ -455,5 +470,85 @@ export class RepresentativeProfilePage {
             });
     }
 
+    contact() {
+        this.presentActionSheet();
+    }
+
+    presentActionSheet() {
+        let rep = this.representative,
+            fax = this.representative.fax_url,
+            twitter = this.representative.twitter_id,
+            repID = this.representative.id,
+            email = this.representative.contact_form,
+            offices = this.representative.offices;
+
+        let buttonsArray = [{
+            text: 'Call',
+            handler: () => {
+                this.navCtrl.push(CallRepPage, {rep: rep, repID: repID, offices: offices, user: this.user});
+            }
+        }];
+
+
+        if (fax) {
+            buttonsArray.push(
+                {
+                    text: 'Fax',
+                    handler: () => {
+                        console.log('Fax clicked');
+                        this.navCtrl.push(FaxFeedBackPage, {iframeUrl: fax, repID: repID});
+                    }
+                }
+            );
+        }
+
+        if (email) {
+            buttonsArray.push(
+                {
+                    text: 'Email',
+                    handler: () => {
+                        console.log('Email clicked');
+                        // this.data.title = 'email';
+                        // this.data.action_type_id = 'f9b53bc8-9847-4699-b897-521d8e1a34bb';
+                        // this.httpProvider.addAction(this.favEndpoint, this.data);
+                        this.navCtrl.push(EmailFeedBackPage, {iframeUrl: email, repID: repID});
+                    }
+                }
+            )
+        }
+
+        if (twitter) {
+            buttonsArray.push(
+                {
+                    text: 'Post message via Twitter',
+                    handler: () => {
+                        console.log('Post message via Twitter clicked');
+
+                        this.shareProvider.twitterShare('@' + twitter).then(() => {
+                            this.data.title = 'tweet';
+                            this.data.action_type_id = '9eef1652-ccf9-449a-901e-ad6c0b3a8a6c';
+                            this.httpProvider.addAction(this.favEndpoint, this.data);
+                            this.streakModal();
+                        });
+                    }
+                }
+            )
+        }
+
+
+        buttonsArray[buttonsArray.length] = {
+            text: 'Cancel',
+            // role: 'cancel',
+            handler: () => {
+                console.log('Cancel clicked');
+            }
+        };
+
+        let actionSheet = this.actionSheetCtrl.create({
+            title: 'Contact ' + rep.name,
+            buttons: buttonsArray
+        });
+        actionSheet.present();
+    }
 
 }
