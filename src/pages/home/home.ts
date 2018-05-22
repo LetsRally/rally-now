@@ -150,7 +150,7 @@ export class HomePage {
 
     firebaseGoogleLogin(response) {
         console.log(response);
-        let credential = firebase.auth.GoogleAuthProvider.credential(response.accessToken, response.idToken);
+        let credential = firebase.auth.GoogleAuthProvider.credential(response.idToken);
         console.log('000000000');
         console.log(credential);
         firebase.auth().signInWithCredential(credential)

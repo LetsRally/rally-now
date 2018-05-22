@@ -5,13 +5,20 @@
     <ion-card class="Card">
         <ion-item>
             <ion-fab>
-                <button ion-fab color="light"><ion-icon name="ios-more"></ion-icon></button>
+                <button ion-fab color="light">
+                    <ion-icon name="ios-more"></ion-icon>
+                </button>
             </ion-fab>
             <ion-avatar item-start (click)="goToOrganizationProfile(organizationID)">
                 <img src="{{orgPhoto}}">
             </ion-avatar>
-            <h2 (click)="goToOrganizationProfile(organizationID)"><small>via</small> {{orgName}}</h2>
-            <p><small>{{date | amTimeAgo}}</small></p>
+            <h2 (click)="goToOrganizationProfile(organizationID)">
+                <small>via</small>
+                {{orgName}}
+            </h2>
+            <p>
+                <small>{{date | amTimeAgo}}</small>
+            </p>
         </ion-item>
 
         <div class="organization-bg" [ngStyle]="{ 'background-image' : 'url(&#34;' + objectivesMedia +'&#34;)'}">
@@ -25,7 +32,8 @@
         </div>
 
         <ion-list>
-            <ion-item text-wrap *ngFor="let d of information; let i=index" (click)="toggleGroup(i)" [ngClass]="{active: isGroupShown(i)}">
+            <ion-item text-wrap *ngFor="let d of information; let i=index" (click)="toggleGroup(i)"
+                      [ngClass]="{active: isGroupShown(i)}">
                 <div class="toggle-header">{{d.title}}
                     <ion-icon [name]="isGroupShown(i) ? 'ios-remove' : 'ios-add'" item-end></ion-icon>
                 </div>
@@ -41,41 +49,63 @@
                 <button ion-button color="dark" clear (click)="finReps()">FIND MY REPS</button>
             </div>
         </ion-row>
-  
-        <ion-list *ngIf="enable">
-                <ion-item (click)="finReps()" *ngIf="!enableSpecificRep">
-                   <h2>YOUR REPRESENTATIVES</h2>
-                   <p>{{repAddress}}</p>
-                   <ion-icon name="md-create" item-end></ion-icon>
+
+        <ion-list *ngIf="enable" class="your-representatives">
+            <ion-item (click)="finReps()" *ngIf="!enableSpecificRep">
+                <h2>YOUR REPRESENTATIVES</h2>
+                <p>{{repAddress}}</p>
+                <ion-icon name="md-create" item-end></ion-icon>
+            </ion-item>
+            <div *ngIf="enableReps" class="rep-box">
+                <ion-item *ngFor="let rep of reps">
+                    <ion-avatar item-start (click)="getID(rep.bioguide)">
+                        <img src="{{rep.photo_url}}" style="border-radius: 50%;">
+                    </ion-avatar>
+
+                    <div class="item-box-org">
+                        <div class="text-box-org">
+                            <h2 (click)="getID(rep.bioguide)">{{rep.name}}</h2>
+                            <p>
+                                <small>US Representative for {{rep.state_name}} District {{rep.district}}</small>
+                            </p>
+                        </div>
+
+                        <div class="button-box-org">
+                            <button (click)="getRepID(rep, rep.civil_services_url ,rep.twitter_url,rep.contact_page, rep.bioguide)"
+                                    item-end
+                                    ion-button
+                                    class="action-btn red">Contact
+                            </button>
+                        </div>
+                    </div>
                 </ion-item>
-                <div *ngIf="enableReps">
-                    <ion-item *ngFor="let rep of reps">
-                        <ion-avatar item-start (click)="getID(rep.bioguide)">
-                            <img src="{{rep.photo_url}}" style="border-radius: 50%;">
-                        </ion-avatar>
-                        <h2 (click)="getID(rep.bioguide)">{{rep.name}}</h2>
-                        <p><small>US Representative for {{rep.state_name}} District {{rep.district}} </small></p>
-                        <button (click)="getRepID(rep, rep.civil_services_url ,rep.twitter_url,rep.contact_page, rep.bioguide)"
-                                item-end
-                                ion-button
-                                class="action-btn red">Contact</button>
-                    </ion-item>
-                    
-                </div>
-          
-            <div *ngIf="enableSen">
+
+            </div>
+
+            <div *ngIf="enableSen" class="rep-box">
                 <ion-item *ngFor="let rep of senators">
                     <ion-avatar item-start (click)="getID(rep.bioguide)">
                         <img src="{{rep.photo_url}}" style="border-radius: 50%;">
                     </ion-avatar>
-                    <h2 (click)="getID(rep.bioguide)">{{rep.name}}</h2>
-                    <p><small>US Senator for {{rep.state_name}}</small></p>
-                    <button (click)="getRepID(rep, rep.civil_services_url ,rep.twitter_url,rep.contact_page, rep.bioguide)"
-                            item-end
-                            ion-button
-                            class="action-btn red">Contact</button>
+
+                    <div class="item-box-org">
+                        <div class="text-box-org">
+                            <h2 (click)="getID(rep.bioguide)">{{rep.name}}</h2>
+                            <p>
+                                <small>US Senator for {{rep.state_name}}</small>
+                            </p>
+                        </div>
+
+                        <div class="button-box-org">
+                            <button (click)="getRepID(rep, rep.civil_services_url ,rep.twitter_url,rep.contact_page, rep.bioguide)"
+                                    item-end
+                                    ion-button
+                                    class="action-btn red">Contact
+                            </button>
+                        </div>
+                    </div>
                 </ion-item>
-                
+
             </div>
 
             <!-- <div *ngIf="enableSpecificRep">
@@ -88,31 +118,41 @@
                     <button (click)="presentActionSheet(rep, rep.fax_url, rep.twitter_id, rep.url, rep.id, rep.offices)" item-end ion-button color="dark" class="action-btn">Contact</button>
                 </ion-item>
             </div> -->
-          
-          
+
+
         </ion-list>
         <ion-list>
-            <div *ngIf="enableSpecificRep">
-                    <ion-item *ngFor="let rep of reps_goals">
-                        <ion-avatar item-start (click)="goToRepProfile(rep.id)">
-                            <img src="{{rep.photo_url}}" style="border-radius: 50%;">
-                        </ion-avatar>
-                        <h2 (click)="goToRepProfile(rep.id)">{{rep.name}}</h2>
-                        <p><small>US Senator for {{rep.state}}</small></p>
-                        <button (click)="presentActionSheet(rep, rep.fax_url, rep.twitter_id, rep.url, rep.id, rep.offices)"
-                                item-end
-                                ion-button
-                                class="action-btn">Contact</button>
-                    </ion-item>
-                </div>
-    </ion-list>
+            <div *ngIf="enableSpecificRep" class="rep-box">
+                <ion-item *ngFor="let rep of reps_goals">
+                    <ion-avatar item-start (click)="goToRepProfile(rep.id)">
+                        <img src="{{rep.photo_url}}" style="border-radius: 50%;">
+                    </ion-avatar>
+
+                    <div class="item-box-org">
+                        <div class="text-box-org">
+                            <h2 (click)="goToRepProfile(rep.id)">{{rep.name}}</h2>
+                            <p>
+                                <small>US Senator for {{rep.state}}</small>
+                            </p>
+                        </div>
+
+                        <div class="button-box-org">
+                            <button (click)="presentActionSheet(rep, rep.fax_url, rep.twitter_id, rep.url, rep.id, rep.offices)"
+                                    item-end
+                                    ion-button
+                                    class="action-btn">Contact
+                            </button>
+                        </div>
+                    </div>
+                </ion-item>
+            </div>
+        </ion-list>
         <div class="flex-center" *ngIf="message">
             <h2>Sorry, no results matched your criteria.</h2>
 
         </div>
 
 
-        
     </ion-card>
 
     <div class="test"></div>
@@ -123,14 +163,17 @@
 <ion-footer>
     <ion-toolbar style="min-height: auto; padding: 0;">
         <ion-row>
-            <button [disabled]="disable" class="btn-50 right-border" ion-button icon-left clear full (click)="getLikeStatus($event, goal_id, goalLike)" [ngStyle]="{'background-color': findInLoop(actions?.user_likes)}">
-                <ion-icon name="{{getIcon(objective?.goals[0]?.user_likes)}}" ></ion-icon>
+            <button [disabled]="disable" class="btn-50 right-border" ion-button icon-left clear full
+                    (click)="getLikeStatus($event, goal_id, goalLike)"
+                    [ngStyle]="{'background-color': findInLoop(actions?.user_likes)}">
+                <ion-icon name="{{getIcon(objective?.goals[0]?.user_likes)}}"></ion-icon>
                 {{likes}}
             </button>
-            <button [disabled]="disable" class="btn-50" ion-button icon-left clear full  (click)="shareController(objTitle, 'assets/img/login-image.jpg', goal_id, shareAction, $event)">
+            <button [disabled]="disable" class="btn-50" ion-button icon-left clear full
+                    (click)="shareController(objTitle, 'assets/img/login-image.jpg', goal_id, shareAction, $event)">
                 <img src="assets/img/Share-white.svg" style="width: 17px; margin-right:8px;">
-            {{shares}}
-          </button>
+                {{shares}}
+            </button>
 
         </ion-row>
     </ion-toolbar>
