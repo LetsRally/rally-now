@@ -272,7 +272,7 @@ page-organization-action {
             }
         }
         .label {
-            display: inline-flex;
+            height: 100%;
             h2 {
                 color: #2b2b2b!important;
                 font-weight: normal!important;
@@ -300,6 +300,9 @@ page-organization-action {
 
     .item-box-org {
         display: flex;
+        justify-content: space-between;
+        flex: 1;
+        height: 100%;
     }
     .text-box-org {
         margin-top: 4px;
