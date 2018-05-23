@@ -504,12 +504,6 @@ export class TakeactionPage {
 
                     }
                 },
-                // {
-                //     text: 'Hide post',
-                //     handler: () => {
-                //         this.hideItem(id, index);
-                //     }
-                // },
                 {
                     text: this.notifyExist(notify) + name,
                     handler: () => {

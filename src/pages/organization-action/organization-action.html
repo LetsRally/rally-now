@@ -5,7 +5,9 @@
     <ion-card class="Card">
         <ion-item>
             <ion-fab>
-                <button ion-fab color="light">
+                <button ion-fab
+                        (click)="ellipsisController()"
+                        color="light">
                     <ion-icon name="ios-more"></ion-icon>
                 </button>
             </ion-fab>
@@ -46,7 +48,10 @@
         <ion-row *ngIf="!enable">
             <div class="flex-center" *ngIf="!enableSpecificRep">
                 <h2>No representatives</h2>
-                <button ion-button color="dark" clear (click)="finReps()">FIND MY REPS</button>
+                <main-button
+                        class="blue"
+                        btnText="FIND MY REPS"
+                        (click)="finReps()"></main-button>
             </div>
         </ion-row>
 
