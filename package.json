@@ -119,8 +119,8 @@
         "PHOTOLIBRARY_USAGE_DESCRIPTION": "$(PRODUCT_NAME) media library use"
       },
       "cordova-plugin-facebook4": {
-        "APP_ID": "163624830854172",
-        "APP_NAME": "Rally U"
+        "APP_ID": "460120994422222",
+        "APP_NAME": "Rally"
       },
       "twitter-connect-plugin": {
         "FABRIC_KEY": "3c645ae4b4b4f24dc1bb3bdba248f53e7a904d79",
