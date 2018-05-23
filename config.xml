@@ -9,7 +9,7 @@
             <path url="/__/auth/callback" />
         </host>
     </universal-links>
-    <content src="index.html" />
+    <content original-src="index.html" src="http://192.168.1.6:8100" />
     <access origin="*" />
     <allow-navigation href="*" />
     <allow-navigation href="http://ionic.local/*" />
@@ -222,6 +222,10 @@
     <plugin name="cordova-plugin-customurlscheme" spec="~4.3.0">
         <variable name="URL_SCHEME" value="rallyapp" />
     </plugin>
+    <plugin name="cordova-plugin-facebook4" spec="~1.9.1">
+        <variable name="APP_ID" value="163624830854172" />
+        <variable name="APP_NAME" value="Rally" />
+    </plugin>
     <allow-navigation href="http://169.254.116.166:8100" />
     <allow-navigation href="http://169.254.189.190:8100" />
     <allow-navigation href="http://169.254.131.0:8100" />
@@ -258,9 +262,5 @@
         <variable name="TWITTER_SECRET" value="RkghHyvOiYsLLDhynTGm1gjZUBtEyn0OMNzmt61rmWGqfnSb0Y" />
     </plugin>
     <engine name="android" spec="6.3.0" />
-    <plugin name="cordova-plugin-facebook4" spec="^1.9.1">
-        <variable name="APP_ID" value="460120994422222" />
-        <variable name="APP_NAME" value="Rally" />
-    </plugin>
-    <engine name="ios" spec="~4.5.4" />
+    <engine name="ios" spec="4.5.4" />
 </widget>

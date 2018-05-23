@@ -140,15 +140,15 @@ import * as configs from "../configs/config";
 
    };
 
-// var config = {
-//    apiKey: "AIzaSyD72XPFvI7g9btbl20FGsCuoRF5rOqOFyM",
-//     authDomain: "rally-up-12c9b.firebaseapp.com",
-//     databaseURL: "https://rally-up-12c9b.firebaseio.com",
-//     projectId: "rally-up-12c9b",
-//     storageBucket: "rally-up-12c9b.appspot.com",
-//     messagingSenderId: "1017475098724"
-//   };
-var config = configs.firebaseConfig.fire;
+var config = {
+   apiKey: "AIzaSyD72XPFvI7g9btbl20FGsCuoRF5rOqOFyM",
+    authDomain: "rally-up-12c9b.firebaseapp.com",
+    databaseURL: "https://rally-up-12c9b.firebaseio.com",
+    projectId: "rally-up-12c9b",
+    storageBucket: "rally-up-12c9b.appspot.com",
+    messagingSenderId: "1017475098724"
+  };
+// var config = configs.firebaseConfig.fire;
    
 
 firebase.initializeApp(config);
