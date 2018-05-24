@@ -246,75 +246,15 @@ export class EventDetailPage {
         modal.present();
     }
 
-    shareController(title, imgURI, reference_id, like_type, $event) {
+    shareController() {
         this.disable = true;
-
-        const actionSheet = this.actionSheetCtrl.create({
-            title: 'Share to where?',
-            buttons: [
-                {
-                    text: 'Facebook',
-                    handler: () => {
-                        this.shareProvider.facebookShare(title, imgURI);
-                        this.addShareAction(reference_id, like_type);
-                        $event.path[1].lastChild.data++;
-                        this.disable = false;
-                        this.streakModal();
-
-                    }
-                },
-                {
-                    text: 'Twitter',
-                    handler: () => {
-                        this.shareProvider.twitterShare(title, imgURI).then(() => {
-                            this.addShareAction(reference_id, like_type);
-                            $event.path[1].lastChild.data++;
-                            this.disable = false;
-                            this.streakModal();
-                        }).catch((error) => {
-                            console.error("shareViaWhatsapp: failed", error);
-                            this.disable = false;
-
-                        });
-
-
-                    }
-                },
-                //  {
-                //   text: 'Copy Link',
-                //   handler: () => {
-                //     this.disable = false;
-
-                //   }
-                // },
-                // {
-                //   text: 'SMS Message',
-                //   handler: () => {
-                //     this.disable = false;
-
-                //   }
-                // },
-                // {
-                //   text: 'Email',
-                //   handler: () => {
-
-                //     this.disable = false;
-
-                //   }
-                // },
-                {
-                    text: 'Cancel',
-                    role: 'cancel',
-                    handler: () => {
-                        console.log('Cancel clicked');
-                        this.disable = false;
-
-                    }
-                }
-            ]
-        });
-
-        actionSheet.present();
+        this.shareProvider.otherShare(this.title, 'MESSAGE ---', this.image_url, constants.appStoreUrl)
+            .then(() => {
+                this.disable = false;
+            }, err => {
+                console.log(err);
+                this.disable = false;
+            })
     }
 
     addShareAction(goal_id, action_type_id) {
@@ -347,13 +287,20 @@ export class EventDetailPage {
     }
 
     eventEllipsisController(name, orgID, followers, notify) {
+        this.disable = true;
         const actionSheet = this.actionSheetCtrl.create({
             buttons: [
                 {
                     text: 'Share this event via...',
                     handler: () => {
                         console.log("test");
-
+                        this.shareProvider.otherShare(this.title, 'MESSAGE ---', this.image_url, constants.appStoreUrl)
+                            .then(() => {
+                                this.disable = false;
+                            }, err => {
+                                console.log(err);
+                                this.disable = false;
+                            })
                     }
                 },
                 {
@@ -361,7 +308,7 @@ export class EventDetailPage {
                     handler: () => {
                         console.log("test");
                         this.checkNotifiers(orgID);
-
+                        this.disable = false;
                     }
                 },
                 {
@@ -369,7 +316,7 @@ export class EventDetailPage {
                     handler: () => {
                         this.orgStatus(orgID);
                         console.log("test");
-
+                        this.disable = false;
                     }
                 },
                 {
@@ -377,7 +324,7 @@ export class EventDetailPage {
                     role: 'destructive',
                     handler: () => {
                         console.log("test");
-
+                        this.disable = false;
                     }
                 },
                 {
@@ -385,6 +332,7 @@ export class EventDetailPage {
                     role: 'cancel',
                     handler: () => {
                         console.log('Cancel clicked');
+                        this.disable = false;
                     }
                 }
             ]

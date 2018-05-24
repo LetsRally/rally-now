@@ -22,7 +22,7 @@ import {EmailFeedBackPage} from '../email-feed-back/email-feed-back';
 import {OrganizationProfilePage} from '../organization-profile/organization-profile';
 import {ThanksPage} from '../thanks/thanks';
 import {RepresentativeProfilePage} from '../representative-profile/representative-profile';
-
+import * as constants from '../../constants/constants';
 
 @IonicPage()
 @Component({
@@ -135,8 +135,6 @@ export class OrganizationActionPage {
                     text: 'Fax',
                     handler: () => {
                         console.log('Fax clicked');
-                        // this.data.action_type_id = 'ad3ef19b-d809-45b7-bef2-d470c9af0d1d';
-                        // this.httpProvider.addAction(this.favEndpoint, this.data);
                         this.navCtrl.push(FaxFeedBackPage, {
                             iframeUrl: fax,
                             repID: repID,
@@ -155,8 +153,6 @@ export class OrganizationActionPage {
                     text: 'Email',
                     handler: () => {
                         console.log('Email clicked');
-                        // this.data.action_type_id = 'f9b53bc8-9847-4699-b897-521d8e1a34bb';
-                        // this.httpProvider.addAction(this.favEndpoint, this.data);
                         this.navCtrl.push(EmailFeedBackPage, {
                             iframeUrl: email,
                             repID: repID,
@@ -348,50 +344,16 @@ export class OrganizationActionPage {
     }
 
 
-    shareController(title, imgURI, reference_id, like_type, $event) {
+    shareController() {
         this.disable = true;
 
-        const actionSheet = this.actionSheetCtrl.create({
-            title: 'Share to where?',
-            buttons: [
-                {
-                    text: 'Facebook',
-                    handler: () => {
-                        this.shareProvider.facebookShare(title, imgURI);
-                        this.addShareAction(reference_id, like_type);
-                        $event.srcElement.lastChild.data++;
-                        this.disable = false;
-                    }
-                },
-                {
-                    text: 'Twitter',
-                    handler: () => {
-                        this.shareProvider.twitterShare(title, imgURI).then(() => {
-                            this.addShareAction(reference_id, like_type);
-                            $event.srcElement.lastChild.data++;
-                            this.disable = false;
-                        }).catch((error) => {
-                            console.error("shareViaWhatsapp: failed", error);
-                            this.disable = false;
-
-                        });
-
-
-                    }
-                },
-                {
-                    text: 'Cancel',
-                    role: 'cancel',
-                    handler: () => {
-                        console.log('Cancel clicked');
-                        this.disable = false;
-
-                    }
-                }
-            ]
-        });
-
-        actionSheet.present();
+        this.shareProvider.otherShare(this.objTitle, 'MESSAGE---', this.orgPhoto, constants.appStoreUrl)
+            .then(() => {
+                this.disable = false;
+            }, err => {
+                console.log(err);
+                this.disable = false;
+            })
     }
 
     addShareAction(goal_id, action_type_id) {
@@ -503,18 +465,27 @@ export class OrganizationActionPage {
     }
 
     ellipsisController() {
+        this.disable = true;
+
         let name = this.orgName,
             orgID = this.organizationID,
-            desc = this.orgDescription,
             followers = this.objective.organization['followers'],
-            notify = this.objective.organization['notify'];
+            notify = this.objective.organization['notify'],
+            title = this.objTitle,
+            imgURI = this.orgPhoto;
 
         const actionSheet = this.actionSheetCtrl.create({
             buttons: [
                 {
                     text: 'Share this post via...',
                     handler: () => {
-                        this.shareProvider.otherShare(name, desc);
+                        this.shareProvider.otherShare(title, 'MESSAGE---', imgURI, constants.appStoreUrl)
+                            .then(() => {
+                                this.disable = false;
+                            }, err => {
+                                console.log(err);
+                                this.disable = false;
+                            })
 
                     }
                 },

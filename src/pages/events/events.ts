@@ -28,6 +28,7 @@ import {DomSanitizer} from '@angular/platform-browser';
 import {ThanksPage} from '../thanks/thanks';
 import {FilterModel} from "../../models/filter-model";
 import {DataProvider} from "../../providers/data/data";
+import * as constants from "../../constants/constants";
 
 
 @IonicPage()
@@ -92,9 +93,9 @@ export class EventsPage {
     setBaseFilterState() {
         let baseFilterState = new FilterModel();
         let date = this.dataService.getCurrentDate();
-            baseFilterState.timeStarts = date.currentDate;
-            baseFilterState.timeEnds = date.nextYear;
-            this.baseFilterState = JSON.stringify(baseFilterState);
+        baseFilterState.timeStarts = date.currentDate;
+        baseFilterState.timeEnds = date.nextYear;
+        this.baseFilterState = JSON.stringify(baseFilterState);
     }
 
     getFilterSettings() {
@@ -105,10 +106,10 @@ export class EventsPage {
 
             let date = this.dataService.getCurrentDate();
 
-            if(!this.filterState.timeStarts || this.filterState.timeStarts === '') {
+            if (!this.filterState.timeStarts || this.filterState.timeStarts === '') {
                 this.filterState.timeStarts = date.currentDate;
             }
-            if(!this.filterState.timeEnds || this.filterState.timeEnds === '') {
+            if (!this.filterState.timeEnds || this.filterState.timeEnds === '') {
                 this.filterState.timeEnds = date.nextYear;
             }
 
@@ -118,7 +119,7 @@ export class EventsPage {
 
     checkDifferentFilterState() {
         let currentFilterState = JSON.stringify(this.filterState);
-        if(this.baseFilterState === currentFilterState) {
+        if (this.baseFilterState === currentFilterState) {
             this.eventFiltered = false;
         } else {
             this.eventFiltered = true;
@@ -172,7 +173,7 @@ export class EventsPage {
 
 
     getFollowedEvents(startDate, endDate, zipcode, distance) {
-        if(this.start === 1) {
+        if (this.start === 1) {
             this.events = [];
         }
 
@@ -188,7 +189,7 @@ export class EventsPage {
     }
 
     getAllEvents() {
-        if(this.start === 1) {
+        if (this.start === 1) {
             this.events = [];
         }
         return new Promise((resolve, reject) => {
@@ -212,7 +213,7 @@ export class EventsPage {
     }
 
     getFilteredEvents(startDate, endDate, zipcode, distance) {
-        if(this.start === 1) {
+        if (this.start === 1) {
             this.events = [];
         }
 
@@ -402,73 +403,13 @@ export class EventsPage {
 
     shareController(title, imgURI, reference_id, like_type, $event) {
         this.disable = true;
-
-        const actionSheet = this.actionSheetCtrl.create({
-            title: 'Share to where?',
-            buttons: [
-                {
-                    text: 'Facebook',
-                    handler: () => {
-                        this.shareProvider.facebookShare(title, imgURI);
-                        this.addShareAction(reference_id, like_type);
-                        $event.path[1].lastChild.data++;
-                        this.disable = false;
-                        this.streakModal();
-
-                    }
-                },
-                {
-                    text: 'Twitter',
-                    handler: () => {
-                        this.shareProvider.twitterShare(title, imgURI).then(() => {
-                            this.addShareAction(reference_id, like_type);
-                            $event.path[1].lastChild.data++;
-                            this.disable = false;
-                            this.streakModal();
-                        }).catch((error) => {
-                            console.error("shareViaWhatsapp: failed", error);
-                            this.disable = false;
-
-                        });
-
-
-                    }
-                },
-                //  {
-                //   text: 'Copy Link',
-                //   handler: () => {
-                //     this.disable = false;
-
-                //   }
-                // },
-                // {
-                //   text: 'SMS Message',
-                //   handler: () => {
-                //     this.disable = false;
-
-                //   }
-                // },
-                // {
-                //   text: 'Email',
-                //   handler: () => {
-
-                //     this.disable = false;
-
-                //   }
-                // },
-                {
-                    text: 'Cancel',
-                    role: 'cancel',
-                    handler: () => {
-                        console.log('Cancel clicked');
-                        this.disable = false;
-
-                    }
-                }
-            ]
-        });
-
-        actionSheet.present();
+        this.shareProvider.otherShare(title,'MESSAGE ---', imgURI, constants.appStoreUrl)
+            .then(() => {
+                this.disable = false;
+            }, err => {
+                console.log(err);
+                this.disable = false;
+            })
     }
 
 
@@ -476,14 +417,21 @@ export class EventsPage {
         this.httpProvider.addShareAction(this.favEndpoint, goal_id, action_type_id, this.myrallyID);
     }
 
-    eventEllipsisController(name, orgID, followers, notify) {
+    eventEllipsisController(name, orgID, followers, notify, title, imgURI) {
+        this.disable = true;
         const actionSheet = this.actionSheetCtrl.create({
             buttons: [
                 {
                     text: 'Share this event via...',
                     handler: () => {
                         console.log("test");
-
+                        this.shareProvider.otherShare(title, 'MESSAGE ---', imgURI, constants.appStoreUrl)
+                            .then(() => {
+                                this.disable = false;
+                            }, err => {
+                                console.log(err);
+                                this.disable = false;
+                            })
                     }
                 },
                 {
@@ -491,7 +439,7 @@ export class EventsPage {
                     handler: () => {
                         console.log("test");
                         this.checkNotifiers(orgID);
-
+                        this.disable = false;
                     }
                 },
                 {
@@ -499,7 +447,7 @@ export class EventsPage {
                     handler: () => {
                         this.orgStatus(orgID);
                         console.log("test");
-
+                        this.disable = false;
                     }
                 },
                 {
@@ -507,7 +455,7 @@ export class EventsPage {
                     role: 'destructive',
                     handler: () => {
                         console.log("test");
-
+                        this.disable = false;
                     }
                 },
                 {
@@ -515,6 +463,7 @@ export class EventsPage {
                     role: 'cancel',
                     handler: () => {
                         console.log('Cancel clicked');
+                        this.disable = false;
                     }
                 }
             ]
@@ -555,21 +504,21 @@ export class EventsPage {
             });
     }
 
-    getOrganizationFollowStatus(actions){
-      if (actions != null){
-        var found = actions.some(el => { 
-            return el.id == this.myrallyID;
-          
-        });
-        
-        if (!found){
-          return 'Follow';
-          
-        }else{
-          return 'Following';
-          
+    getOrganizationFollowStatus(actions) {
+        if (actions != null) {
+            var found = actions.some(el => {
+                return el.id == this.myrallyID;
+
+            });
+
+            if (!found) {
+                return 'Follow';
+
+            } else {
+                return 'Following';
+
+            }
         }
-      }
     }
 
 

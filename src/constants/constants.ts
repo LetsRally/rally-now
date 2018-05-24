@@ -57,3 +57,5 @@ export const themeAbleOptions: ThemeableBrowserOptions = {
         event: 'forwardPressed'
     }
 };
+
+export const appStoreUrl = 'http://appstore.com';

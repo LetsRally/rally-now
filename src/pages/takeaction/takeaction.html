@@ -89,7 +89,7 @@
         <ion-item>
             <ion-fab>
                 <button ion-fab color="light"
-                        (click)="ellipsisController(objective.organization['name'], objective.id, i, objective.organization_id,objective.description, objective.organization['followers'], objective.organization['notify'])">
+                        (click)="ellipsisController(objective.organization['name'], objective.id, i, objective.organization_id,objective.description, objective.organization['followers'], objective.organization['notify'], objective.title, objective.image_url)">
                     <ion-icon name="ios-more"></ion-icon>
                 </button>
                 <!-- <ion-fab-list side="left">
@@ -112,7 +112,7 @@
             </p>
         </ion-item>
 
-        <div (click)="goToActionPage(objective.id, objective.goals[0]?.goal_type, objective.goals[0]?.source_link, objective.goals[0]?.id, objective?.goals[0]?.reps_goals[0]?.id)"
+        <div (click)="goToActionPage(objective.id, objective.goals[0]?.goal_type, objective.goals[0]?.source_link, objective.goals[0]?.id, objective?.goals[0]?.reps_goals[0]?.id, objective.image_url, objective.organization['name'])"
              class="organization-bg" [ngStyle]="{ 'background-image' : 'url(&#34;' + objective.image_url +'&#34;)'}">
 
             <div class="organization-filter"></div>
@@ -135,7 +135,7 @@
 
 
         <ion-card-content
-                (click)="goToActionPage(objective.id, objective.goals[0]?.goal_type, objective.goals[0]?.source_link, objective.goals[0]?.id, objective?.goals[0]?.reps_goals[0]?.id)">
+                (click)="goToActionPage(objective.id, objective.goals[0]?.goal_type, objective.goals[0]?.source_link, objective.goals[0]?.id, objective?.goals[0]?.reps_goals[0]?.id, objective.image_url, objective.organization['name'])">
             <p class="multi-ellipsys-box" [innerHTML]="objective.formattedDescription"></p>
             <span class="see-more">See more</span>
         </ion-card-content>

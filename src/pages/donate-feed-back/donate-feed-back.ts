@@ -24,6 +24,8 @@ export class DonateFeedBackPage {
         goal_id: ''
     }];
     objectiveID: any;
+    private imgURI: string;
+    private titleForShare: string;
 
     constructor(
         public navCtrl: NavController,
@@ -32,6 +34,8 @@ export class DonateFeedBackPage {
         private httpProvider: UsersProvider) {
         this.url = navParams.get('iframeUrl');
         this.data.goal_id = navParams.get('goalID');
+        this.imgURI = navParams.get('imgURI');
+        this.titleForShare = navParams.get('titleForShare');
         this.data.representative_id = navParams.get('repID');
         this.data.action_type_id = '500f35fc-9338-4f1d-bdc8-13302afa33e7';
         this.data.title = 'donat';
@@ -65,7 +69,11 @@ export class DonateFeedBackPage {
     }
 
     streakModal() {
-        let modal = this.modalCtrl.create(ThankYouPage);
+        let data = {
+            imgURI: this.imgURI,
+            titleForShare: this.titleForShare
+        };
+        let modal = this.modalCtrl.create(ThankYouPage, data);
         modal.onDidDismiss(() => {
             this.navCtrl.popTo(this.navCtrl.getByIndex(0), {
                 animate: true,
