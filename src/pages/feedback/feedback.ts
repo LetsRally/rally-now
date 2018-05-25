@@ -26,6 +26,8 @@ export class FeedbackPage {
     goal_id: '',
   }];
   objetiveID:any;
+  private titleForShare: string;
+  private imgURI: string;
   
 
   constructor(
@@ -36,6 +38,8 @@ export class FeedbackPage {
     public viewCtrl: ViewController) {
       this.data.representative_id = navParams.get('repID');
       this.data.goal_id = navParams.get('goalID');
+      this.titleForShare = navParams.get('titleForShare');
+      this.imgURI = navParams.get('imgURI');
       this.objetiveID = navParams.get('objectiveID');
       this.data.action_type_id = '2afa6869-7ee5-436e-80a9-4fee7c871212';
       this.data.title = 'call';
@@ -68,7 +72,12 @@ export class FeedbackPage {
   }
 
   streakModal() {
-    let modal = this.modalCtrl.create(ThankYouPage);
+      let data = {
+          titleForShare: this.titleForShare,
+          imgURI: this.imgURI
+      };
+
+    let modal = this.modalCtrl.create(ThankYouPage, data);
     modal.onDidDismiss(() => {
       this.navCtrl.popTo(this.navCtrl.getByIndex(1), {animate:true,animation:'transition',duration:500,direction:'back'});
     });
@@ -85,20 +94,6 @@ export class FeedbackPage {
 
   back(){
     this.navCtrl.popTo(this.navCtrl.getByIndex(1), {animate:true,animation:'transition',duration:500,direction:'back'});
-    // if(this.objetiveID != null){
-    // this.navCtrl.push(OrganizationActionPage, {
-    //   objectiveID: this.objetiveID,
-    //   pageName: 'Home'
-    // }).then(() => {
-    //   const index = this.viewCtrl.index;
-
-    //   for(let i = index; i > 0; i--){
-    //       this.navCtrl.remove(i);
-    //   }
-    // });
-    // }else{
-    //   this.navCtrl.pop();
-    // }
   }
 
 

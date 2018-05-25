@@ -30,6 +30,7 @@ export class FaxFeedBackPage {
     private userEmail = '';
     private userName = '';
     private userPhone = '';
+    private rep: any;
 
 
     constructor(
@@ -43,6 +44,7 @@ export class FaxFeedBackPage {
         this.url = navParams.get('iframeUrl');
         this.data.representative_id = navParams.get('repID');
         this.data.goal_id = navParams.get('goalID');
+        this.rep = navParams.get('rep');
         this.data.action_type_id = 'ad3ef19b-d809-45b7-bef2-d470c9af0d1d';
         this.data.title = 'fax';
         this.objectiveID = navParams.get('objectiveID');
@@ -118,7 +120,12 @@ export class FaxFeedBackPage {
     }
 
     streakModal() {
-        let modal = this.modalCtrl.create(ThankYouPage);
+        let data = {
+            titleForShare: `I used Rally to fax ${this.rep.title} ${this.rep.first_name} ${this.rep.last_name}`,
+            imgURI: this.rep.photo_url
+        };
+
+        let modal = this.modalCtrl.create(ThankYouPage, data);
         modal.present();
     }
 

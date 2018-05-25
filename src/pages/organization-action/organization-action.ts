@@ -136,6 +136,7 @@ export class OrganizationActionPage {
                     handler: () => {
                         console.log('Fax clicked');
                         this.navCtrl.push(FaxFeedBackPage, {
+                            rep: rep,
                             iframeUrl: fax,
                             repID: repID,
                             goalID: this.goal_id,
@@ -157,7 +158,8 @@ export class OrganizationActionPage {
                             iframeUrl: email,
                             repID: repID,
                             goalID: this.goal_id,
-                            objectiveID: this.objectiveID
+                            objectiveID: this.objectiveID,
+                            rep: rep
                         });
                     }
                 }
@@ -175,7 +177,12 @@ export class OrganizationActionPage {
                             this.data.action_type_id = '9eef1652-ccf9-449a-901e-ad6c0b3a8a6c';
                             this.data.goal_id = this.goal_id;
                             this.httpProvider.addAction(this.favEndpoint, this.data);
-                            this.streakModal();
+
+                            let data = {
+                                titleForShare: `I used Rally to tweet ${rep.title} ${rep.first_name} ${rep.last_name}`,
+                                imgURI: rep.photo_url
+                            };
+                            this.streakModal(data);
                         });
                     }
                 }
@@ -199,8 +206,8 @@ export class OrganizationActionPage {
         actionSheet.present();
     }
 
-    streakModal() {
-        let modal = this.modalCtrl.create(ThanksPage);
+    streakModal(data) {
+        let modal = this.modalCtrl.create(ThanksPage, data);
         modal.present();
     }
 

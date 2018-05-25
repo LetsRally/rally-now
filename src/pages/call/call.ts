@@ -118,7 +118,11 @@ export class CallPage {
   }
 
   giveFeedBack(){
-    this.navCtrl.push(FeedbackPage, {}, {animate:true,animation:'transition',duration:500,direction:'forward'});
+      let data = {
+          titleForShare: `I used Rally to call ${this.rep.title} ${this.rep.first_name} ${this.rep.last_name}`,
+          imgURI: this.rep.photo_url
+      };
+    this.navCtrl.push(FeedbackPage, data, {animate:true,animation:'transition',duration:500,direction:'forward'});
   } 
 
   showCallAlert(phone_number){

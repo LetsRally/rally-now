@@ -29,7 +29,7 @@ import firebase from 'firebase';
 import {DonateFeedBackPage} from "../donate-feed-back/donate-feed-back";
 import * as constants from "../../constants/constants";
 import {ThemeableBrowser, ThemeableBrowserObject} from "@ionic-native/themeable-browser";
-
+import { Storage } from '@ionic/storage';
 
 @IonicPage()
 @Component({
@@ -57,6 +57,7 @@ export class FriendsactivityPage {
     notificationsEndpoint: any = 'devices';
     alertsEndpoint: any = 'ux_events';
     singleEndpoint: any = 'community_feed';
+    userName = '';
 
 
     constructor(
@@ -73,6 +74,7 @@ export class FriendsactivityPage {
         public modalCtrl: ModalController,
         public loadingCtrl: LoadingController,
         private sanitizer: DomSanitizer,
+        private storage: Storage,
         private db: AngularFireDatabase) {
         this.all = "all";
         this.enable = false;
@@ -84,7 +86,9 @@ export class FriendsactivityPage {
             this.getPersonaldata();
         });
 
-
+        this.storage.get('DISPLAYNAME').then((res) => {
+            this.userName = res;
+        });
     }
 
     ionViewDidLoad() {
@@ -304,53 +308,19 @@ export class FriendsactivityPage {
         modal.present();
     }
 
-    shareController(title, imgURI, reference_id, like_type, $event) {
+    shareController(activity) {
         this.disable = true;
-
-        const actionSheet = this.actionSheetCtrl.create({
-            title: 'Share to where?',
-            buttons: [
-                {
-                    text: 'Facebook',
-                    handler: () => {
-                        this.shareProvider.facebookShare(title, imgURI);
-                        this.addShareAction(reference_id, like_type);
-                        $event.path[1].lastChild.data++;
-                        this.streakModal();
-                        this.disable = false;
-
-                    }
-                },
-                {
-                    text: 'Twitter',
-                    handler: () => {
-                        this.shareProvider.twitterShare(title, imgURI).then(() => {
-                            this.addShareAction(reference_id, like_type);
-                            $event.path[1].lastChild.data++;
-                            this.streakModal();
-                            this.disable = false;
-                        }).catch((error) => {
-                            console.error("shareViaWhatsapp: failed", error);
-                            this.disable = false;
-
-                        });
-
-
-                    }
-                },
-                {
-                    text: 'Cancel',
-                    role: 'cancel',
-                    handler: () => {
-                        console.log('Cancel clicked');
-                        this.disable = false;
-
-                    }
-                }
-            ]
-        });
-
-        actionSheet.present();
+        let imgURI = activity.photo_url,
+            title = this.createMessageForShare(activity),
+            msg = 'MESSAGE---';
+        this.shareProvider.otherShare(title, msg, imgURI, constants.appStoreUrl)
+            .then(() => {
+                this.disable = false;
+            })
+            .catch((err) => {
+                console.log(err);
+                this.disable = false;
+            })
     }
 
 
@@ -412,7 +382,7 @@ export class FriendsactivityPage {
     openWebpage(url?, target?) {
         return new Promise((resolve, reject) => {
             let options = constants.themeAbleOptions;
-            if(!target) {
+            if (!target) {
                 target = '_blank';
             }
             const browser: ThemeableBrowserObject = this.themeAbleBrowser.create(url, target, options);
@@ -443,15 +413,26 @@ export class FriendsactivityPage {
         return value;
     }
 
-    userEllipsisController(name, userid, followers, message) {
+    userEllipsisController(activity, name, userid, followers, message) {
+        this.disable = true;
+        let imgURI = activity.photo_url,
+            title = this.createMessageForShare(activity),
+            msg = 'MESSAGE---';
+
         const actionSheet = this.actionSheetCtrl.create({
             buttons: [
                 {
                     text: 'Share this post via...',
                     handler: () => {
                         console.log("test");
-                        this.shareProvider.otherShare(name, message);
-
+                        this.shareProvider.otherShare(title, msg, imgURI, constants.appStoreUrl)
+                            .then(() => {
+                                this.disable = false;
+                            })
+                            .catch((err) => {
+                                console.log(err);
+                                this.disable = false;
+                            })
                     }
                 },
                 {
@@ -459,7 +440,7 @@ export class FriendsactivityPage {
                     handler: () => {
                         console.log("test");
                         this.followUser(userid);
-
+                        this.disable = false;
                     }
                 },
                 {
@@ -468,7 +449,7 @@ export class FriendsactivityPage {
                     handler: () => {
                         console.log("test");
                         this.shareProvider.shareViaEmail();
-
+                        this.disable = false;
                     }
                 },
                 {
@@ -476,12 +457,24 @@ export class FriendsactivityPage {
                     role: 'cancel',
                     handler: () => {
                         console.log('Cancel clicked');
+                        this.disable = false;
                     }
                 }
             ]
         });
 
         actionSheet.present();
+    }
+
+    createMessageForShare(data) {
+        let message = '';
+        let action = data.action;
+        if (action === 'call' || action === 'fax' || action === 'email' || action === 'tweet') {
+            message = `${this.userName} used Rally to ${action} ${data.fname}`;
+        } else {
+            message = data.objective;
+        }
+        return message;
     }
 
     getFollowStatus(actions) {

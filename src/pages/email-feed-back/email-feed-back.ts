@@ -26,7 +26,7 @@ export class EmailFeedBackPage {
         goal_id: ''
     }];
     objectiveID: any;
-
+    private rep: any;
 
     constructor(
         public navCtrl: NavController,
@@ -39,6 +39,7 @@ export class EmailFeedBackPage {
         this.openWebpage(this.url);
         this.data.representative_id = navParams.get('repID');
         this.data.goal_id = navParams.get('goalID');
+        this.rep = navParams.get('rep');
         this.objectiveID = navParams.get('objectiveID');
         this.data.action_type_id = 'f9b53bc8-9847-4699-b897-521d8e1a34bb';
         this.data.title = 'email';
@@ -91,7 +92,12 @@ export class EmailFeedBackPage {
     }
 
     streakModal() {
-        let modal = this.modalCtrl.create(ThankYouPage);
+        let data = {
+            titleForShare: `I used Rally to email ${this.rep.title} ${this.rep.first_name} ${this.rep.last_name}`,
+            imgURI: this.rep.photo_url
+        };
+
+        let modal = this.modalCtrl.create(ThankYouPage, data);
         modal.present();
     }
 
