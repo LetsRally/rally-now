@@ -216,6 +216,9 @@ page-organization-profile {
             font-size: 12px;
             text-transform: uppercase;
         }
+        &:last-of-type {
+            margin-bottom: 60px!important;
+        }
     }
     .profile-headshot {
         h4 {

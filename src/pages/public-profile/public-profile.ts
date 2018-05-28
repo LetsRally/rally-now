@@ -20,6 +20,7 @@ import {RepresentativeProfilePage} from '../representative-profile/representativ
 import {PublicFollowersPage} from '../public-followers/public-followers';
 import {PublicFollowingPage} from '../public-following/public-following';
 import {DonateFeedBackPage} from "../donate-feed-back/donate-feed-back";
+import * as constants from "../../constants/constants";
 
 
 @IonicPage()
@@ -223,9 +224,11 @@ export class PublicProfilePage {
         });
     }
 
-
-    getFollowRecordID() {
-        this.httpProvider.getJsonData(this.followEndpoint + '?follower_id=' + this.myRallyID + '&following_id=' + this.parameter).subscribe(
+    getFollowRecordID(param?) {
+        if(!param) {
+            param = this.parameter;
+        }
+        this.httpProvider.getJsonData(this.followEndpoint + '?follower_id=' + this.myRallyID + '&following_id=' + param).subscribe(
             result => {
                 console.log("Delete User ID : " + result[0].id);
                 this.unFollowFriend(result[0].id);
@@ -385,36 +388,58 @@ export class PublicProfilePage {
 
     }
 
-    shareController(title, imgURI, reference_id, like_type, $event) {
+    shareController(activity) {
         this.disable = true;
+        let imgURI = activity.photo_url,
+            title = this.createMessageForShare(activity),
+            msg = 'MESSAGE---';
+        this.shareProvider.otherShare(title, msg, imgURI, constants.appStoreUrl)
+            .then(() => {
+                this.disable = false;
+            })
+            .catch((err) => {
+                console.log(err);
+                this.disable = false;
+            })
+    }
+
+    ellipsysController(activity, name, userid, followers, message) {
+        this.disable = true;
+        let imgURI = activity.photo_url,
+            title = this.createMessageForShare(activity),
+            msg = 'MESSAGE---';
 
         const actionSheet = this.actionSheetCtrl.create({
-            title: 'Share to where?',
             buttons: [
                 {
-                    text: 'Facebook',
+                    text: 'Share this post via...',
                     handler: () => {
-                        this.shareProvider.facebookShare(title, imgURI);
-                        this.addShareAction(reference_id, like_type);
-                        $event.path[1].lastChild.data++;
-                        this.disable = false;
-
+                        console.log("test");
+                        this.shareProvider.otherShare(title, msg, imgURI, constants.appStoreUrl)
+                            .then(() => {
+                                this.disable = false;
+                            })
+                            .catch((err) => {
+                                console.log(err);
+                                this.disable = false;
+                            })
                     }
                 },
                 {
-                    text: 'Twitter',
+                    text: this.getFollowStatus(followers) + ' ' + name,
                     handler: () => {
-                        this.shareProvider.twitterShare(title, imgURI).then(() => {
-                            this.addShareAction(reference_id, like_type);
-                            $event.path[1].lastChild.data++;
-                            this.disable = false;
-                        }).catch((error) => {
-                            console.error("shareViaWhatsapp: failed", error);
-                            this.disable = false;
-
-                        });
-
-
+                        console.log("test");
+                        this.followUser(userid);
+                        this.disable = false;
+                    }
+                },
+                {
+                    text: 'Report',
+                    role: 'destructive',
+                    handler: () => {
+                        console.log("test");
+                        this.shareProvider.shareViaEmail();
+                        this.disable = false;
                     }
                 },
                 {
@@ -423,13 +448,55 @@ export class PublicProfilePage {
                     handler: () => {
                         console.log('Cancel clicked');
                         this.disable = false;
-
                     }
                 }
             ]
         });
 
         actionSheet.present();
+    }
+
+    getFollowStatus(actions) {
+        if (actions != null) {
+            var found = actions.some(el => {
+                return el == this.myRallyID;
+
+            });
+
+            if (!found) {
+                return 'Follow';
+
+            } else {
+                return 'Following';
+
+            }
+        }
+    }
+
+    followUser(userid) {
+        let user: any = firebase.auth().currentUser;
+        let followRef = this.db.database.ref('follow/' + user['uid'] + '/' + userid);
+        followRef.once('value', snapshot => {
+            if (snapshot.hasChildren()) {
+                console.log('You already follow this user');
+                this.getFollowRecordID(userid);
+
+            } else {
+                this.followFriend(userid);
+                // this.getDeviceID(userid);
+            }
+        });
+    }
+
+    createMessageForShare(data) {
+        let message = '';
+        let action = data.action;
+        if (action === 'call' || action === 'fax' || action === 'email' || action === 'tweet') {
+            message = `${data.fname} used Rally to ${action} ${data.representative}`;
+        } else {
+            message = data.objective;
+        }
+        return message;
     }
 
     addShareAction(goal_id, action_type_id) {
