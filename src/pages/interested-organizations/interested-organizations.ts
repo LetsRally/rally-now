@@ -45,83 +45,93 @@ export class InterestedOrganizationsPage {
       this.count = this.followArray.length;
       this.buttonText = "Follow (" + this.count + ")";
       console.log(this.followArray);
+      this.cutDescription();
 
+  }
+  cutDescription() {
+    this.organizations.map((el) => {
+      if(el.description.length <= 70) {
+          el['descriptionTemp'] = el.description;
+      } else {
+          el['descriptionTemp'] = el.description.substr(0, 70) + '...';
+      }
+    });
   }
 
   ionViewDidLoad() {
-    this.getUID();
+    // this.getUID();
     console.log('ionViewDidLoad InterestedOrganizationsPage');
   }
-
-  goToHome(){
-    this.navCtrl.setRoot(TabsPage);
-  }
-
-    toggleAll(){
-      console.log(this.count);
-      this.organizations.forEach(org => {
-          org.selected = this.enable;
-          
-      });
-      
-    }
-
-    getState($event, id){ 
-      console.log("DOM", $event);
-      if($event._value === true){
-          this.count++;
-          this.buttonText = "Follow (" + this.count + ")";
-          console.log(this.count);
-          this.followArray.push(id);
-          console.log(this.followArray);
-      }else{
-        this.count--;
-        let position = this.followArray.indexOf(id);
-        console.log(position);  
-        (this.followArray).splice(position, 1);
-        console.log(this.followArray); 
-        console.log("Count", this.count);
-        if (this.count < 1){
-          this.buttonText = "Next";
-
-        }else{
-          this.buttonText = "Follow (" + this.count + ")";
-
-        }
-      }
-    }
-
-    followOrganizations(){
-        if(this.followArray.length > 0){
-
-          this.followArray.forEach(org => {
-              console.log(org);
-              this.followOrg(org);
-          });
-          console.log("You can Follow");
-          this.goToHome();
-        }else{
-          console.log("Just go home");
-          this.goToHome();
-        }
-    }
-
-    followOrg(organizationID){
-      this.httpProvider.followOrganization(this.organizationEndpoint, this.myrallyID, organizationID );
-    }
-
-    getUID(){ 
-      this.userData.getUid().then((uid) => {
-        console.log(uid);
-         this.af.database.ref('users/'+uid)
-          .on('value', snapshot => {
-            console.log("Username", snapshot.val());
-            this.myrallyID = snapshot.val().apiRallyID;
-        
-           
-          });
-      });
-    }
+  //
+  // goToHome(){
+  //   this.navCtrl.setRoot(TabsPage);
+  // }
+  //
+  //   toggleAll(){
+  //     console.log(this.count);
+  //     this.organizations.forEach(org => {
+  //         org.selected = this.enable;
+  //
+  //     });
+  //
+  //   }
+  //
+  //   getState($event, id){
+  //     console.log("DOM", $event);
+  //     if($event._value === true){
+  //         this.count++;
+  //         this.buttonText = "Follow (" + this.count + ")";
+  //         console.log(this.count);
+  //         this.followArray.push(id);
+  //         console.log(this.followArray);
+  //     }else{
+  //       this.count--;
+  //       let position = this.followArray.indexOf(id);
+  //       console.log(position);
+  //       (this.followArray).splice(position, 1);
+  //       console.log(this.followArray);
+  //       console.log("Count", this.count);
+  //       if (this.count < 1){
+  //         this.buttonText = "Next";
+  //
+  //       }else{
+  //         this.buttonText = "Follow (" + this.count + ")";
+  //
+  //       }
+  //     }
+  //   }
+  //
+  //   followOrganizations(){
+  //       if(this.followArray.length > 0){
+  //
+  //         this.followArray.forEach(org => {
+  //             console.log(org);
+  //             this.followOrg(org);
+  //         });
+  //         console.log("You can Follow");
+  //         this.goToHome();
+  //       }else{
+  //         console.log("Just go home");
+  //         this.goToHome();
+  //       }
+  //   }
+  //
+  //   followOrg(organizationID){
+  //     this.httpProvider.followOrganization(this.organizationEndpoint, this.myrallyID, organizationID );
+  //   }
+  //
+  //   getUID(){
+  //     this.userData.getUid().then((uid) => {
+  //       console.log(uid);
+  //        this.af.database.ref('users/'+uid)
+  //         .on('value', snapshot => {
+  //           console.log("Username", snapshot.val());
+  //           this.myrallyID = snapshot.val().apiRallyID;
+  //
+  //
+  //         });
+  //     });
+  //   }
  
 
 }

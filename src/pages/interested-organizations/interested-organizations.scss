@@ -43,4 +43,44 @@ page-interested-organizations {
     .footer-md::before, .footer-ios::before{
         display: none;
     }
+    .item-ios ion-avatar ion-img,
+    .item-ios ion-avatar img {
+        width: 60px;
+        height: 60px;
+        border: 2px solid #b6b6b6;
+        min-width: 60px;
+    }
+    .description {
+        white-space: initial;
+    }
+
+    //.description {
+    //    overflow: hidden;
+    //    position: relative;
+    //    line-height: 1.2em;
+    //    max-height: 3.6em;
+    //    text-align: justify;
+    //    margin-right: -1em;
+    //    padding-right: 1em;
+    //}
+    //.description:before {
+    //    content: '...';
+    //    position: absolute;
+    //    right: 12px;
+    //    bottom: 0;
+    //    background-color: #fff;
+    //}
+    //.description:after {
+    //    content: '';
+    //    position: absolute;
+    //    right: 12px;
+    //    width: 1em;
+    //    height: 1em;
+    //    margin-top: 0.2em;
+    //    background: white;
+    //}
+    .label-ios {
+        margin-right: 0;
+        padding-right: 12px;
+    }
 }

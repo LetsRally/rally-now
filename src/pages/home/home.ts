@@ -17,6 +17,7 @@ import { WelcomePage } from '../welcome/welcome';
 import { HelloPage } from '../hello/hello';
 import { TermsPage } from '../terms/terms';
 import { PrivacyPolicyPage } from '../privacy-policy/privacy-policy';
+import {InterestedOrganizationsPage} from "../interested-organizations/interested-organizations";
 
 
 
@@ -95,7 +96,7 @@ export class HomePage {
 
   facebookLogin(): void{
     console.log("Hola Facebook API");
-
+// this.navCtrl.push(InterestedOrganizationsPage);
 
     this.facebook.login(["email", "public_profile", "user_friends"]).then((loginResponse) => {
         let credential = firebase.auth.FacebookAuthProvider.credential(loginResponse.authResponse.accessToken);

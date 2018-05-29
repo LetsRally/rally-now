@@ -28,6 +28,7 @@
               <h2 text-wrap>{{org.name}}</h2>
               <p text-wrap><!--<small>@jk_rowling</small> <br>-->
                 {{org.short_desc}}</p>
+              <p class="description">{{org.descriptionTemp}}</p>
           </div>
             </ion-label>
               <ion-checkbox (ionChange)="getState($event, org.id)" item-end [(ngModel)]="org.selected" ></ion-checkbox>
