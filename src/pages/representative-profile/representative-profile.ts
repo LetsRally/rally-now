@@ -316,75 +316,19 @@ export class RepresentativeProfilePage {
         });
     }
 
-    shareController(title, imgURI, reference_id, like_type, $event) {
+    shareController(title, imgURI, tweetImage) {
+        let imgUrl = imgURI;
+        if (tweetImage && tweetImage !== '') {
+            imgUrl = tweetImage;
+        }
         this.disable = true;
-
-        const actionSheet = this.actionSheetCtrl.create({
-            title: 'Share to where?',
-            buttons: [
-                {
-                    text: 'Facebook',
-                    handler: () => {
-                        this.shareProvider.facebookShare(title, imgURI);
-                        this.addShareAction(reference_id, like_type);
-                        $event.path[1].lastChild.data++;
-                        this.disable = false;
-                        this.streakModal();
-
-                    }
-                },
-                {
-                    text: 'Twitter',
-                    handler: () => {
-                        this.shareProvider.twitterShare(title, imgURI).then(() => {
-                            this.addShareAction(reference_id, like_type);
-                            $event.path[1].lastChild.data++;
-                            this.disable = false;
-                            this.streakModal();
-                        }).catch((error) => {
-                            console.error("shareViaWhatsapp: failed", error);
-                            this.disable = false;
-
-                        });
-
-
-                    }
-                },
-                //  {
-                //   text: 'Copy Link',
-                //   handler: () => {
-                //     this.disable = false;
-
-                //   }
-                // },
-                // {
-                //   text: 'SMS Message',
-                //   handler: () => {
-                //     this.disable = false;
-
-                //   }
-                // },
-                // {
-                //   text: 'Email',
-                //   handler: () => {
-
-                //     this.disable = false;
-
-                //   }
-                // },
-                {
-                    text: 'Cancel',
-                    role: 'cancel',
-                    handler: () => {
-                        console.log('Cancel clicked');
-                        this.disable = false;
-
-                    }
-                }
-            ]
-        });
-
-        actionSheet.present();
+        this.shareProvider.otherShare(title, 'MESSAGE---', imgUrl, constants.appStoreUrl)
+            .then(() => {
+                this.disable = false;
+            }, err => {
+                console.log(err);
+                this.disable = false;
+            })
     }
 
     streakModal() {
@@ -396,15 +340,26 @@ export class RepresentativeProfilePage {
         this.httpProvider.addShareAction(this.favEndpoint, goal_id, action_type_id, this.currentRallyID);
     }
 
-    tweetRepEllipsisController(name, repID, desc, notify) {
+    tweetRepEllipsisController(name, repID, desc, notify, imgURI, tweetImage) {
+        let imgUrl = imgURI;
+        if (tweetImage && tweetImage !== '') {
+            imgUrl = tweetImage;
+        }
+        this.disable = true;
+
         const actionSheet = this.actionSheetCtrl.create({
             buttons: [
                 {
                     text: 'Share this post via...',
                     handler: () => {
                         console.log("test");
-                        this.shareProvider.otherShare(name, desc);
-
+                        this.shareProvider.otherShare(desc, 'MESSAGE---', imgUrl, constants.appStoreUrl)
+                            .then(() => {
+                                this.disable = false;
+                            }, err => {
+                                this.disable = false;
+                                console.log(err);
+                            })
                     }
                 },
                 {
