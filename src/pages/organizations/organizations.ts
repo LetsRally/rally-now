@@ -335,102 +335,48 @@ export class OrganizationsPage {
         modal.present();
     }
 
-    shareController(title, imgURI, reference_id, like_type, $event) {
+    shareController(title, imgURI, tweetImage?) {
+        let imgUrl = imgURI;
+        if (tweetImage && tweetImage !== '') {
+            imgUrl = tweetImage;
+        }
         this.disable = true;
-
-        const actionSheet = this.actionSheetCtrl.create({
-            title: 'Share to where?',
-            buttons: [
-                {
-                    text: 'Facebook',
-                    handler: () => {
-                        this.shareProvider.facebookShare(title, imgURI);
-                        this.addShareAction(reference_id, like_type);
-                        $event.path[1].lastChild.data++;
-                        this.disable = false;
-                        this.streakModal();
-
-                    }
-                },
-                {
-                    text: 'Twitter',
-                    handler: () => {
-                        this.shareProvider.twitterShare(title, imgURI).then(() => {
-                            this.addShareAction(reference_id, like_type);
-                            $event.path[1].lastChild.data++;
-                            this.disable = false;
-                            this.streakModal();
-                        }).catch((error) => {
-                            console.error("shareViaWhatsapp: failed", error);
-                            this.disable = false;
-
-                        });
-
-                    }
-                },
-                //  {
-                //   text: 'Copy Link',
-                //   handler: () => {
-                //     this.disable = false;
-
-                //   }
-                // },
-                // {
-                //   text: 'SMS Message',
-                //   handler: () => {
-                //     this.disable = false;
-
-                //   }
-                // },
-                // {
-                //   text: 'Email',
-                //   handler: () => {
-
-                //     this.disable = false;
-
-                //   }
-                // },
-                {
-                    text: 'Cancel',
-                    role: 'cancel',
-                    handler: () => {
-                        console.log('Cancel clicked');
-                        this.disable = false;
-
-                    }
-                }
-            ]
-        });
-
-        actionSheet.present();
+        this.shareProvider.otherShare(title, 'MESSAGE---', imgUrl, constants.appStoreUrl)
+            .then(() => {
+                this.disable = false;
+            }, err => {
+                console.log(err);
+                this.disable = false;
+            })
     }
 
     addShareAction(goal_id, action_type_id) {
         this.rallyProvider.addShareAction(this.favEndpoint, goal_id, action_type_id, this.myApiRallyID);
     }
 
-    ellipsisController(name, id, index, orgID, desc, followers, notify) {
+    ellipsisController(name, id, index, orgID, desc, followers, notify, title, imgURI) {
+        this.disable = true;
         const actionSheet = this.actionSheetCtrl.create({
             buttons: [
                 {
                     text: 'Share this post via...',
                     handler: () => {
                         console.log("test");
-                        this.shareProvider.otherShare(name, desc);
-
+                        this.shareProvider.otherShare(desc, 'MESSAGE---', imgURI, constants.appStoreUrl)
+                            .then(() => {
+                                this.disable = false;
+                            }, err => {
+                                console.log(err);
+                                this.disable = false;
+                            })
                     }
                 },
-                // {
-                //     text: 'Hide post',
-                //     handler: () => {
-                //         this.hideItem(id, index);
-                //     }
-                // },
                 {
                     text: this.notifyExist(notify) + name,
                     handler: () => {
                         console.log("test");
                         this.checkNotifiers(orgID);
+                        this.disable = false;
                     }
                 },
                 {
@@ -438,7 +384,7 @@ export class OrganizationsPage {
                     handler: () => {
                         this.orgStatus(orgID);
                         console.log("test");
-
+                        this.disable = false;
                     }
                 },
                 {
@@ -446,7 +392,7 @@ export class OrganizationsPage {
                     role: 'destructive',
                     handler: () => {
                         console.log("test");
-
+                        this.disable = false;
                     }
                 },
                 {
@@ -454,6 +400,7 @@ export class OrganizationsPage {
                     role: 'cancel',
                     handler: () => {
                         console.log('Cancel clicked');
+                        this.disable = false;
                     }
                 }
             ]
@@ -495,15 +442,26 @@ export class OrganizationsPage {
     }
 
 
-    eventEllipsisController(name, orgID, desc, followers, notify) {
+    eventEllipsisController(name, orgID, desc, followers, notify, imgURI, tweetImage) {
+        let imgUrl = imgURI;
+        if (tweetImage && tweetImage !== '') {
+            imgUrl = tweetImage;
+        }
+        this.disable = true;
+
         const actionSheet = this.actionSheetCtrl.create({
             buttons: [
                 {
                     text: 'Share this event via...',
                     handler: () => {
                         console.log("test");
-                        this.shareProvider.otherShare(name, desc);
-
+                        this.shareProvider.otherShare(desc, 'MESSAGE---', imgUrl, constants.appStoreUrl)
+                            .then(() => {
+                                this.disable = false;
+                            }, err => {
+                                console.log(err);
+                                this.disable = false;
+                            })
                     }
                 },
                 {
@@ -511,7 +469,7 @@ export class OrganizationsPage {
                     handler: () => {
                         console.log("test");
                         this.checkNotifiers(orgID);
-
+                        this.disable = false;
                     }
                 },
                 {
@@ -519,7 +477,7 @@ export class OrganizationsPage {
                     handler: () => {
                         this.orgStatus(orgID);
                         console.log("test");
-
+                        this.disable = false;
                     }
                 },
                 {
@@ -528,7 +486,7 @@ export class OrganizationsPage {
                     handler: () => {
                         console.log("test");
                         this.shareProvider.shareViaEmail();
-
+                        this.disable = false;
                     }
                 },
                 {
@@ -536,6 +494,7 @@ export class OrganizationsPage {
                     role: 'cancel',
                     handler: () => {
                         console.log('Cancel clicked');
+                        this.disable = false;
                     }
                 }
             ]

@@ -367,7 +367,7 @@ export class RepresentativeProfilePage {
                     handler: () => {
                         console.log("test");
                         this.checkNotifiersRep(repID);
-
+                        this.disable = false;
                     }
                 },
                 {
@@ -376,7 +376,7 @@ export class RepresentativeProfilePage {
                     handler: () => {
                         console.log("test");
                         this.shareProvider.shareViaEmail();
-
+                        this.disable = false;
                     }
                 },
                 {
@@ -384,6 +384,7 @@ export class RepresentativeProfilePage {
                     role: 'cancel',
                     handler: () => {
                         console.log('Cancel clicked');
+                        this.disable = false;
                     }
                 }
             ]
