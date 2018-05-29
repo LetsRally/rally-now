@@ -641,8 +641,8 @@ export class OrganizationsPage {
         browser.on("loadstop")
             .subscribe(
                 () => {
-                    browser.insertCss({
-                        code: "body, html {padding-top: 20px!important;} header .rn-ipm5af{top: 16px !important; margin-top: 0 !important;} main{overflow:hidden}"
+                    browser.executeScript({
+                        code: 'document.body.style.paddingTop = "50px"'
                     })
                 },
                 err => {

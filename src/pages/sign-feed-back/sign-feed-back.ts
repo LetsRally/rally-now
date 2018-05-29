@@ -59,15 +59,14 @@ export class SignFeedBackPage {
 
         browser.on("loadstop")
             .subscribe(
-                () => {
-                    browser.insertCss({
-                        code: "body, html {padding-top: 20px!important;} header .rn-ipm5af{top: 16px !important; margin-top: 0 !important;} main{overflow:hidden}"
+                (data) => {
+                    browser.executeScript({
+                        code: 'document.body.style.paddingTop = "50px"'
                     })
                 },
                 err => {
                     console.log("InAppBrowser Loadstop Event Error: " + err);
                 });
-
         browser.on('closePressed').subscribe(data => {
             browser.close();
         })

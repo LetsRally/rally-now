@@ -332,6 +332,9 @@ page-representative-profile {
         //        font-size: 13px !important;
         //    }
         //}
+        &:last-of-type {
+            margin-bottom: 50px!important;
+        }
     }
 
     main-button{

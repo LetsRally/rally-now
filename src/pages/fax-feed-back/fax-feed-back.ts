@@ -83,7 +83,8 @@ export class FaxFeedBackPage {
                         browser.executeScript({
                             code: 'document.getElementById("input-fax_s_name").value = "' + that.userName + '";' +
                             ' document.getElementById("input-fax_s_email").value = "' + that.userEmail + '";' +
-                            ' document.getElementById("input-fax_s_phone").value = "' + that.userPhone + '";'
+                            ' document.getElementById("input-fax_s_phone").value = "' + that.userPhone + '";' +
+                            ' document.body.style.paddingTop = "50px"'
                         }).then((r) => {
                         }).catch((err) => {
                             console.log('EXECUTE ERROR');
