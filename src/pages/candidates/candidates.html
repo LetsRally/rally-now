@@ -70,7 +70,7 @@
          <ion-card class="reps-card Card has-footer" *ngFor="let record of records">
                 <ion-item>
                     <ion-fab>
-                        <button ion-fab color="light" (click)="tweetRepEllipsisController(record.name, record.rep_id, record.tweet, record.followers, record.notify)">
+                        <button ion-fab color="light" (click)="tweetRepEllipsisController(record.name, record.rep_id, record.tweet, record.followers, record.notify, record.photo_url, record['tweet_image'])">
                             <ion-icon name="ios-more"></ion-icon>
                         </button>
                     </ion-fab>
