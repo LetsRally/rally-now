@@ -94,6 +94,12 @@ page-friends-request {
     main-button button{
         width: 120px;
     }
+    ion-avatar {
+        img {
+            width: 60px!important;
+            height: 60px!important;
+        }
+    }
 }
 
 .button {

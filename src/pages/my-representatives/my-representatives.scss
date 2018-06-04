@@ -30,4 +30,11 @@ page-my-representatives {
         border-color: #296fb7 !important;
 
     }
+
+    ion-avatar {
+        img {
+            width: 60px!important;
+            height: 60px!important;
+        }
+    }
 }
