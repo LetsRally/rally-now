@@ -1,39 +1,44 @@
 <ion-header padding>
-  <h1>Choose organizations to follow</h1>
-  <p>Follow some of the organizations below to receive their up-to-the-minute
-    news, actions and events in your feed.
-  </p>
-  <ion-list>
-    <ion-item>
-      <ion-label>
-        <h1>You may be interested in</h1>
-      </ion-label>
-      <ion-checkbox item-end checked="{{enable}}" [(ngModel)]="enable" (ionChange)="toggleAll()"></ion-checkbox>
-    </ion-item>
-  </ion-list>
+    <h1>Choose organizations to follow</h1>
+    <p>Follow some of the organizations below to receive their up-to-the-minute
+        news, actions and events in your feed.
+    </p>
+    <ion-list>
+        <ion-item>
+            <ion-label>
+                <h1>You may be interested in</h1>
+            </ion-label>
+            <ion-checkbox item-end checked="{{enable}}" [(ngModel)]="enable" (ionChange)="toggleAll()"></ion-checkbox>
+        </ion-item>
+    </ion-list>
 
 </ion-header>
 <ion-content padding>
-    
+
     <ion-list>
-     
-      <ion-item *ngFor="let org of organizations">
-        <ion-label style="display:flex; align-items:center;">
-          <div>
-              <ion-avatar item-start>
-                  <img src="{{org.image_url}}">
-                </ion-avatar>
-          </div>
-          <div>
-              <h2 text-wrap>{{org.name}}</h2>
-              <p text-wrap><!--<small>@jk_rowling</small> <br>-->
-                {{org.short_desc}}</p>
-              <p class="description">{{org.descriptionTemp}}</p>
-          </div>
+
+        <ion-item *ngFor="let org of organizations">
+            <ion-label style="display:flex; align-items:center;">
+                <div class="org-avatar">
+                    <ion-avatar item-start>
+                        <img src="{{org.image_url}}">
+                    </ion-avatar>
+                </div>
+                <div class="org-text-box">
+                    <div class="org-title">
+                        <h2 text-wrap>{{org.name}}</h2>
+                        <ion-checkbox (ionChange)="getState($event, org.id)" item-end
+                                      [(ngModel)]="org.selected"></ion-checkbox>
+                    </div>
+                    <div class="org-description">
+                        <p text-wrap><!--<small>@jk_rowling</small> <br>-->
+                            {{org.short_desc}}</p>
+                        <p class="description">{{org.description}}</p>
+                    </div>
+                </div>
             </ion-label>
-              <ion-checkbox (ionChange)="getState($event, org.id)" item-end [(ngModel)]="org.selected" ></ion-checkbox>
-              
-      </ion-item>
+
+        </ion-item>
     </ion-list>
 </ion-content>
 

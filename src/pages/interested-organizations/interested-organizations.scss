@@ -83,4 +83,38 @@ page-interested-organizations {
         margin-right: 0;
         padding-right: 12px;
     }
+    ion-item {
+        padding-left: 0!important;
+    }
+    ion-avatar {
+        margin-top: 0!important;
+    }
+    .input-wrapper {
+        ion-label {
+            align-items: flex-start!important;
+        }
+    }
+    .scroll-content {
+        .item-inner {
+            align-items: flex-start;
+        }
+        ion-label {
+            padding-right: 0;
+        }
+    }
+    .item-inner {
+        padding-right: 0!important;
+    }
+}
+.org-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    ion-checkbox {
+        margin-top: 0!important;
+        margin-bottom: 2px!important;
+    }
+}
+.org-text-box {
+    width: 100%;
 }
