@@ -60,6 +60,8 @@ export class OrganizationsListPage {
         private orgProvider: OrganizationsProvider,
         private sanitizer: DomSanitizer) {
 
+        this.items = [];
+        this.groupedItems = [];
         this.searchControl = new FormControl();
         this.searchTerm$ = new Subject<string>();
         this.httpProvider.returnRallyUserId().then(
@@ -79,6 +81,8 @@ export class OrganizationsListPage {
         return new Promise(resolve => {
             this.orgProvider.load(this.newEndpoint, this.start)
                 .then(data => {
+                    console.log('DATA');
+                    console.log(data);
                     this.getArray(data);
                     resolve(true);
                 });
@@ -228,7 +232,7 @@ export class OrganizationsListPage {
         this.orgProvider.getSubjectJson(this.searchTerm$)
             .subscribe(result => {
                     this.enablePlaceholder = false;
-                    this.items = result['organization'];
+                    this.getArray(result['organization']);
                 },
                 err => {
                     this.enablePlaceholder = false;
