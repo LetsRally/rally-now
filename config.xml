@@ -9,7 +9,7 @@
             <path url="/__/auth/callback" />
         </host>
     </universal-links>
-    <content original-src="index.html" src="http://192.168.12.43:8100" />
+    <content original-src="index.html" src="http://192.168.12.43:8101" />
     <access origin="*" />
     <allow-navigation href="*" />
     <allow-navigation href="http://ionic.local/*" />
@@ -261,6 +261,7 @@
         <variable name="TWITTER_KEY" value="mX4bWG9qdpR8eRcDO3AjbbLKI" />
         <variable name="TWITTER_SECRET" value="RkghHyvOiYsLLDhynTGm1gjZUBtEyn0OMNzmt61rmWGqfnSb0Y" />
     </plugin>
+    <allow-navigation href="http://192.168.12.43:8101" />
     <engine name="android" spec="6.3.0" />
     <engine name="ios" spec="4.5.4" />
 </widget>

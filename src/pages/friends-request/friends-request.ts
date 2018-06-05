@@ -79,7 +79,8 @@ export class FriendsRequestPage {
 
     getDiscoverOrganizations() {
         this.orgProvider.getJsonData(this.discoverEndpoint).subscribe(result => {
-            this.mapOrgs(result);
+            // this.mapOrgs(result);
+            this.orgs = result;
             console.log('GET DISCOVER ORGANIZATIONS');
         });
     }
@@ -135,6 +136,8 @@ export class FriendsRequestPage {
     getFacebookFriendsList() {
         this.facebook.api('me/friends', ['user_friends']).then(
             list => {
+                console.log('GETTING USER_FRIENDS');
+                console.log(list);
                 this.mapFacebookUsers(list['data']);
             }, error => {
                 console.log("error", error);
@@ -170,11 +173,15 @@ export class FriendsRequestPage {
     sortOrgs(org) {
         this.httpProvicer.getJsonData(this.organizationEndpoint + '?follower_id=' + this.myRallyID + '&organization_id=' + org[0])
             .subscribe(result => {
-                // console.log(result);
+                console.log('SORT ORGS');
+                console.log(result);
+                console.log('-----------------');
                 if (result != "") {
                     // console.log("ya sigues a esta ORG");
                 } else {
                     this.orgs.push(org);
+                    console.log('ORGS============');
+                    console.log(this.orgs);
                 }
             });
     }
