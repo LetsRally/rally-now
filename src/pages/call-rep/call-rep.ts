@@ -39,7 +39,7 @@ export class CallRepPage {
     objetiveID: any;
     isRep: any;
     user: any;
-    phoneArr: any = [];
+    phoneArr = [];
 
     constructor(
         public navCtrl: NavController,
@@ -66,8 +66,15 @@ export class CallRepPage {
         this.isRep = this.rep.title === 'representative';
 
         this.showCallAlert(this.rep.phone);
-        this.offices.forEach(office => {
-            this.phoneArr.push(office.phone);
+        this.setPhonesArray(this.offices);
+    }
+
+    setPhonesArray(arr) {
+        arr.map((elem) => {
+            let hasElem = this.phoneArr.indexOf(elem.phone);
+            if (elem.phone !== '' && hasElem === -1) {
+                this.phoneArr.push(elem.phone);
+            }
         });
     }
 
@@ -111,39 +118,15 @@ export class CallRepPage {
     callOffices() {
         let actionSheet = this.actionSheetCtrl.create({
             title: 'Select a different office',
-            // buttons: [
-            //   {
-            //     text: '(123) 456 789',
-            //     handler: () => {
-            //       console.log('test');
-            //     }
-            //   },{
-            //     text: '(987) 654 321',
-            //     handler: () => {
-            //       console.log('Fax clicked');
-            //     }
-            //   },{
-            //     text: 'Cancel',
-            //     role: 'cancel',
-            //     handler: () => {
-            //       console.log('Cancel clicked');
-            //     }
-            //   }
-            // ]
         });
 
-        // for(var i = 0; i< this.offices.length; i++){
-
-
-        // }
-
-        this.offices.forEach(office => {
+        this.phoneArr.forEach(phone => {
             actionSheet.addButton({
-                text: office.phone,
+                text: phone,
                 handler: () => {
                     console.log("Phone Number", this.offices);
-                    console.log("Iterator", office.phone);
-                    this.makeCall(office.phone);
+                    console.log("Iterator", phone);
+                    this.makeCall(phone);
 
                 }
             });

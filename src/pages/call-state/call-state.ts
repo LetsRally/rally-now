@@ -37,7 +37,7 @@ export class CallStatePage {
     talkingPoints: any;
     offices: any;
     objetiveID: any;
-    phoneArr: any = [];
+    phoneArr = [];
 
     constructor(
         public navCtrl: NavController,
@@ -62,8 +62,15 @@ export class CallStatePage {
         });
         this.showCallAlert(this.rep.offices[0].phone);
 
-        this.offices.forEach(office => {
-            this.phoneArr.push(office.phone);
+        this.setPhonesArray(this.offices);
+    }
+
+    setPhonesArray(arr) {
+        arr.map((elem) => {
+            let hasElem = this.phoneArr.indexOf(elem.phone);
+            if (elem.phone !== '' && hasElem === -1) {
+                this.phoneArr.push(elem.phone);
+            }
         });
     }
 
@@ -108,14 +115,13 @@ export class CallStatePage {
             title: 'Select a different office',
         });
 
-
-        this.offices.forEach(office => {
+        this.phoneArr.forEach(phone => {
             actionSheet.addButton({
-                text: office.phone,
+                text: phone,
                 handler: () => {
                     console.log("Phone Number", this.offices);
-                    console.log("Iterator", office.phone);
-                    this.makeCall(office.phone);
+                    console.log("Iterator", phone);
+                    this.makeCall(phone);
 
                 }
             });
