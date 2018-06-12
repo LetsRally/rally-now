@@ -69,4 +69,11 @@ page-filter-events {
     .toolbar-background {
         border: none!important;
     }
+    ion-footer {
+        padding: 0 16px 25px;
+        background-color: #f2f2f2;
+        .large-white-button {
+            width: 100%;
+        }
+    }
 }

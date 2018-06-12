@@ -105,4 +105,19 @@ page-call-rep {
     .scroll-content{
         padding-top: 140px;
     }
+    .large-blue-button {
+        width: 100%;
+        color: white;
+        position: relative;
+        img {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+    }
+    .col {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
 }

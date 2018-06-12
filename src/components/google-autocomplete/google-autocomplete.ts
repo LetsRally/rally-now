@@ -13,6 +13,7 @@ import {Http} from "@angular/http";
 export class GoogleAutocompleteComponent {
 
     @Input('key') key: string;
+    @Input() placeholder;
     @Output() searchResult = new EventEmitter();
 
     public searchTerm = '';
@@ -20,7 +21,8 @@ export class GoogleAutocompleteComponent {
     public places = [];
     public displayPlaces = false;
     public place = '';
-    public enablePlaceholder = false;
+    public enablePlaceholder = true;
+    public showPlaceholder = 'Search';
     public noResults = false;
     private endpoint = 'https://maps.googleapis.com/maps/api/place/autocomplete/json?input=';
 
@@ -28,6 +30,9 @@ export class GoogleAutocompleteComponent {
                 private http: Http,
                 private keyboard: Keyboard) {
         this.searchTerm$ = new Subject<string>();
+        this.showPlaceholder = this.placeholder || 'Search';
+        console.log("8");
+        console.log(this.showPlaceholder);
     }
 
     onSearchInput() {

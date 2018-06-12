@@ -4,18 +4,28 @@
   <img src="assets/img/isologo.png" alt="">
   <h1>Make an impact together</h1>
 
-</ion-content>
-<ion-footer>
-  <button ion-button
-          class="google-login"
-          full
-          block
-          (click)="googleLogin()">GET STARTED WITH GOOGLE</button>
+  <div class="login-buttons">
+    <button class="fb-btn"
+            full
+            ion-button
+            color="facebook"
+            block
+            (click)="facebookLogin()" >
+      <span class="fb-icon"></span>
+      Get Started With Facebook</button>
 
-  <button class="fb-btn" full ion-button color="facebook"  block  (click)="facebookLogin()" > Get started with Facebook</button>
-  <ion-col col-12 padding>
+    <button ion-button
+            class="google-login"
+            full
+            block
+            (click)="googleLogin()">
+      <span class="google-icon"></span>
+      Get Started With Google</button>
+  </div>
+
+  <ion-col col-12 padding text-center="">
     <div class="text-btn" text-wrap >
-    By signing up, you agree to our <strong (click)="goToTerms()">Terms</strong> &amp; <strong (click)="goToPrivacy()">Privacy Policy</strong>.
+      By signing up, you agree to our <strong (click)="goToTerms()">Terms</strong> &amp; <strong (click)="goToPrivacy()">Privacy Policy</strong>.
     </div>
   </ion-col>
-</ion-footer>
+</ion-content>

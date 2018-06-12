@@ -26,6 +26,7 @@
    <!--</google-places-autocomplete>-->
 
        <google-autocomplete key="AIzaSyAG8YwO3jnFYNYfiV1B35FzICVOYVJYnMQ"
+                            [placeholder]="'EX:'"
                             (searchResult)="searchResult($event)"></google-autocomplete>
 
    </form>
@@ -33,8 +34,10 @@
   
 </ion-content>
 
-<ion-footer *ngIf="showFooter">
-  <button ion-button full class="reps-btn" (click)="getLocation()">
-    FIND MY REPS 
+<ion-footer *ngIf="showFooter" class="button-container">
+    <p>We'll never display this information to other in Rally</p>
+  <button class="large-white-button"
+          (click)="getLocation()">
+    Find My Representatives
   </button>
 </ion-footer>

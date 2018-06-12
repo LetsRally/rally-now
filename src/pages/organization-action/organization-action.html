@@ -47,11 +47,8 @@
         </ion-list>
         <ion-row *ngIf="!enable">
             <div class="flex-center" *ngIf="!enableSpecificRep">
-                <h2>No representatives</h2>
-                <main-button
-                        class="blue"
-                        btnText="FIND MY REPS"
-                        (click)="finReps()"></main-button>
+                <button class="large-white-button"
+                        (click)="finReps()">Find My Representatives</button>
             </div>
         </ion-row>
 

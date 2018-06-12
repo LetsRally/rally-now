@@ -158,38 +158,11 @@ page-organization-action {
     .flex-center{
         width: 100%;
         text-align: center;
-        padding: 15px 0;
+        padding: 15px 20px;
 
         h2{
             font-size: 20px;
-        }
-        button{
-            background: #fff;
-            border: 1px solid #989898;
-            border-radius: 6px;
-            color: #998899 !important;
-            margin-top: 10px;
-            min-width: 100px;
-            padding: 5px 10px;
-            font-size: 14px;
-            line-height: 20px;
-            font-family: 'SF UI Text' !important;
-            font-weight: 600;
-            letter-spacing: -0.36px;
-            height: 32px;
-
-            .button-inner{
-                font-size: 14px;
-                height: 20px;
-                display: inline-block;
-                line-height: 20px;
-                overflow: hidden;
-                white-space: nowrap;
-                text-overflow: ellipsis;
-                font-family: 'SF UI Text' !important;
-                font-weight: 600;
-                letter-spacing: -0.36px;
-            }
+            margin-bottom: 15px;
         }
     }
     .item.item-block{

@@ -1,23 +1,29 @@
-<rally-orange-header></rally-orange-header>
-
 <ion-content padding>
-  <ion-row>
-      <h1>Change Username</h1>
-      <p>Pick a username for your account. You can always change it later</p>
-      <ion-list>
-          
-            <ion-item>
-              <ion-input type="text" value="{{username}}" [(ngModel)]="username" max="15" autocapitalize='off'></ion-input>
-              <ion-icon *ngIf="enable" class="static-icon" style="color: green;" name="ios-checkmark-circle-outline" item-right></ion-icon> 
-              <ion-icon *ngIf="!enable" class="static-icon" style="color: red;" name="ios-refresh-outline" item-right></ion-icon>              
-                
-            </ion-item>
-            <p class="red">{{warning}}</p>
-            <ion-item>
-                <button ion-button full color="primary" (click)="validateUsername()">Next</button>
-              </ion-item>         
-          </ion-list>
+    <div class="flex">
+        <img src="assets/img/isologo.png" alt="">
+        <h1>Change Username</h1>
+        <p>Pick a username for your account. You can always change it later</p>
+    </div>
 
+    <ion-list>
+        <ion-item>
+            <ion-input type="text" value="{{username}}" [(ngModel)]="username" max="15"
+                       autocapitalize='off'></ion-input>
+            <ion-icon *ngIf="enable" class="static-icon" style="color: green;" name="ios-checkmark-circle-outline"
+                      item-right></ion-icon>
+            <ion-icon *ngIf="!enable" class="static-icon" style="color: red;" name="ios-refresh-outline"
+                      item-right></ion-icon>
 
-  </ion-row>
+        </ion-item>
+        <p class="red">{{warning}}</p>
+    </ion-list>
+
 </ion-content>
+
+<ion-footer padding>
+    <button ion-button
+            full
+            class="large-blue-button"
+            (click)="validateUsername()">Next
+    </button>
+</ion-footer>

@@ -6,27 +6,65 @@ page-home {
         background: #fefcf8 !important;
     }
 
-    .fb-btn{
-        color: #fff;
-        background: #45619d;
-        height: 80px !important;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-    }
-
     .footer-md::before, .footer-ios::before{
         background: none !important;
     }
 
     .text-btn{
+        width: 200px;
         height: 30px;
         text-align: center;
-        color: #6b6b6b;
+        color: #9b9b9b;
+        display: inline-block;
+        font-family: 'SF UI Display';
+        font-size: 14px;
+        font-weight: 400;
+        strong {
+            color: #5b91c8;
+        }
     }
     
     
 }
 
 .google-login {
-    height: 80px;
+    background-color: #fff;
+    color: #4a4a4a;
+    border: 1px solid rgb(213, 213, 213);
+}
+.fb-btn {
+    color: #f2f2f2;
+}
+.login-buttons {
+    padding: 20px 0 10px;
+    button {
+        border-radius: 6px;
+        height: 53px;
+        font-family: 'SF UI Display';
+        letter-spacing: -0.33px;
+        font-size: 18px;
+        font-weight: 600;
+
+        &:first-of-type {
+            margin-bottom: 8px;
+        }
+    }
+    .google-icon, .fb-icon {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+    .google-icon {
+        left: 15px;
+        width: 20px;
+        height: 22px;
+        background-image: url('../assets/img/google-icon.png');
+    }
+    .fb-icon {
+        left: 20px;
+        width: 10px;
+        height: 21px;
+        background: rgb(45, 78, 146);
+        background-image: url('../assets/img/fb-icon.png');
+    }
 }

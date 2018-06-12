@@ -81,8 +81,16 @@ $colors: (primary: #488aff, secondary: #32db64, danger: #f53d3d, light: #f4f4f4,
 @font-face {
     font-family: 'SF UI Display';
     src: url($font-path + '/SFUIDisplay-Light.woff2') format('woff2'),
-    url($font-path + '/SFUIDisplay-Light.woff') format('woff');
-    font-weight: 200;
+url($font-path + '/SFUIDisplay-Light.woff') format('woff');
+font-weight: 200;
+font-style: normal;
+}
+
+@font-face {
+    font-family: 'SF UI Display Thin';
+    src: url($font-path + '/SFUIDisplay-Thin.woff2') format('woff2'),
+    url($font-path + '/SFUIDisplay-Thin.woff') format('woff');
+    font-weight: 100;
     font-style: normal;
 }
 
@@ -261,6 +269,12 @@ $searchbar-ios-input-placeholder-color: #fff;
 $searchbar-ios-input-clear-icon-color: #fff;
 $searchbar-ios-input-search-icon-color: #fff;
 $searchbar-ios-input-text-color: #fff;
+page-adress-modal {
+  $searchbar-ios-input-placeholder-color: #c7c7cc;
+  $searchbar-ios-input-clear-icon-color: #c7c7cc;
+  $searchbar-ios-input-search-icon-color: #c7c7cc;
+  $searchbar-ios-input-text-color: #c7c7cc;
+}
 
 // Custom styles
 // --------------------------------------------------

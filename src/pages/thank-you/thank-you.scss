@@ -26,12 +26,10 @@ page-thank-you {
     }
 
     ion-footer{
-        button{
-            height: 80px !important;
-            background: #356fba !important;
+        padding: 0 16px 25px;
+        .large-white-button {
+            width: 100%;
         }
-
-       
     }
 
     .streak-row{

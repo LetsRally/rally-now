@@ -1,114 +1,128 @@
 page-call {
-    .toolbar-background {
-        background-color: #4a90e2;
-        color: #fff;
-    }
-    p.white {
-        color: #fff;
-        margin: 0;
-    }
+  .toolbar-background {
+    background-color: #4a90e2;
+    color: #fff;
+  }
+  p.white {
+    color: #fff;
+    margin: 0;
+  }
 
-    ion-content{
-        top: 45px;
-        height: calc(100vh - 45px);
-    }
-    .bordered {
-        border-bottom: 1px solid #000;
-    }
+  ion-content {
+    top: 45px;
+    height: calc(100vh - 45px);
+  }
+  .bordered {
+    border-bottom: 1px solid #000;
+  }
 
-    .bob-headshot {
-        height: 70px;
-        width: 70px;
-        border-radius: 50%;
-        margin: 0 auto;
-        margin-right: 0;
-        border: 2px solid gray;
-        background-size: cover;
+  .bob-headshot {
+    height: 70px;
+    width: 70px;
+    border-radius: 50%;
+    margin: 0 auto;
+    margin-right: 0;
+    border: 2px solid gray;
+    background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    }
+  }
 
-    .gray {
-        color: gray;
-        margin: 0;
-    }
+  .gray {
+    color: gray;
+    margin: 0;
+  }
 
-    h3 {
-        margin: 5px 0;
-    }
+  h3 {
+    margin: 5px 0;
+  }
 
-    .bob-button{
-    	min-height: 70px;
-    }
+  .bob-button {
+    min-height: 70px;
+  }
 
-    .btn-light-blue{
-        
-        button{
-            border: 1px solid #296fb7;
-            height: 5.5rem !important;
-            background-color: transparent !important;
-            border-radius: 7px;
-            color: #296fb7;
-            .special-btn{
-                text-transform: none;
-            }
+  .btn-light-blue {
+
+    button {
+      border: 1px solid #296fb7;
+      height: 5.5rem !important;
+      background-color: transparent !important;
+      border-radius: 7px;
+      color: #296fb7;
+      .special-btn {
+        text-transform: none;
+      }
+    }
+    &.add-class {
+      width: 100% !important;
+      max-width: 100%;
+      flex: 1;
+    }
+  }
+
+  .call {
+    padding: 0 5px;
+    button {
+      padding: 0;
+      height: 6rem !important;
+      border-radius: 7px;
+      background-color: #296fb7 !important;
+      transition: none;
+      .button-inner {
+        display: inline-block !important;
+        background: #296fb7 !important;
+        height: 30px;
+        line-height: 30px;
+        vertical-align: top;
+        width: auto;
+        margin-left: 7px;
+        img {
+          width: 30px;
+          height: 30px;
+          margin-bottom: 5px;
+          filter: brightness(0) invert(1);
+
         }
-        &.add-class{
-            width: 100% !important;
-            max-width: 100%;
-            flex: 1;
-        }
+      }
     }
+  }
 
-    .call{
-        padding: 0 5px;
-        button{
-            padding: 0;
-            height: 6rem !important;
-            border-radius: 7px;
-            background-color: #296fb7 !important;
-            transition: none;
-            .button-inner{
-                display: inline-block !important;
-                background: #296fb7 !important;
-                height: 30px;
-                line-height: 30px;
-                vertical-align: top;
-                width: auto;
-                margin-left: 7px;
-                img{
-                    width: 30px;
-                    height: 30px;
-                    margin-bottom: 5px;
-                    filter: brightness(0) invert(1);
-                    
-                }
-            }
-        }
-    }
+  .right-border {
+    border-right: 1px solid #f2f2f2;
+  }
 
-    .right-border{
-        border-right: 1px solid #f2f2f2;
-    }
+  .footer {
+    padding-top: 5px;
+    background-color: #fff;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+  }
 
-    .footer{
-        padding-top: 5px;
-        background-color: #fff;
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        width: 100%;
+  .fixed-panel {
+    position: fixed;
+    z-index: 9;
+    background: #fff;
+    top: 44px;
+    width: 100%;
+  }
+  .scroll-content {
+    padding-top: 140px;
+  }
+  .large-blue-button {
+    width: 100%;
+    color: white;
+    position: relative;
+    img {
+      position: absolute;
+      left: 16px;
+      top: 50%;
+      transform: translateY(-50%);
     }
-
-    .fixed-panel{
-        position: fixed;
-        z-index: 9;
-        background: #fff;
-        top: 44px;
-        width: 100%;
-    }
-    .scroll-content{
-        padding-top: 140px;
-    }
-
+  }
+  .col {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
 }

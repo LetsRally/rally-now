@@ -31,25 +31,25 @@
 </ion-content>
 <ion-footer>
     <ion-row>
-        <ion-col col-12 no-padding class="call">
-            <button ion-button full (click)="makeCall(rep.offices[0].phone)" style="margin-bottom: 0 !important; margin-top: 0 !important;" >
-                    <img src="assets/img/Call.svg" alt="">
+        <ion-col col-12>
+            <button class="large-blue-button" (click)="makeCall(rep.offices[0].phone)" >
+                <img src="assets/img/phone.svg" alt="">
                     <div class="button-inner">
-                        CALL NOW
+                        Call Now
                     </div>             
             </button>
         </ion-col>
-        <ion-col col-6 class="btn-light-blue right-border">
-            <button ion-button full (click)="callOffices()">
+        <ion-col col-12 *ngIf="phoneArr.length">
+            <button class="large-white-button" (click)="callOffices()">
                 <div class="special-btn">
-                        Try another office             
+                    Try Another Office
                 </div>
             </button>
         </ion-col>
-        <ion-col col-6 class="btn-light-blue">
-            <button ion-button full (click)="pop()">
+        <ion-col col-12 [ngClass]="!phoneArr.length ? 'add-class' : ''">
+            <button class="large-white-button" (click)="pop()">
                     <div class="special-btn">
-                            I'm done
+                            I'm Done
                     </div>
             </button>
         </ion-col>

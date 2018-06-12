@@ -13,8 +13,10 @@ page-sync-contacts {
         }
     }
 
-    .footer-btn{
-        height: 80px;
-        background: #356fba !important;
+    ion-footer {
+        padding: 0 16px 25px;
+        .large-white-button {
+            width: 100%;
+        }
     }
 }
