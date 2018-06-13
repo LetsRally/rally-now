@@ -27,9 +27,9 @@ export class MyApp {
     public storage:Storage,
     private httpProvider:UsersProvider
 ) {
-console.log(111111111);
+
         this.userData.hasLoggedIn().then((hasLoggedIn) => {
-      console.log(222222222);
+            this.splashScreen.hide();
                 if(hasLoggedIn){
                   this.rootPage = TabsPage;
                 }
@@ -39,13 +39,11 @@ console.log(111111111);
         }); 
         
         this.httpProvider.setToken().subscribe(data =>{
-            console.log(33333333);
           localStorage.setItem('token', data.auth_token);
        
         });
           platform.ready().then((readySource) => {
             console.log("Platform Ready from ", readySource);
-            console.log(4444444444);
             statusBar.overlaysWebView(false);
             statusBar.backgroundColorByHexString('#f4512c');
             // Appsee.start("e81f4eb7b562458b80bbd8fb1f6130dc");

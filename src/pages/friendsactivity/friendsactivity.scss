@@ -111,7 +111,19 @@ page-friendsactivity {
         .right-border {
             border-right: 1px solid #f2f2f2;
         }
-    
+    .obj-info {
+        font-family: 'SF UI Text';
+        font-weight: 200;
+        font-size: 17px;
+        color: #2B2B2B;
+        letter-spacing: -0.41px;
+        line-height: 22px;
+        strong {
+            font-family: 'SF UI Text';
+            font-weight: 600;
+            font-size: 17px;
+        }
+    }
 }
 
 .footer-icons {

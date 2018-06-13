@@ -36,9 +36,9 @@ export const themeAbleOptions: ThemeableBrowserOptions = {
         showPageTitle: false
     },
     closeButton: {
-        wwwImage: 'assets/img/done.png',
-        wwwImagePressed: 'assets/img/done_pressed.png',
-        wwwImageDensity: 1,
+        wwwImage: 'assets/img/done_x.png',
+        wwwImagePressed: 'assets/img/done_x_touched.png',
+        wwwImageDensity: 4,
         align: 'left',
         event: 'closePressed'
     },
