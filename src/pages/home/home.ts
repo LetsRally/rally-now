@@ -77,10 +77,10 @@ console.log(this.users);
     let userRef = this.db.database.ref('users/'+id);
 
     userRef.once('value').then((snapshot) => {
-      // if (snapshot.hasChildren()) {
-      //   console.log('Usuario ya existe');
-      //   this.navCtrl.setRoot(TabsPage);
-      //  } else{
+      if (snapshot.hasChildren()) {
+        console.log('Usuario ya existe');
+        this.navCtrl.setRoot(TabsPage);
+       } else{
          console.log('Nuevo Usuario', this.user);
            this.db.database.ref('users/'+this.user.uid).set(this.user);
            this.httpProvider.saveNewUser(this.endpoint, this.user).subscribe(data => {
@@ -91,7 +91,7 @@ console.log(this.users);
            }, error => { 
              console.log("Error", error);
            });
-       // }
+       }
     });
     
   }

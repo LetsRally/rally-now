@@ -196,16 +196,16 @@
             </ion-avatar>
             <h2>{{name}}</h2>
             <p>
+                <ion-icon name="logo-twitter"></ion-icon>
                 <small>@{{record.twitter_username}} • {{record.tweet_created_at | amTimeAgo}}</small>
             </p>
         </ion-item>
 
-        <ion-card-content (click)="openWebpage(record.twitter_username, record.tweet_id)">
-            <blockquote class="twitter-video" data-lang="es">
+        <div (click)="openWebpage(record.twitter_username, record.tweet_id)">
+            <p class="twitter-video" data-lang="es">
                 {{record.tweet}}
-            </blockquote>
-            <ion-icon name="logo-twitter"></ion-icon>
-        </ion-card-content>
+            </p>
+        </div>
 
         <ion-row class="card-footer">
             <button [disabled]="disable" class="btn-50 right-border" ion-button icon-left clear full

@@ -212,6 +212,7 @@ export class RepresentivesListPage {
             .subscribe(result => {
                     this.enablePlaceholder = false;
                     this.items = result['reps'];
+                    this.groupItems(this.items);
                 },
                 err => {
                     this.enablePlaceholder = false;
