@@ -124,10 +124,6 @@ export class EventsPage {
         } else {
             this.eventFiltered = true;
         }
-        console.log('CHECK DIFFERENT');
-        console.log(currentFilterState);
-        console.log(this.baseFilterState);
-        console.log(this.baseFilterState === currentFilterState);
     }
 
     goToHome() {
@@ -158,6 +154,9 @@ export class EventsPage {
 
     getdata() {
         this.checkDifferentFilterState();
+        if (this.filterState.zipcode === '') {
+            return this.getAllEvents();
+        }
         if (this.filterState.timeStarts && this.filterState.timeStarts !== '') {
             if (this.filterState.filterBy === 'all') {
                 return this.getFilteredEvents(this.filterState.timeStarts, this.filterState.timeEnds, this.filterState.zipcode, this.filterState.distance);
@@ -184,6 +183,7 @@ export class EventsPage {
                     resolve(true);
                 }, err => {
                     reject(err);
+                    this.enablePlaceholder = false;
                 });
         });
     }
@@ -199,6 +199,7 @@ export class EventsPage {
                     resolve(true);
                 }, err => {
                     reject(err);
+                    this.enablePlaceholder = false;
                 });
         });
     }
@@ -225,6 +226,7 @@ export class EventsPage {
                     resolve(true);
                 }, err => {
                     reject(err);
+                    this.enablePlaceholder = false;
                 });
         });
 

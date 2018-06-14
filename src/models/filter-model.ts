@@ -6,7 +6,7 @@ export class FilterModel {
     filterBy: string;
 
     constructor() {
-        this.zipcode = '98053';
+        this.zipcode = '';
         this.distance = 50;
         this.timeStarts = '';
         this.timeEnds = '';

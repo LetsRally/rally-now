@@ -78,7 +78,7 @@ export class OrganizationsProvider {
 
         let options = new RequestOptions({headers: headers});
         console.log(this.base + endpoint + start + '/' + this.perpage);
-        return new Promise(resolve => {
+        return new Promise((resolve, reject) => {
             this.http.get(this.base + endpoint + start + '/' + this.perpage, options)
                 .map(res => res.json())
                 .subscribe(data => {

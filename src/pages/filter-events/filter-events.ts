@@ -23,6 +23,8 @@ export class FilterEventsPage {
     orgs: boolean = false;
     events: boolean = false;
     disable: boolean = true;
+    public disableButton = false;
+    public disableRange = true;
 
     constructor(
         public navCtrl: NavController,
@@ -46,7 +48,6 @@ export class FilterEventsPage {
             this.events = true;
             this.getStorage('eventsFilterState');
         }
-        this.checkZipCode();
     }
 
     getStorage(key) {
@@ -58,6 +59,7 @@ export class FilterEventsPage {
                 }
                 this.setDate();
             }
+            this.checkZipCode(true);
         });
     }
 
@@ -87,7 +89,7 @@ export class FilterEventsPage {
 
     goToEvents() {
         if (!this.filterState.zipcode || this.filterState.zipcode === '') {
-            this.filterState.zipcode = '98053';
+            this.filterState.zipcode = '';
         }
 
         this.storage.set('eventsFilterState', JSON.stringify(this.filterState));
@@ -108,22 +110,36 @@ export class FilterEventsPage {
         }
     }
 
-    checkZipCode() {
+    checkZipCode(firstTime?) {
+        if(this.filterState.zipcode === '') {
+            this.invalidZip = false;
+            this.disableRange = true;
+            this.disableButton = false;
+            return;
+        }
         if (constants.virginZipCodes.indexOf(this.filterState.zipcode) === -1) {
             this.dataService.getZipCodes(this.filterState.zipcode)
                 .then((data) => {
                     if (data) {
                         this.invalidZip = false;
+                        this.disableButton = false;
+                        this.disableRange = false;
                         this.getDistance();
                     } else {
                         this.invalidZip = true;
+                        this.disableButton = true;
+                        this.disableRange = true;
                     }
                 }, (err) => {
                     console.log(err);
                 });
             this.invalidZip = true;
+            this.disableButton = true;
+            this.disableRange = true;
         } else {
             this.invalidZip = false;
+            this.disableButton = false;
+            this.disableRange = false;
             this.getDistance();
         }
     }
@@ -132,7 +148,7 @@ export class FilterEventsPage {
         this.filterState = new FilterModel();
         this.setDate();
         if (!this.filterState.zipcode || this.filterState.zipcode === '') {
-            this.filterState.zipcode = '98053';
+            this.filterState.zipcode = '';
         }
         this.storage.set('eventsFilterState', JSON.stringify(this.filterState));
     }
