@@ -112,10 +112,10 @@ page-friendsactivity {
             border-right: 1px solid #f2f2f2;
         }
     .obj-info {
-        font-family: 'SF UI Text';
+        font-family: 'SF UI Text'!important;
         font-weight: 200;
-        font-size: 17px;
-        color: #2B2B2B;
+        font-size: 17px!important;
+        color: #2B2B2B!important;
         letter-spacing: -0.41px;
         line-height: 22px;
         strong {

@@ -30,7 +30,7 @@ page-home {
 .google-login {
     background-color: #fff;
     color: #4a4a4a;
-    border: 1px solid rgb(213, 213, 213);
+    border: 1px solid rgba(182, 182, 182, 0.5);
 }
 .fb-btn {
     color: #f2f2f2;
@@ -40,7 +40,7 @@ page-home {
     button {
         border-radius: 6px;
         height: 53px;
-        font-family: 'SF UI Display';
+        font-family: 'SF UI Display'!important;
         letter-spacing: -0.33px;
         font-size: 18px;
         font-weight: 600;

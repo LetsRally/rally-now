@@ -39,6 +39,21 @@ page-news {
                 max-width: 90%;
                 overflow: visible;
                 white-space: initial;
+                .item-block {
+                    align-items: flex-start;
+                }
+                .label {
+                    margin-top: 0;
+                    margin-bottom: 0;
+                }
+                h2 {
+                    color: #3d3935!important;
+                    font-size: 17px!important;
+                    font-family: 'SF UI Text'!important;
+                    font-weight: 600!important;
+                    letter-spacing: -0.41px;
+                    line-height: 22px;
+                }
             }
             .button-clear-md,
             .button-clear-ios {
@@ -60,19 +75,11 @@ page-news {
                 background-color: #f2f2f2;
                 border-right: 1px solid #fff;
             }
-            .ion-logo-twitter {
-                //background: #4a90e2;
-                padding: 5px;
-                border-radius: 50%;
-                height: 25px;
-                width: 25px;
-                color: #4a90e2;
-            }
             ion-item{
             	padding-left: 0 !important;
-            	h2{
-            		font-size: 13px !important;
-            	}
+            	//h2{
+            	//	font-size: 13px !important;
+            	//}
             }
         }
     }
@@ -122,19 +129,40 @@ page-news {
             background-color: #f2f2f2;
             border-right: 1px solid #fff;
         }
-        .ion-logo-twitter {
-            //background: #4a90e2;
-            padding: 5px;
-            border-radius: 50%;
-            height: 25px;
-            width: 25px;
-            color: #4a90e2;
-        }
         ion-item{
             padding-left: 0 !important;
-            h2{
-                font-size: 13px !important;
-            }
+            //h2{
+            //    font-size: 13px !important;
+            //}
         }
     }
+    .ion-logo-twitter {
+        vertical-align: middle;
+        padding: 0;
+        border-radius: 50%;
+        height: 16px;
+        width: 16px;
+        color: #4a90e2;
+    }
+    .twitter-video {
+        font-family: 'SF UI Text'!important;
+        font-weight: normal;
+        font-style: normal;
+        font-size: 17px;
+        color: #2B2B2B;
+        letter-spacing: -0.41px;
+        line-height: 22px;
+    }
+    ion-avatar[item-start] {
+        margin-top: 0!important;
+    }
+}
+.with-tweet-logo {
+    color: #868686!important;
+    font-size: 12px!important;
+    line-height: 20px!important;
+    font-family: 'SF UI Text' !important;
+    font-weight: normal;
+    letter-spacing: -0.41px;
+    margin: 0!important;
 }

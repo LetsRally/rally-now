@@ -1,0 +1,59 @@
+general-modal {
+  .modal-window {
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+    border-radius: 12px;
+    width: 250px;
+    min-height: 100px;
+    border: none;
+  }
+  .modal-buttons {
+    border: none;
+    border-radius: 0 0 12px 12px;
+    background-color: #296fb7;
+    .button {
+      width: 100%;
+      color: #ffffff;
+      font-family: "SF UI Text"!important;
+      font-size: 18px;
+      font-weight: 600;
+      letter-spacing: -0.33px;
+    }
+  }
+  .modal-title {
+    h2 {
+      color: #2b2b2b;
+      font-family: "SF UI Text"!important;
+      font-size: 18px;
+      font-weight: 600;
+      line-height: 22px;
+    }
+    p {
+      color: #2b2b2b;
+      font-family: "SF UI Text"!important;
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 22px;
+      letter-spacing: -0.25px;
+    }
+  }
+  .modal-body {
+    padding: 0;
+    max-height: initial;
+    margin-bottom: 0;
+    ion-item {
+      padding-left: 0;
+      text-align: center;
+      .item-inner {
+        padding-right: 0!important;
+      }
+      .label {
+        margin-right: 0;
+        color: #296fb7;
+        font-family: "SF UI Text"!important;
+        font-size: 18px;
+        font-weight: 600;
+        letter-spacing: -0.33px;
+      }
+    }
+  }
+}

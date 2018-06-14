@@ -1,5 +1,5 @@
 import { Component, NgZone } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import {ModalController, NavController} from 'ionic-angular';
 import { ViewChild } from '@angular/core';
 import { Slides } from 'ionic-angular';
 import { AlertController } from 'ionic-angular'; 
@@ -18,6 +18,7 @@ import { HelloPage } from '../hello/hello';
 import { TermsPage } from '../terms/terms';
 import { PrivacyPolicyPage } from '../privacy-policy/privacy-policy';
 import {InterestedOrganizationsPage} from "../interested-organizations/interested-organizations";
+import {GeneralModalComponent} from "../../components/general-modal/general-modal";
 
 
 
@@ -61,11 +62,13 @@ export class HomePage {
     private facebook: Facebook,
     private db: AngularFireDatabase,
     private httpProvider:UsersProvider,
+    private modalCtrl: ModalController,
     private readonly ngZone: NgZone
 
   ) {
       this.users = db.list('/users');
-
+console.log('USERS FROM FIRE');
+console.log(this.users);
   }
 
  
@@ -74,10 +77,10 @@ export class HomePage {
     let userRef = this.db.database.ref('users/'+id);
 
     userRef.once('value').then((snapshot) => {
-      if (snapshot.hasChildren()) {
-        console.log('Usuario ya existe');
-        this.navCtrl.setRoot(TabsPage);
-       } else{
+      // if (snapshot.hasChildren()) {
+      //   console.log('Usuario ya existe');
+      //   this.navCtrl.setRoot(TabsPage);
+      //  } else{
          console.log('Nuevo Usuario', this.user);
            this.db.database.ref('users/'+this.user.uid).set(this.user);
            this.httpProvider.saveNewUser(this.endpoint, this.user).subscribe(data => {
@@ -88,11 +91,37 @@ export class HomePage {
            }, error => { 
              console.log("Error", error);
            });
-       }
+       // }
     });
     
   }
- 
+
+  startFacebookLogin() {
+      let data = {
+          title: "Accept & Continue!",
+          subTitle: "By signing up, you agree to our \n" +
+          "Terms of Use & Privacy Policy",
+          buttonName: 'Accept',
+          rows: [
+              {text: "Terms & Conditions", id: 1},
+              {text: "Privacy Policy", id: 2},
+              {text: "Decline", id: 3},
+          ]
+      };
+      let modal = this.modalCtrl.create('GeneralModalComponent', data);
+      modal.onDidDismiss(data => {
+          if(data.accepted) {
+              this.facebookLogin();
+          }
+          if(data.actionId === 1) {
+              this.navCtrl.push(TermsPage);
+          }
+          if(data.actionId === 2) {
+              this.navCtrl.push(PrivacyPolicyPage);
+          }
+      });
+      modal.present();
+  }
 
   facebookLogin(): void{
     console.log("Hola Facebook API");
