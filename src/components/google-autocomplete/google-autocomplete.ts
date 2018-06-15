@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, Output, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {Platform} from "ionic-angular";
 import {Keyboard} from "@ionic-native/keyboard";
 import {Observable} from "rxjs/Observable";
@@ -13,7 +13,7 @@ import {Http} from "@angular/http";
 export class GoogleAutocompleteComponent {
 
     @Input('key') key: string;
-    @Input() placeholder;
+    @Input() placeholderText: string;
     @Output() searchResult = new EventEmitter();
 
     public searchTerm = '';
@@ -22,7 +22,6 @@ export class GoogleAutocompleteComponent {
     public displayPlaces = false;
     public place = '';
     public enablePlaceholder = true;
-    public showPlaceholder = 'Search';
     public noResults = false;
     private endpoint = 'https://maps.googleapis.com/maps/api/place/autocomplete/json?input=';
 
@@ -30,12 +29,11 @@ export class GoogleAutocompleteComponent {
                 private http: Http,
                 private keyboard: Keyboard) {
         this.searchTerm$ = new Subject<string>();
-        this.showPlaceholder = this.placeholder || 'Search';
-        console.log("8");
-        console.log(this.showPlaceholder);
     }
 
     onSearchInput() {
+        console.log(this.key);
+        console.log(this.placeholderText);
         const proxyurl = "https://cors-anywhere.herokuapp.com/";
         if (this.searchTerm === "") {
             this.places = [];
@@ -43,7 +41,7 @@ export class GoogleAutocompleteComponent {
             this.places = [];
             this.enablePlaceholder = true;
             this.displayPlaces = false;
-            this.searchTerm$.next(`${proxyurl}${this.endpoint}${this.searchTerm}&types=address&language=en&limit=10&components=country:us|country:pr|country:vi&key=${this.key}`);
+            this.searchTerm$.next(`${this.endpoint}${this.searchTerm}&types=address&language=en&limit=10&components=country:us|country:pr|country:vi&key=${this.key}`);
             this.getSubjectJson(this.searchTerm$).subscribe((res) => {
                 this.places = res.predictions;
                 this.showMessage(res);

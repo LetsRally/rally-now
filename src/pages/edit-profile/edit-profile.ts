@@ -85,10 +85,8 @@ export class EditProfilePage {
   ionViewDidLoad(){
       this.getUID(); 
       console.log(this.toggle);
-
-
   }
- 
+
   refresh(){
     this.getUID();
     this.navCtrl.pop();
@@ -99,7 +97,6 @@ export class EditProfilePage {
          console.log(uid);
           this.af.database.ref('users/'+uid)
            .on('value', snapshot => {
-             console.log(snapshot.val().displayName);
              this.user.displayName = snapshot.val().displayName;
              this.user.photoURL = snapshot.val().photoURL;
              this.user.uid = snapshot.val().uid;

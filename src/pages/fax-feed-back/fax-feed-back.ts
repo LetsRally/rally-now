@@ -54,7 +54,7 @@ export class FaxFeedBackPage {
                 this.userEmail = res;
             });
             this.storage.get('USER_PHONE').then((res) => {
-                this.userPhone = res;
+                this.userPhone = res || '';
             });
             this.storage.get('DISPLAYNAME').then((res) => {
                 this.userName = res;

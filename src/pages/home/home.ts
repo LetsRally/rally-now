@@ -80,6 +80,7 @@ console.log(this.users);
       if (snapshot.hasChildren()) {
         console.log('Usuario ya existe');
         this.navCtrl.setRoot(TabsPage);
+          this.storage.set('USER_PHONE', snapshot.val().phone || '');
        } else{
          console.log('Nuevo Usuario', this.user);
            this.db.database.ref('users/'+this.user.uid).set(this.user);
@@ -148,6 +149,7 @@ console.log(this.users);
           this.user.username = nickname;
           this.storage.set('PHOTOURL', res.photoURL);
           this.user.photoURL = res.photoURL;
+          this.user.phone = res.phone || '';
           this.storage.set('PROVIDER', 'twitter.com');
           this.user.provider = 'facebook.com';
           this.storage.set('EMAIL', res.email);

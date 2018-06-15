@@ -195,6 +195,7 @@ export class UsersProvider {
             searchable: data.searchable,
             hide_activity: data.hide_activity,
             email: data.email,
+            phone: data.phone,
             username: data.username,
             address: data.address,
             lon: data.lon,
@@ -209,6 +210,7 @@ export class UsersProvider {
             }, error => {
                 console.log("Error", error);
             });
+        this.storage.set('USER_PHONE', data.phone);
     }
 
     updateUsername(endpoint, username): void {

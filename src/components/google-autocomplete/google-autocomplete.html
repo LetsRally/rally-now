@@ -2,9 +2,9 @@
   <ion-searchbar (ionInput)="onSearchInput()"
                  [(ngModel)]="searchTerm"
                  [name]="place"
-                 [placeholder]="showPlaceholder"
+                 [placeholder]="placeholderText || 'Search'"
                  [showCancelButton]="true"
-                 [debounce]="800"
+                 [debounce]="300"
                  (ionCancel)="cancel()"></ion-searchbar>
 </div>
 
