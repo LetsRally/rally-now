@@ -211,6 +211,7 @@ export class UsersProvider {
                 console.log("Error", error);
             });
         this.storage.set('USER_PHONE', data.phone);
+        this.storage.set('USER_ADDRESS', data.address);
     }
 
     updateUsername(endpoint, username): void {

@@ -122,7 +122,25 @@ page-call {
     }
   }
   .col {
-    padding-left: 16px;
-    padding-right: 16px;
+    padding-left: 0;
+    padding-right: 0;
+  }
+  .scrollable-content {
+    top: 0;
+    .scroll-content {
+      margin-top: 0!important;
+      padding-top: 0;
+    }
+    .row {
+      padding-top: 0;
+      padding-bottom: 0;
+    }
+  }
+  .fixed-box {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 9;
   }
 }

@@ -90,9 +90,10 @@
                     <ion-avatar item-start (click)="goToPublicProfile(activity.user_id)">
                         <img src="{{activity.photo_url}}">
                     </ion-avatar>
-                    <h2 (click)="goToPublicProfile(activity.user_id)">{{activity.fname}}</h2>
+                    <h2 class="org-name"
+                        (click)="goToPublicProfile(activity.user_id)">{{activity.fname}}</h2>
                     <div>
-                        <p>
+                        <p class="with-tweet-logo">
                             <small>{{activity.username}} • {{activity.created_at | amTimeAgo}}</small>
                         </p>
 
@@ -167,9 +168,10 @@
                     <ion-avatar item-start (click)="goToPublicProfile(activity.user_id)">
                         <img src="{{activity.photo_url}}">
                     </ion-avatar>
-                    <h2 (click)="goToPublicProfile(activity.user_id)">{{activity.fname}}</h2>
+                    <h2 class="org-name"
+                        (click)="goToPublicProfile(activity.user_id)">{{activity.fname}}</h2>
                     <div>
-                        <p>
+                        <p class="with-tweet-logo">
                             <small>{{activity.username}} • {{activity.created_at | amTimeAgo}}</small>
                         </p>
                     </div>
@@ -177,7 +179,7 @@
                 <ion-card-content>
 
                     <p class="obj-info">{{transform(activity.action)}}ed <strong
-                            (click)="goToRepProfile(activity.rep_id)">{{activity.representative}}.</strong></p>
+                            (click)="goToRepProfile(activity.rep_id)">{{activity.representative}}</strong>.</p>
                 </ion-card-content>
 
 
@@ -233,9 +235,10 @@
                     <ion-avatar item-start (click)="goToPublicProfile(activity.user_id)">
                         <img src="{{activity.photo_url}}">
                     </ion-avatar>
-                    <h2 (click)="goToPublicProfile(activity.user_id)">{{activity.fname}}</h2>
+                    <h2 class="org-name"
+                        (click)="goToPublicProfile(activity.user_id)">{{activity.fname}}</h2>
                     <div>
-                        <p>
+                        <p class="with-tweet-logo">
                             <small>{{activity.username}} • {{activity.created_at | amTimeAgo}}</small>
                         </p>
                     </div>
@@ -310,9 +313,10 @@
                     <ion-avatar item-start (click)="goToPublicProfile(activity.user_id)">
                         <img src="{{activity.photo_url}}">
                     </ion-avatar>
-                    <h2 (click)="goToPublicProfile(activity.user_id)">{{activity.fname}}</h2>
+                    <h2 class="org-name"
+                        (click)="goToPublicProfile(activity.user_id)">{{activity.fname}}</h2>
                     <div>
-                        <p>
+                        <p class="with-tweet-logo">
                             <small>{{activity.username}} • {{activity.created_at | amTimeAgo}}</small>
                         </p>
                     </div>
@@ -320,7 +324,7 @@
                 <ion-card-content>
 
                     <p class="obj-info">{{transform(activity.action)}}ed <strong
-                            (click)="goToRepProfile(activity.rep_id)">{{activity.representative}}.</strong></p>
+                            (click)="goToRepProfile(activity.rep_id)">{{activity.representative}}</strong>.</p>
                 </ion-card-content>
 
 

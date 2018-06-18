@@ -109,7 +109,6 @@ export class OrganizationActionPage {
 
     ionViewDidLoad() {
         console.log('ionViewDidLoad OrganizationActionPage');
-
     }
 
     presentActionSheet(rep, fax, twitter, email, repID, offices) {

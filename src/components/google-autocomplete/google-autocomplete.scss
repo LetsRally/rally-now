@@ -19,4 +19,11 @@ google-autocomplete {
     border-radius: 10px!important;
     padding-left: 30px!important;
   }
+  .autocomplete-box {
+    text-align: center;
+  }
+  ion-searchbar {
+    max-width: 335px;
+    display: inline-flex;
+  }
 }

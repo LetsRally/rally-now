@@ -88,7 +88,8 @@
                     </ion-avatar>
                     <!-- only show icon on verified accounts <h2 style="display: flex;">Senator Bob Jones <img *ngIf="{{rep.verified === true}}" style="width: 12px; height: 12px; margin-left: 5px;" src="assets/img/TwtterVerified.svg" alt=""></h2> -->
 
-                    <h2 style="display: flex; font-weight:bold;" (click)="goToRepProfile(record.rep_id)">
+                    <h2 class="org-name"
+                        (click)="goToRepProfile(record.rep_id)">
                         {{record.name}}</h2>
                     <p class="with-tweet-logo">
                         <ion-icon name="logo-twitter"></ion-icon>
@@ -98,9 +99,9 @@
             </ion-card-header>
             <ion-card-content (click)="openWebpage(record.twitter_username, record.tweet_id)">
                 <div>
-                    <blockquote class="twitter-video" data-lang="es">
+                    <p class="twitter-video" data-lang="es">
                         {{record.tweet}}
-                    </blockquote>
+                    </p>
                 </div>
             </ion-card-content>
 
@@ -143,7 +144,8 @@
                         <img [src]="record.image_url ">
                     </ion-avatar>
 
-                    <h2 style="display: flex; font-weight:bold;" (click)="goToOrganizationProfile(record.org_id)">
+                    <h2 class="org-name"
+                        (click)="goToOrganizationProfile(record.org_id)">
                         {{record.name}}</h2>
                     <p class="with-tweet-logo">
                         <ion-icon name="logo-twitter"></ion-icon>

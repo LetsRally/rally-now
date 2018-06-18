@@ -80,6 +80,7 @@ console.log(this.users);
       if (snapshot.hasChildren()) {
         console.log('Usuario ya existe');
         this.navCtrl.setRoot(TabsPage);
+        console.log(snapshot.val());
           this.storage.set('USER_PHONE', snapshot.val().phone || '');
        } else{
          console.log('Nuevo Usuario', this.user);

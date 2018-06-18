@@ -2,13 +2,13 @@
 
 <ion-content>
     <ion-row padding style="padding-bottom: 0; background: #fff;">
-        <ion-col col-4 class="profile-headshot">
+        <ion-col col-5 class="profile-headshot">
             <ion-avatar item-start class="profile-img">
                 <img [src]="photo_url ? photo_url : 'assets/img/user.svg' ">
             </ion-avatar>
 
         </ion-col>
-        <ion-col col-8 class="profile-counts">
+        <ion-col col-7 class="profile-counts">
             <ion-row *ngIf="twitter_id && twitter_id !== '' && twitter_id !== 'not available'">
                 <ion-col>
                     <h4>{{post_count}}</h4>
@@ -20,15 +20,13 @@
                 </ion-col>
             </ion-row>
             <ion-row>
-                <main-button *ngIf="twitter_id && twitter_id !== '' && twitter_id !== 'not available'"
-                             [ngClass]="!isFollowing ? 'blue' : 'grey'"
+                <button *ngIf="twitter_id && twitter_id !== '' && twitter_id !== 'not available'"
+                             [ngClass]="!isFollowing ? 'middle-blue-button' : 'middle-gray-button unfollow'"
                              (click)="followRep(repID, $event)"
-                             btnText={{findInLoop(followers)}}
                              full
-                             outline></main-button>
-                <main-button class="light-grey"
-                             (click)="contact()"
-                             btnText="Contact"></main-button>
+                             outline>{{findInLoop(followers)}}</button>
+                <button class="middle-gray-button"
+                             (click)="contact()">Contact</button>
             </ion-row>
 
         </ion-col>
@@ -36,7 +34,7 @@
             <h4 text-wrap class="username-h4">{{name}}</h4>
         </ion-col>
         <ion-col col-12 style="padding:0;">
-            <p style="margin:0; color: gray;"
+            <p class="rep-twitter"
                *ngIf="twitter_id && twitter_id !== '' && twitter_id !== 'not available'"
                (click)="tweetRep(twitter_id)">
                 <ion-icon style="color: #2196F3" name="logo-twitter"></ion-icon>
@@ -46,11 +44,11 @@
 
 
         <ion-col col-12>
-            <p text-wrap style="margin-top: 0;">{{description}}</p>
+            <p text-wrap class="rep-text">{{description}}</p>
         </ion-col>
         <ion-col col-12
                  *ngIf="twitter_id && twitter_id !== '' && twitter_id !== 'not available'">
-            <p style="color: gray;">ACTIVITY FEED</p>
+            <p class="activity-feed">ACTIVITY FEED</p>
         </ion-col>
 
     </ion-row>
@@ -72,7 +70,7 @@
                 <h2>{{name}}</h2>
                 <p>
                     <ion-icon name="logo-twitter"></ion-icon>
-                    <small>@{{record.twitter_username}} . {{record.tweet_created_at | amTimeAgo}}</small>
+                    <small>@{{record.twitter_username}} • {{record.tweet_created_at | amTimeAgo}}</small>
                 </p>
             </ion-item>
 

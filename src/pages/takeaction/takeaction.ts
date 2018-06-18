@@ -272,6 +272,8 @@ export class TakeactionPage {
                 this.loader = false;
                 this.addListeners();
                 console.log("Objectives", JSON.stringify(result));
+                console.log('===============');
+                console.log(result);
             },
             err => {
                 console.error("Error : " + err);

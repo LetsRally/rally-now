@@ -103,7 +103,7 @@ page-call-state {
         width: 100%;
     }
     .scroll-content{
-        padding-top: 140px;
+        padding-top: 120px;
     }
     .large-blue-button {
         width: 100%;
@@ -119,5 +119,24 @@ page-call-state {
     .col {
         padding-left: 16px;
         padding-right: 16px;
+    }
+    .scrollable-content {
+        top: 0;
+        .scroll-content {
+            margin-top: 0!important;
+            padding-top: 0;
+            height: calc(100vh - 240px);
+        }
+        .row {
+            padding-top: 0;
+            padding-bottom: 0;
+        }
+    }
+    .fixed-box {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 9;
     }
 }

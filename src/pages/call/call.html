@@ -1,42 +1,45 @@
 
 <rally-name-header name="Call"></rally-name-header>
 
-<ion-row padding class="bordered fixed-panel">
-    <ion-col col-8>
-        <p class="gray">Calling this office</p>
-        <h3>{{rep.name}}</h3>
-        <p class="gray">
-            <ion-icon name="ios-call-outline" style="color: #f4512c;
+<ion-header class="fixed-box">
+    <ion-row padding class="bordered fixed-panel">
+        <ion-col col-8>
+            <p class="gray">Calling this office</p>
+            <h3>{{rep.name}}</h3>
+            <p class="gray">
+                <ion-icon name="ios-call-outline" style="color: #f4512c;
             font-size: 18px;"></ion-icon> {{rep.phone}}</p>
-    </ion-col>
-    <ion-col col-4>
-        <div class="bob-headshot" [ngStyle]="{ 'background-image' : 'url(' + rep.photo_url +')'}"></div>
-    </ion-col>
-    <ion-col col-12 >
+        </ion-col>
+        <ion-col col-4>
+            <div class="bob-headshot" [ngStyle]="{ 'background-image' : 'url(' + rep.photo_url +')'}"></div>
+        </ion-col>
+        <ion-col col-12 >
         <span *ngIf="!isNotYourRep">
             <span *ngIf="isRep">This is your local representative in the House</span>
             <span *ngIf="!isRep">This is one of your two US Senators</span>
         </span>
-        <span *ngIf="isNotYourRep">
+            <span *ngIf="isNotYourRep">
             <span *ngIf="isSen">
                 US Senator for {{rep.state}}
             </span>
             <span *ngIf="!isSen">
-                US Representative for {{rep.state}}  District [District number]
+                US Representative for {{rep.state}}  District {{rep.district}}
             </span>
         </span>
-    </ion-col>
-   
-</ion-row>
+        </ion-col>
+
+    </ion-row>
+</ion-header>
 
 <ion-content>
-    <ion-row padding>
-        <ion-list *ngIf="talkingPoints != null">
-            <ion-list-header style="border: none; padding-left: 0;">Talking Points</ion-list-header>
-            <p>{{talkingPoints}}</p>
-           
-        </ion-list>
-    </ion-row>
+    <div class="scrollable-content">
+        <ion-row padding>
+            <ion-list *ngIf="talkingPoints != null">
+                <ion-list-header style="border: none; padding-left: 0;">Talking Points</ion-list-header>
+                <p>{{talkingPoints}}</p>
+            </ion-list>
+        </ion-row>
+    </div>
 </ion-content>
 <ion-footer>
     <ion-row>

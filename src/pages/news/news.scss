@@ -156,13 +156,22 @@ page-news {
     ion-avatar[item-start] {
         margin-top: 0!important;
     }
+    .card-content {
+        margin-top: -3px;
+    }
+    .card-header {
+        ion-label {
+            white-space: normal;
+        }
+    }
 }
 .with-tweet-logo {
-    color: #868686!important;
-    font-size: 12px!important;
-    line-height: 20px!important;
-    font-family: 'SF UI Text' !important;
-    font-weight: normal;
-    letter-spacing: -0.41px;
-    margin: 0!important;
+    small {
+        color: #868686!important;
+        font-size: 12px!important;
+        font-family: 'SF UI Text' !important;
+        font-weight: normal;
+        letter-spacing: -0.41px;
+        margin: 0!important;
+    }
 }

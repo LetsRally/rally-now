@@ -1,33 +1,38 @@
 
 <rally-name-header name="Call"></rally-name-header>
 
-<ion-row padding class="bordered fixed-panel">
-    <ion-col col-8>
-        <p class="gray">Calling this office</p>
-        <h3>{{rep.full_name}}</h3>
+<ion-header class="fixed-box">
+    <ion-row padding class="bordered fixed-panel">
+        <ion-col col-8>
+            <p class="gray">Calling this office</p>
+            <h3>{{rep.full_name}}</h3>
 
-        <p class="gray">
-            <ion-icon name="ios-call-outline" style="color: #f4512c;
+            <p class="gray">
+                <ion-icon name="ios-call-outline" style="color: #f4512c;
             font-size: 18px;"></ion-icon> {{rep.offices[0].phone}}</p>
-    </ion-col>
-    <ion-col col-4>
-        <div class="bob-headshot" [ngStyle]="{ 'background-image' : 'url(' + rep.photo_url +')'}"></div>
-    </ion-col>
-    <ion-col col-12>
-        This is your State Representative
-    </ion-col>
-   
-   
-</ion-row>
+        </ion-col>
+        <ion-col col-4>
+            <div class="bob-headshot" [ngStyle]="{ 'background-image' : 'url(' + rep.photo_url +')'}"></div>
+        </ion-col>
+        <ion-col col-12>
+            This is your State Representative
+        </ion-col>
+    </ion-row>
+</ion-header>
 
 <ion-content>
-    <ion-row padding>
-        <ion-list *ngIf="talkingPoints != null">
-            <ion-list-header style="border: none; padding-left: 0;">Talking Points</ion-list-header>
-            <p>{{talkingPoints}}</p>
-           
-        </ion-list>
-    </ion-row>
+    <div class="scrollable-content">
+        <ion-row padding>
+            <ion-list *ngIf="talkingPoints != null">
+                <ion-list-header style="border: none; padding-left: 0;">Talking Points</ion-list-header>
+                <p>Hello, my name is {{user.displayName}} and I am calling from {{(user.address === '') ? '{user address}' : user.address}} to urge {{rep.title}} {{rep.last_name}}
+                    to [vote for or against a bill, speak out on an issue, etc.].</p>
+
+                <p>Thank you for your time. I will follow up soon to see what <span *ngIf="isRep">Representative {{rep.last_name}}e</span>
+                    {{rep.title}} {{rep.last_name}} has done about this important issue.</p>
+            </ion-list>
+        </ion-row>
+    </div>
 </ion-content>
 <ion-footer>
     <ion-row>

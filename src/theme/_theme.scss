@@ -306,3 +306,38 @@ ion-searchbar {
   font-size: 18px;
   width: 100%;
 }
+.middle-gray-button {
+  color: #6d6d72;
+  font-family: "SF UI Text"!important;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 22px;
+  text-transform: uppercase;
+  letter-spacing: -0.36px;
+  background-color: #fff;
+  border-radius: 6px;
+  border: 1px solid rgba(182, 182, 182, 0.5);
+  width: 100%;
+  padding-top: 3px;
+  padding-bottom: 3px;
+  &.unfollow {
+    color: #adadad;
+    border: 1px solid #adadad;
+  }
+}
+
+.middle-blue-button {
+  border-radius: 6px;
+  background-color: #296fb7;
+  border: 1px solid #296fb7;
+  color: #f2f2f2;
+  font-family: "SF UI Text"!important;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 22px;
+  text-transform: uppercase;
+  letter-spacing: -0.36px;
+  width: 100%;
+  padding-top: 3px;
+  padding-bottom: 3px;
+}

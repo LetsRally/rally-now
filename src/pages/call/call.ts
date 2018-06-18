@@ -24,6 +24,7 @@ import {UsersProvider} from '../../providers/users/users';
 })
 export class CallPage {
     rep: any;
+    user: any;
     endpoint: any = 'actions';
     callButtonText: any = 'Call';
     data: any = [{
@@ -54,7 +55,6 @@ export class CallPage {
         console.log("offices", navParams.get('offices'));
         this.offices = navParams.get('offices');
         this.rep = navParams.get('rep');
-        this.talkingPoints = navParams.get('talkingPoints');
         this.data.representative_id = navParams.get('repID');
         this.data.goal_id = navParams.get('goalID');
         this.objetiveID = navParams.get('objectiveID');
@@ -63,12 +63,23 @@ export class CallPage {
         this.isNotYourRep = navParams.get('yourRep');
         this.httpProvider.returnRallyUserId().then(user => {
             this.data.user_id = user.apiRallyID;
+            this.user = user;
+            this.parseTalkingPoints();
         });
         this.isRep = this.rep.title && this.rep.title.indexOf('representative') !== -1;
         this.isSen = this.rep.rep_type && this.rep.rep_type === 'sen';
         this.showCallAlert(this.rep.phone);
 
         this.setPhonesArray(this.offices);
+    }
+
+    parseTalkingPoints() {
+        let tempText = this.navParams.get('talkingPoints');
+        tempText = tempText.split('{user.first_name}').join(this.user.first_name);
+        tempText = tempText.split('{user.address_city}').join(this.user.address);
+        tempText = tempText.split('{rep.title}').join(this.rep.title);
+        tempText = tempText.split('{rep.last_name}').join(this.rep.last_name);
+        this.talkingPoints = tempText;
     }
 
     setPhonesArray(arr) {

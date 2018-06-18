@@ -116,8 +116,9 @@
              class="organization-bg" [ngStyle]="{ 'background-image' : 'url(&#34;' + objective.image_url +'&#34;)'}">
 
             <div class="organization-filter"></div>
-            <div class="railled-excerpt" *ngIf="objective.rallies > 0">
-                <p class="white"><strong>{{objective.rallies}}</strong><br> Rallied</p>
+            <div class="railled-excerpt">
+                <p *ngIf="objective.rallies > 0"
+                   class="white"><strong>{{objective.rallies}}</strong><br> Rallied</p>
                 <div class="btn-objectives-contact">
                     <main-button class="red"
                                  *ngIf="objective?.goals[0]?.goal_type === 'contact'"
