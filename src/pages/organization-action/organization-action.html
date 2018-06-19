@@ -33,7 +33,7 @@
             </div>
         </div>
 
-        <ion-list>
+        <ion-list class="information-box">
             <ion-item text-wrap *ngFor="let d of information; let i=index" (click)="toggleGroup(i)"
                       [ngClass]="{active: isGroupShown(i)}">
                 <div class="toggle-header">{{d.title}}
@@ -76,7 +76,7 @@
                             <button (click)="getRepID(rep, rep.civil_services_url ,rep.twitter_url,rep.contact_page, rep.bioguide)"
                                     item-end
                                     ion-button
-                                    class="action-btn red">Contact
+                                    class="action-btn small-red-button">Contact
                             </button>
                         </div>
                     </div>
@@ -102,7 +102,7 @@
                             <button (click)="getRepID(rep, rep.civil_services_url ,rep.twitter_url,rep.contact_page, rep.bioguide)"
                                     item-end
                                     ion-button
-                                    class="action-btn red">Contact
+                                    class="action-btn small-red-button">Contact
                             </button>
                         </div>
                     </div>
@@ -142,7 +142,7 @@
                             <button (click)="presentActionSheet(rep, rep.fax_url, rep.twitter_id, rep.url, rep.id, rep.offices)"
                                     item-end
                                     ion-button
-                                    class="action-btn">Contact
+                                    class="action-btn small-red-button">Contact
                             </button>
                         </div>
                     </div>

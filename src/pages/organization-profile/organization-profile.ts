@@ -28,7 +28,7 @@ import {PhotoViewer} from "@ionic-native/photo-viewer";
     templateUrl: 'organization-profile.html',
 })
 export class OrganizationProfilePage {
-    testPhoto: any = '../assets/img/event.png';
+    testPhoto: any = 'assets/img/event.png';
     organizationID: string;
     endpoint: string = 'organization/';
     name: string;

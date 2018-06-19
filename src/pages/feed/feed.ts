@@ -35,7 +35,7 @@ import * as constants from '../../constants/constants';
 })
 
 export class FeedPage {
-  organizationPhoto:any = '../assets/img/event.png';
+  organizationPhoto:any = 'assets/img/event.png';
   organizationsData:any;
   endpoint:string = 'homefeed/';
   loading:any;

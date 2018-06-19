@@ -262,53 +262,61 @@
   border-radius: 5px;
   line-height: 22px;
 }
+
 .back-button {
-  font-family:'San Francisco Text',Sans-Serif !important;
+  font-family: 'San Francisco Text', Sans-Serif !important;
 }
+
 ion-searchbar {
   background-color: #f4512c !important;
 }
+
 .fixed-search-bar {
   .fixed-content, .scroll-content {
-    margin-top: 88px!important;
+    margin-top: 88px !important;
   }
 }
+
 .ion-alpha-scroll {
   .fixed-content, .scroll-content {
-    margin-top: 0!important;
+    margin-top: 0 !important;
   }
 }
+
 .large-blue-button {
-  border-radius: 6px!important;
-  height: 50px!important;
-  background-color: #296fb7!important;
-  font-family: 'SF UI Text'!important;
-  font-size: 18px!important;
+  border-radius: 6px !important;
+  height: 50px !important;
+  background-color: #296fb7 !important;
+  font-family: 'SF UI Text' !important;
+  font-size: 18px !important;
   letter-spacing: -0.43px;
   font-weight: 600;
 }
+
 .transparent-button {
-  background-color: transparent!important;
-  color: #5b91c8!important;
-  font-family: 'SF UI Text'!important;
-  font-size: 14px!important;
+  background-color: transparent !important;
+  color: #5b91c8 !important;
+  font-family: 'SF UI Text' !important;
+  font-size: 14px !important;
   font-weight: 400;
-  height: 50px!important;
+  height: 50px !important;
 }
+
 .large-white-button {
   height: 53px;
   border-radius: 6px;
   background-color: #fff;
   border: 1px solid rgba(182, 182, 182, 0.5);
   color: #296fb7;
-  font-family: 'SF UI Text'!important;
+  font-family: 'SF UI Text' !important;
   font-weight: 600;
   font-size: 18px;
   width: 100%;
 }
+
 .middle-gray-button {
   color: #6d6d72;
-  font-family: "SF UI Text"!important;
+  font-family: "SF UI Text" !important;
   font-size: 14px;
   font-weight: 600;
   line-height: 22px;
@@ -331,7 +339,7 @@ ion-searchbar {
   background-color: #296fb7;
   border: 1px solid #296fb7;
   color: #f2f2f2;
-  font-family: "SF UI Text"!important;
+  font-family: "SF UI Text" !important;
   font-size: 14px;
   font-weight: 600;
   line-height: 22px;
@@ -340,4 +348,29 @@ ion-searchbar {
   width: 100%;
   padding-top: 3px;
   padding-bottom: 3px;
+}
+
+.small-red-button {
+  text-transform: uppercase !important;
+  background-color: #f4512c !important;
+  box-shadow: none !important;
+  width: 100px;
+  border: none;
+  padding: 8px 0 !important;
+  border-radius: 6px !important;
+  height: auto !important;
+  .button-inner {
+    letter-spacing: -0.36px;
+    line-height: 1;
+    color: #f2f2f2 !important;
+    font-weight: 600;
+    font-family: "SF UI Text" !important;
+    font-size: 14px !important;
+  }
+  &:active, &:focus {
+    background: #f4512c !important;
+    .button-inner {
+      color: #f2f2f2 !important;
+    }
+  }
 }
