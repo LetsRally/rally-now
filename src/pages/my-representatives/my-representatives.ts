@@ -5,7 +5,6 @@ import { AdressModalPage } from '../adress-modal/adress-modal';
 import { UsersProvider } from '../../providers/users/users';
 import { FaxFeedBackPage } from '../fax-feed-back/fax-feed-back';
 import { EmailFeedBackPage } from '../email-feed-back/email-feed-back';
-import { CallStatePage } from '../call-state/call-state';
 import { ThanksPage } from '../thanks/thanks';
 import { SocialShareProvider } from '../../providers/social-share/social-share';
 import { CallRepPage } from '../call-rep/call-rep';

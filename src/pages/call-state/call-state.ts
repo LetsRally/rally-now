@@ -15,6 +15,7 @@ import {FeedPage} from '../feed/feed';
 import {FeedbackPage} from '../feedback/feedback';
 import {CallNumber} from '@ionic-native/call-number';
 import {UsersProvider} from '../../providers/users/users';
+import { Storage } from '@ionic/storage';
 
 
 @IonicPage()
@@ -38,17 +39,23 @@ export class CallStatePage {
     offices: any;
     objetiveID: any;
     phoneArr = [];
+    isNotYourRep: boolean = true;
+    isRep: any;
+    isSen: any;
+    user = {
+        displayName: ''
+    };
 
     constructor(
         public navCtrl: NavController,
         public navParams: NavParams,
+        private storage: Storage,
         public popoverCtrl: PopoverController,
         public actionSheetCtrl: ActionSheetController,
         private callNumber: CallNumber,
         private httpProvider: UsersProvider,
         public viewCtrl: ViewController,
         private alertCtrl: AlertController) {
-        console.log("offices", navParams.get('offices'));
         this.offices = navParams.get('offices');
         this.rep = navParams.get('rep');
         this.talkingPoints = navParams.get('talkingPoints');
@@ -57,12 +64,40 @@ export class CallStatePage {
         this.objetiveID = navParams.get('objectiveID');
         this.data.action_type_id = '2afa6869-7ee5-436e-80a9-4fee7c871212';
         this.data.title = 'call';
+        this.isRep = this.rep.title && this.rep.title.indexOf('representative') !== -1;
+        this.isSen = this.rep.rep_type && this.rep.rep_type === 'sen';
         this.httpProvider.returnRallyUserId().then(user => {
             this.data.user_id = user.apiRallyID;
+            this.user = user;
         });
         this.showCallAlert(this.rep.offices[0].phone);
 
         this.setPhonesArray(this.offices);
+        this.getYourRepsAndSen();
+    }
+
+    getYourRepsAndSen() {
+        this.storage.get('representatives').then((reps) => {
+            this.storage.get('senators').then((sens) => {
+                if(reps && reps.length) {
+                    reps.map((el) => {
+                        if(el['bioguide'] === this.rep['bioguide']) {
+                            this.isNotYourRep = false;
+                            this.isRep = true;
+                        }
+                    })
+                }
+
+                if(sens && sens.length) {
+                    sens.map((el) => {
+                        if(el['bioguide'] === this.rep['bioguide']) {
+                            this.isNotYourRep = false;
+                            this.isSen = true;
+                        }
+                    })
+                }
+            })
+        })
     }
 
     setPhonesArray(arr) {

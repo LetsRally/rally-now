@@ -63,9 +63,6 @@ export class CallRepPage {
             this.data.user_id = user.apiRallyID;
         });
         this.user = navParams.get('user');
-        if(!this.user.address) {
-
-        }
         this.isRep = this.rep.title === 'representative';
 
         this.showCallAlert(this.rep.phone);

@@ -14,8 +14,8 @@ import {ThanksPage} from '../thanks/thanks';
 import {ThemeableBrowser} from "@ionic-native/themeable-browser";
 import * as constants from '../../constants/constants';
 import {EmailFeedBackPage} from "../email-feed-back/email-feed-back";
-import {CallRepPage} from "../call-rep/call-rep";
 import {FaxFeedBackPage} from "../fax-feed-back/fax-feed-back";
+import {CallStatePage} from "../call-state/call-state";
 
 
 @IonicPage()
@@ -441,7 +441,7 @@ export class RepresentativeProfilePage {
         let buttonsArray = [{
             text: 'Call',
             handler: () => {
-                this.navCtrl.push(CallRepPage, {rep: rep, repID: repID, offices: offices, user: this.user});
+                this.navCtrl.push(CallStatePage, {rep: rep, repID: repID, offices: offices, user: this.user});
             }
         }];
 

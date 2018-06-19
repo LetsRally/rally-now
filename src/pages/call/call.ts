@@ -15,6 +15,7 @@ import {FeedPage} from '../feed/feed';
 import {FeedbackPage} from '../feedback/feedback';
 import {CallNumber} from '@ionic-native/call-number';
 import {UsersProvider} from '../../providers/users/users';
+import { Storage } from '@ionic/storage';
 
 
 @IonicPage()
@@ -39,7 +40,7 @@ export class CallPage {
     offices: any;
     objetiveID: any;
     phoneArr = [];
-    isNotYourRep: boolean = false;
+    isNotYourRep: boolean = true;
     isRep: any;
     isSen: any;
 
@@ -50,6 +51,7 @@ export class CallPage {
         public actionSheetCtrl: ActionSheetController,
         private callNumber: CallNumber,
         private httpProvider: UsersProvider,
+        private storage: Storage,
         public viewCtrl: ViewController,
         private alertCtrl: AlertController) {
         console.log("offices", navParams.get('offices'));
@@ -60,7 +62,6 @@ export class CallPage {
         this.objetiveID = navParams.get('objectiveID');
         this.data.action_type_id = '2afa6869-7ee5-436e-80a9-4fee7c871212';
         this.data.title = 'call';
-        this.isNotYourRep = navParams.get('yourRep');
         this.httpProvider.returnRallyUserId().then(user => {
             this.data.user_id = user.apiRallyID;
             this.user = user;
@@ -71,11 +72,36 @@ export class CallPage {
         this.showCallAlert(this.rep.phone);
 
         this.setPhonesArray(this.offices);
+        this.getYourRepsAndSen();
+    }
+
+    getYourRepsAndSen() {
+        this.storage.get('representatives').then((reps) => {
+            this.storage.get('senators').then((sens) => {
+                if(reps && reps.length) {
+                    reps.map((el) => {
+                        if(el['bioguide'] === this.rep['bioguide']) {
+                            this.isNotYourRep = false;
+                            this.isRep = true;
+                        }
+                    })
+                }
+
+                if(sens && sens.length) {
+                    sens.map((el) => {
+                        if(el['bioguide'] === this.rep['bioguide']) {
+                            this.isNotYourRep = false;
+                            this.isSen = true;
+                        }
+                    })
+                }
+            })
+        })
     }
 
     parseTalkingPoints() {
         let tempText = this.navParams.get('talkingPoints');
-        tempText = tempText.split('{user.first_name}').join(this.user.first_name);
+        tempText = tempText.split('{user.first_name}').join(this.user.displayName);
         tempText = tempText.split('{user.address_city}').join(this.user.address);
         tempText = tempText.split('{rep.title}').join(this.rep.title);
         tempText = tempText.split('{rep.last_name}').join(this.rep.last_name);

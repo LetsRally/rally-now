@@ -9,7 +9,6 @@ import {
     ModalController,
     LoadingController
 } from 'ionic-angular';
-import {CallPage} from '../call/call';
 import {FeedPage} from '../feed/feed';
 import {AlertsPage} from '../alerts/alerts';
 import {ProfilePage} from '../profile/profile';
@@ -19,9 +18,7 @@ import {UsersProvider} from '../../providers/users/users';
 import {OrganizationProfilePage} from '../organization-profile/organization-profile';
 import {OrganizationActionPage} from '../organization-action/organization-action';
 import {AngularFireDatabase} from 'angularfire2/database';
-import firebase from 'firebase';
 import {SocialShareProvider} from '../../providers/social-share/social-share';
-import {ThankYouPage} from '../thank-you/thank-you';
 import {SignFeedBackPage} from '../sign-feed-back/sign-feed-back';
 import {ThanksPage} from '../thanks/thanks';
 import {DomSanitizer} from '@angular/platform-browser';
@@ -187,48 +184,6 @@ export class TakeactionPage {
 
     ionViewDidLoad() {
         console.log('ionViewDidLoad TakeactionPage');
-    }
-
-    presentActionSheet() {
-        let actionSheet = this.actionSheetCtrl.create({
-            title: 'Contact Bob Representative',
-            buttons: [
-                {
-                    text: 'Call',
-                    handler: () => {
-                        // this.navCtrl.push(CallPage);
-                        this.navCtrl.setRoot(CallPage);
-                    }
-                }, {
-                    text: 'Post on Facebook',
-                    handler: () => {
-                        console.log('Post on Facebook clicked');
-                    }
-                }, {
-                    text: 'Post message via Twitter',
-                    handler: () => {
-                        console.log('Post message via Twitter clicked');
-                    }
-                }, {
-                    text: 'Send a Fax',
-                    handler: () => {
-                        console.log('Send a Fax clicked');
-                    }
-                }, {
-                    text: 'Email',
-                    handler: () => {
-                        console.log('Email clicked');
-                    }
-                }, {
-                    text: 'Cancel',
-                    role: 'cancel',
-                    handler: () => {
-                        console.log('Cancel clicked');
-                    }
-                }
-            ]
-        });
-        actionSheet.present();
     }
 
     goToHome() {
