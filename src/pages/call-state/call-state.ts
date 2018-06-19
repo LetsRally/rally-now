@@ -187,7 +187,6 @@ export class CallStatePage {
                     text: 'Review script',
                     role: 'cancel',
                     handler: () => {
-                        console.log('Cancel clicked');
                         this.callButtonText = "Call Again";
                     }
                 },

@@ -64,7 +64,7 @@
                 </button>
             </ion-fab>
             <ion-avatar item-start>
-                <img [src]="objective.organization['image_url'] ? objective.organization['image_url'] : 'assets/img/org_icon.svg'"
+                <img [src]="objective.organization['image_url'] ? objective.organization['image_url'] : testPhoto"
                      (click)="showPhotoViewer(objective.organization['image_url'])">
             </ion-avatar>
             <div class="item-heading">
@@ -192,7 +192,7 @@
                 </button>
             </ion-fab>
             <ion-avatar item-start>
-                <img [src]="data?.image_url">
+                <img [src]="data?.image_url ? data?.image_url : testPhoto">
             </ion-avatar>
             <h2>{{name}}</h2>
             <p>
