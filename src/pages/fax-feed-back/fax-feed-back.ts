@@ -7,6 +7,7 @@ import {Storage} from '@ionic/storage';
 import {ViewController} from 'ionic-angular/navigation/view-controller';
 import {ThemeableBrowser} from "@ionic-native/themeable-browser";
 import * as constants from '../../constants/constants';
+import {TakeactionPage} from "../takeaction/takeaction";
 
 @IonicPage()
 @Component({
@@ -133,12 +134,17 @@ export class FaxFeedBackPage {
     errorModal() {
         let modal = this.modalCtrl.create(IssueScreenPage);
         modal.onDidDismiss((val) => {
-            this.navCtrl.popTo(this.navCtrl.getByIndex(1), {
-                animate: true,
-                animation: 'transition',
-                duration: 500,
-                direction: 'back'
-            });
+            if(!val || !val.close) {
+                this.navCtrl.pop({animate:true,animation:'transition',duration:500,direction:'back'});
+                this.navCtrl.popTo(TakeactionPage, {animate:true,animation:'transition',duration:500,direction:'forward'});
+            } else {
+                this.navCtrl.popTo(this.navCtrl.getByIndex(1), {
+                    animate: true,
+                    animation: 'transition',
+                    duration: 500,
+                    direction: 'back'
+                });
+            }
         });
         modal.present();
     }

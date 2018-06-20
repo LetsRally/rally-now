@@ -45,6 +45,7 @@ export class CallStatePage {
     user = {
         displayName: ''
     };
+    private parentView = undefined;
 
     constructor(
         public navCtrl: NavController,
@@ -56,6 +57,7 @@ export class CallStatePage {
         private httpProvider: UsersProvider,
         public viewCtrl: ViewController,
         private alertCtrl: AlertController) {
+        this.parentView = navParams.get('parentView');
         this.offices = navParams.get('offices');
         this.rep = navParams.get('rep');
         this.talkingPoints = navParams.get('talkingPoints');
@@ -170,12 +172,12 @@ export class CallStatePage {
         this.navCtrl.push(FeedbackPage, {
             repID: this.data.representative_id,
             goalID: this.data.goal_id,
-            objectiveID: this.objetiveID
-        });
-    }
-
-    pop() {
-        this.navCtrl.pop();
+            objectiveID: this.objetiveID,
+            parentView: this.parentView
+        }, {animate: true,
+            animation: 'transition',
+            duration: 500,
+            direction: 'forward'});
     }
 
     showCallAlert(phone_number) {

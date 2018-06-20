@@ -3,6 +3,7 @@ import {IonicPage, NavController, NavParams, ModalController} from 'ionic-angula
 import {ThankYouPage} from '../thank-you/thank-you';
 import {UsersProvider} from '../../providers/users/users';
 import {IssueScreenPage} from '../issue-screen/issue-screen';
+import {TakeactionPage} from "../takeaction/takeaction";
 
 
 @IonicPage()
@@ -88,12 +89,17 @@ export class DonateFeedBackPage {
     errorModal() {
         let modal = this.modalCtrl.create(IssueScreenPage);
         modal.onDidDismiss((val) => {
-            this.navCtrl.popTo(this.navCtrl.getByIndex(0), {
-                animate: true,
-                animation: 'transition',
-                duration: 500,
-                direction: 'back'
-            });
+            if(!val || !val.close) {
+                this.navCtrl.pop({animate:true,animation:'transition',duration:500,direction:'back'});
+                this.navCtrl.popTo(TakeactionPage, {animate:true,animation:'transition',duration:500,direction:'forward'});
+            } else {
+                this.navCtrl.popTo(this.navCtrl.getByIndex(0), {
+                    animate: true,
+                    animation: 'transition',
+                    duration: 500,
+                    direction: 'back'
+                });
+            }
         });
         modal.present();
     }

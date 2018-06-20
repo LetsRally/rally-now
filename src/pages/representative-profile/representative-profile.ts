@@ -441,7 +441,7 @@ export class RepresentativeProfilePage {
         let buttonsArray = [{
             text: 'Call',
             handler: () => {
-                this.navCtrl.push(CallStatePage, {rep: rep, repID: repID, offices: offices, user: this.user});
+                this.navCtrl.push(CallStatePage, {rep: rep, repID: repID, offices: offices, user: this.user, parentView: 'repProfile'});
             }
         }];
 
