@@ -1,7 +1,5 @@
 <ion-header>
     <ion-navbar>
-        <form action="." (ngSubmit)="onSearchInput()">
-
             <ion-searchbar (ionInput)="onSearchInput()"
                            no-padding
                            class="rally-search"
@@ -11,8 +9,6 @@
                            [showCancelButton]="true"
                            (ionCancel)="cancel()"
             ></ion-searchbar>
-        </form>
-
     </ion-navbar>
 </ion-header>
 

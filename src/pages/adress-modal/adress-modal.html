@@ -1,43 +1,27 @@
-
 <ion-header>
-  <ion-toolbar>
-  
-    <ion-buttons start>
-      <button ion-button (click)="dismiss({cancel: true})">
-        <span ion-text color="primary" showWhen="ios">Cancel</span>
-        <ion-icon name="md-close" showWhen="android,windows"></ion-icon>
-      </button>
-    </ion-buttons>
-  </ion-toolbar>
+    <ion-toolbar>
+
+        <ion-buttons start>
+            <button ion-button (click)="dismiss({cancel: true})">
+                <span ion-text color="primary" showWhen="ios">Cancel</span>
+                <ion-icon name="md-close" showWhen="android,windows"></ion-icon>
+            </button>
+        </ion-buttons>
+    </ion-toolbar>
 </ion-header>
 
 <ion-content padding>
     <img class="rep-img" src="assets/img/Representatives.svg">
-   <h1>Enter your address to find your representatives</h1>
-   <form action="." (ngSubmit)="getLocation()">
-
-   <!-- <ion-searchbar type="search" [(ngModel)]="searchTerm" [ngModelOptions]="{standalone: true}"
-   ></ion-searchbar> -->
-   <!--<google-places-autocomplete placeholder="Ex: 1234 Main St, Yourtown"-->
-                               <!--[(ngModel)]="searchTerm"-->
-                               <!--[ngModelOptions]="googlePlacesOptions"-->
-                               <!--(callback)="detail($event[0])"-->
-                               <!--key="AIzaSyAG8YwO3jnFYNYfiV1B35FzICVOYVJYnMQ">-->
-   <!--</google-places-autocomplete>-->
-
-       <google-autocomplete key="AIzaSyAG8YwO3jnFYNYfiV1B35FzICVOYVJYnMQ"
-                            placeholderText="Ex: 1234 Main St, Yourtown"
-                            (searchResult)="searchResult($event)"></google-autocomplete>
-
-   </form>
-
-  
+    <h1>Enter your address to find your representatives</h1>
+    <google-autocomplete key="AIzaSyAG8YwO3jnFYNYfiV1B35FzICVOYVJYnMQ"
+                         placeholderText="Ex: 1234 Main St, Yourtown"
+                         (searchResult)="searchResult($event)"></google-autocomplete>
 </ion-content>
 
 <ion-footer *ngIf="showFooter" class="button-container">
     <p>We’ll never display this information to others in Rally.</p>
-  <button class="large-white-button"
-          (click)="getLocation()">
-    Find My Representatives
-  </button>
+    <button class="large-white-button"
+            (click)="getLocation()">
+        Find My Representatives
+    </button>
 </ion-footer>
