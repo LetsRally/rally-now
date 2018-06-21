@@ -25,7 +25,7 @@
 
             </ion-row>
             <ion-row>
-                <button *ngIf="login" [ngClass]="!isFollowing ? 'small-blue-button' : 'small-blue-button following'"
+                <button *ngIf="login" [ngClass]="!isFollowing ? 'middle-blue-button' : 'middle-blue-button following'"
                              (click)="addFollowRecordFirebase(dataID)"
                              outline>{{buttonFollowTest}}</button>
             </ion-row>

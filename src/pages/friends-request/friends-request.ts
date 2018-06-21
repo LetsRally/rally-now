@@ -74,7 +74,6 @@ export class FriendsRequestPage {
             this.getSuggestedFriend();
             // this.mapOrgs(this.organizations);
         });
-
     }
 
     getDiscoverOrganizations() {
