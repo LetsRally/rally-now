@@ -175,7 +175,7 @@ export class HeaderComponent {
     unFollowActionSheet(representativeID, el, name) {
 
         let actionSheet = this.actionSheetCtrl.create({
-            title: 'Unfollow ${name}?',
+            title: `Unfollow ${name}?`,
             cssClass: 'title-img',
             buttons: [
                 {
@@ -247,13 +247,13 @@ export class HeaderComponent {
         });
     }
 
-    addFollowRecordFirebase(organizationID, $event) {
+    addFollowRecordFirebase(organizationID, $event, name) {
         let user: any = firebase.auth().currentUser;
         let followRef = this.db.database.ref('organizations/' + user['uid'] + '/' + organizationID);
         followRef.once('value', snapshot => {
             if (snapshot.hasChildren()) {
                 console.log('You already follow this org');
-                this.unFollowOrgActionSheet(organizationID, $event);
+                this.unFollowOrgActionSheet(organizationID, $event, name);
             } else {
                 this.followOrg(organizationID, $event);
             }
@@ -363,10 +363,10 @@ export class HeaderComponent {
         el.srcElement.classList.add('following');
     }
 
-    unFollowOrgActionSheet(organizationID, el) {
+    unFollowOrgActionSheet(organizationID, el, name) {
 
         let actionSheet = this.actionSheetCtrl.create({
-            title: 'Unfollow this organization?',
+            title: `Unfollow ${name}?`,
             cssClass: 'title-img',
             buttons: [
                 {

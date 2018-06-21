@@ -158,7 +158,7 @@
                         <button item-end
                                 class="small-blue-button"
                                 [ngClass]="('Following' === findInLoop(organization.followers)) ? 'following' : ''"
-                                (click)="addFollowRecordFirebase(organization.id, $event)"
+                                (click)="addFollowRecordFirebase(organization.id, $event, organization.name)"
                         >{{findInLoop(organization.followers)}}
                         </button>
                     </ion-item>
