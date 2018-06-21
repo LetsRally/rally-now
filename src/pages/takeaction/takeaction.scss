@@ -129,6 +129,7 @@ page-takeaction {
                 p {
                     font-size: 17px;
                     width: 70%;
+                    padding-right: 16px;
                 }
             }
         }
@@ -271,5 +272,12 @@ page-takeaction {
     }
     .scroll-content{
         //margin-bottom: 75px !important;
+    }
+    .fixed-box {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 9;
     }
 }

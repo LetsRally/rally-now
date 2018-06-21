@@ -53,7 +53,9 @@ page-overlay {
     font-family: 'Conv_SanFranciscoDisplay-Semibold', Sans-Serif !important;
 
   }
-
+  ion-img {
+    background-color: transparent;
+  }
   img {
     width: 35px;
     margin-right: 10px;

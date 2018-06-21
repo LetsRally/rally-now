@@ -1,4 +1,10 @@
 rally-header {
+  ion-item {
+    padding-left: 0!important;
+  }
+  .item-inner {
+    padding-right: 0!important;
+  }
 
   background: #fff !important;
   .rally-search {

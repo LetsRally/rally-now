@@ -191,7 +191,7 @@ export class RepresentativeProfilePage {
 
     unFollowRep(recordID, el) {
         let actionSheet = this.actionSheetCtrl.create({
-            title: 'Unfollow this representative?',
+            title: `Unfollow ${this.name}?`,
             cssClass: 'title-img',
             buttons: [
                 {

@@ -86,8 +86,7 @@ export class FriendsRequestPage {
     }
 
     hide(id) {
-        console.log('HIDE');
-        console.log(id);
+        alert('This button doesn\'t work now. We wait backend part');
     }
 
     getSuggestedFriend() {
@@ -265,10 +264,7 @@ export class FriendsRequestPage {
                         console.log('Destructive clicked');
                         this.getFollowRecordID(userID);
                         $event.srcElement.innerText = 'Follow';
-                        $event.srcElement.style.backgroundColor = '#296fb7';
-                        $event.srcElement.offsetParent.style.backgroundColor = '#296fb7';
-                        $event.srcElement.style.color = '#f2f2f2';
-                        $event.srcElement.parentNode.style.backgroundColor = '#296fb7';
+                        $event.srcElement.classList.remove('following');
                     }
                 }, {
                     text: 'Cancel',
@@ -289,8 +285,6 @@ export class FriendsRequestPage {
         let followRef = this.db.database.ref('follow/' + user['uid'] + '/' + friendID);
         followRef.once('value', snapshot => {
             if (snapshot.hasChildren()) {
-                console.log('You already follow this user');
-                // this.getFollowRecordID(friendID);
                 this.unFollowUserActionSheet(friendID, $event);
 
             } else {
@@ -349,10 +343,7 @@ export class FriendsRequestPage {
             console.log(data);
             this.httpProvicer.saveFollowRecordID(data.following_id, data.id, 'follow');
             $event.srcElement.innerText = 'Following';
-            $event.srcElement.style.backgroundColor = '#fff';
-            $event.srcElement.offsetParent.style.backgroundColor = '#fff';
-            $event.srcElement.parentNode.style.backgroundColor = '#fff';
-            $event.srcElement.style.color = '#6D6D72';
+            $event.srcElement.classList.add('following');
             this.getDeviceID(friendID);
         }, error => {
             console.log("Error", error);
@@ -378,11 +369,7 @@ export class FriendsRequestPage {
             } else {
                 this.followOrg(organizationID);
                 $event.srcElement.innerText = 'Following';
-                // $event.srcElement.style.backgroundColor = '#fff';
-                // $event.srcElement.offsetParent.style.backgroundColor = '#fff';
-                // $event.srcElement.parentNode.style.backgroundColor = '#fff';
-                // $event.srcElement.style.color = '#6D6D72';
-
+                $event.srcElement.classList.add('following');
             }
         });
     }
@@ -404,10 +391,7 @@ export class FriendsRequestPage {
                         console.log('Destructive clicked');
                         this.getOrganizationFollowRecordID(organizationID);
                         $event.srcElement.innerText = 'Follow';
-                        $event.srcElement.style.backgroundColor = '#296fb7';
-                        $event.srcElement.offsetParent.style.backgroundColor = '#296fb7';
-                        $event.srcElement.style.color = '#f2f2f2';
-                        $event.srcElement.parentNode.style.backgroundColor = '#296fb7';
+                        $event.srcElement.classList.remove('following');
                     }
                 }, {
                     text: 'Cancel',

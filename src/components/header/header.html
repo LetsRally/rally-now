@@ -1,14 +1,14 @@
 <ion-header>
     <ion-navbar>
-            <ion-searchbar (ionInput)="onSearchInput()"
-                           no-padding
-                           class="rally-search"
-                           name="searchField"
-                           [debounce]="300"
-                           [(ngModel)]="searchTerm"
-                           [showCancelButton]="true"
-                           (ionCancel)="cancel()"
-            ></ion-searchbar>
+        <ion-searchbar (ionInput)="onSearchInput()"
+                       no-padding
+                       class="rally-search"
+                       name="searchField"
+                       [debounce]="300"
+                       [(ngModel)]="searchTerm"
+                       [showCancelButton]="true"
+                       (ionCancel)="cancel()"
+        ></ion-searchbar>
     </ion-navbar>
 </ion-header>
 
@@ -80,7 +80,7 @@
             </div>
         </div>
 
-        <ion-list>
+        <ion-list padding-horizontal>
             <div *ngIf="currentTabName === 'all'">
                 <div class="flex-center"
                      *ngIf="!actions.length && !users.length && !organizations.length && !reps.length && !events.length && !enablePlaceholder">
@@ -127,12 +127,13 @@
                             <small>{{user.state}}</small>
                         </p>
 
-                        <main-button clear
-                                     item-end
-                                     *ngIf="login"
-                                     (click)="addFollowUserRecordFirebase(user, $event)"
-                                     class="blue"
-                                     btnText="{{findInLoopUser(user)}}"></main-button>
+                        <button item-end
+                                *ngIf="login"
+                                (click)="addFollowUserRecordFirebase(user, $event)"
+                                class="small-blue-button"
+                                [ngClass]="('Following' === findInLoopUser(user)) ? 'following' : ''"
+                        >{{findInLoopUser(user)}}
+                        </button>
                     </ion-item>
                 </div>
             </div>
@@ -149,17 +150,17 @@
 
                     <ion-item *ngFor="let organization of organizations">
                         <ion-avatar item-start (click)="goToOrganizationProfile(organization.id)">
-                            <img [src]="organization.image_url ? organization.image_url : 'assets/img/event.png'" style="width: 70px; height: 70px;">
+                            <img [src]="organization.image_url ? organization.image_url : 'assets/img/event.png'"
+                                 style="width: 70px; height: 70px;">
                         </ion-avatar>
 
                         <h2 text-wrap (click)="goToOrganizationProfile(organization.id)">{{organization.name}}</h2>
-                        <main-button clear
-                                     item-end
-                                     class="blue"
-                                     (click)="addFollowRecordFirebase(organization.id, $event)"
-                                     btnText="{{findInLoop(organization.followers)}}"></main-button>
-                        <!--<p>{{organization.short_desc}}</p>-->
-
+                        <button item-end
+                                class="small-blue-button"
+                                [ngClass]="('Following' === findInLoop(organization.followers)) ? 'following' : ''"
+                                (click)="addFollowRecordFirebase(organization.id, $event)"
+                        >{{findInLoop(organization.followers)}}
+                        </button>
                     </ion-item>
                 </div>
             </div>
@@ -207,9 +208,13 @@
                             <small>US Representative for {{rep.state}}</small>
                         </p>
 
-                        <main-button clear item-end *ngIf="rep.twitter_id !== 'not available'"
-                                     (click)="followRep(rep.id, $event)" class="blue"
-                                     btnText="{{findInLoop(rep.followers)}}"></main-button>
+                        <button item-end
+                                *ngIf="rep.twitter_id !== 'not available'"
+                                class="small-blue-button"
+                                [ngClass]="('Following' === findInLoop(rep.followers)) ? 'following' : ''"
+                                (click)="followRep(rep.id, $event, rep.name)"
+                        >{{findInLoop(rep.followers)}}
+                        </button>
                     </ion-item>
                 </div>
             </div>

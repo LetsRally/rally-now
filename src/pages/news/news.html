@@ -84,7 +84,7 @@
             <ion-card-header>
                 <ion-item>
                     <ion-avatar item-start (click)="goToRepProfile(record.rep_id)">
-                        <img [src]="record.photo_url ">
+                        <img [src]="record.photo_url">
                     </ion-avatar>
                     <!-- only show icon on verified accounts <h2 style="display: flex;">Senator Bob Jones <img *ngIf="{{rep.verified === true}}" style="width: 12px; height: 12px; margin-left: 5px;" src="assets/img/TwtterVerified.svg" alt=""></h2> -->
 
@@ -141,7 +141,7 @@
             <ion-card-header>
                 <ion-item>
                     <ion-avatar item-start (click)="goToOrganizationProfile(record.org_id)">
-                        <img [src]="record.image_url ">
+                        <img [src]="record.image_url ? record.photo_url : 'assets/img/event.png'">
                     </ion-avatar>
 
                     <h2 class="org-name"

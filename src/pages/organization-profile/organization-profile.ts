@@ -394,6 +394,13 @@ export class OrganizationProfilePage {
                     }
                 },
                 {
+                    text: 'Follow',
+                    handler: () => {
+                        alert("This point should be finished after create new version backend");
+                        this.disable = false;
+                    }
+                },
+                {
                     text: 'Report',
                     role: 'destructive',
                     handler: () => {
@@ -442,6 +449,13 @@ export class OrganizationProfilePage {
                     handler: () => {
                         console.log("test");
                         this.checkNotifiers(orgID);
+                        this.disable = false;
+                    }
+                },
+                {
+                    text: 'Follow',
+                    handler: () => {
+                        alert("This point should be finished after create new version backend");
                         this.disable = false;
                     }
                 },

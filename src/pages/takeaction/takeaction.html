@@ -10,14 +10,17 @@
         </ion-buttons>
     </ion-navbar>
 </ion-header>
-<ion-segment [(ngModel)]="all" (ionChange)="segmentChanged()" class="rally-segment">
-    <ion-segment-button value="all">
-        All
-    </ion-segment-button>
-    <ion-segment-button value="friends">
-        Following
-    </ion-segment-button>
-</ion-segment>
+<ion-header class="fixed-box">
+    <ion-segment [(ngModel)]="all" (ionChange)="segmentChanged()" class="rally-segment">
+        <ion-segment-button value="all">
+            All
+        </ion-segment-button>
+        <ion-segment-button value="friends">
+            Following
+        </ion-segment-button>
+    </ion-segment>
+</ion-header>
+
 <ion-content>
     <ion-spinner *ngIf="loader"></ion-spinner>
 
@@ -120,13 +123,15 @@
                 <p *ngIf="objective.rallies > 0"
                    class="white"><strong>{{objective.rallies}}</strong><br> Rallied</p>
                 <div class="btn-objectives-contact">
-                    <main-button class="red"
+                    <button class="small-red-button"
                                  *ngIf="objective?.goals[0]?.goal_type === 'contact'"
-                                 btnText="Contact"></main-button>
-                    <main-button class="red" *ngIf="objective?.goals[0]?.goal_type === 'sign'"
-                                 btnText="Sign"></main-button>
-                    <main-button class="red" *ngIf="objective?.goals[0]?.goal_type === 'donate'"
-                                 btnText="Donate"></main-button>
+                                 >Contact</button>
+                    <button class="small-red-button"
+                            *ngIf="objective?.goals[0]?.goal_type === 'sign'"
+                                 >Sign</button>
+                    <button class="small-red-button"
+                            *ngIf="objective?.goals[0]?.goal_type === 'donate'"
+                                 >Donate</button>
                 </div>
             </div>
             <div class="bottom-excerpt">

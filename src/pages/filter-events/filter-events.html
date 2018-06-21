@@ -49,6 +49,7 @@
                           max="2099"
                           displayFormat="MMM DD YYYY"
                           pickerFormat="MMM DD YYYY"
+                          (ionChange)="checkEndDate()"
                           [(ngModel)]="filterState.timeStarts"></ion-datetime>
         </ion-item>
         <ion-item style="background: #f2f2f2">
@@ -57,8 +58,10 @@
                           max="2099"
                           displayFormat="MMM DD YYYY"
                           pickerFormat="MMM DD YYYY"
+                          (ionChange)="checkEndDate()"
                           [(ngModel)]="filterState.timeEnds"></ion-datetime>
         </ion-item>
+        <p class="error-message" *ngIf="errorEndDate">End date should be bigger than start date</p>
     </ion-list>
 
     <ion-list radio-group [(ngModel)]="filterState.filterBy">
@@ -93,7 +96,7 @@
 </ion-content>
 <ion-footer>
     <button class="large-white-button"
-            [disabled]="disableButton"
+            [disabled]="disableButton || errorEndDate"
             (click)="goToEvents()">Apply Filters
     </button>
 </ion-footer>

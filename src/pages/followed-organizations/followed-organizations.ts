@@ -150,10 +150,13 @@ export class FollowedOrganizationsPage {
             if (data && data.access) {
                 this.httpProvider.getJsonData(this.organizationEndpoint + '?follower_id=' + this.currentApiID + '&organization_id=' + orgID).subscribe(
                     result => {
-                        console.log("Delete ID : " + result[0].id);
-                        this.unfollow(result[0].id, orgID);
-                        $event.srcElement.innerText = 'Follow';
-
+                        if (result != "") {
+                            this.unfollow(result[0].id, orgID);
+                            $event.srcElement.innerText = "FOLLOW";
+                            $event.srcElement.classList.remove('following');
+                        } else {
+                            this.followOrg(orgID, $event);
+                        }
                     },
                     err => {
                         console.error("Error : " + err);
@@ -164,6 +167,12 @@ export class FollowedOrganizationsPage {
             }
         });
         modal.present();
+    }
+
+    followOrg(organizationID, el) {
+        this.httpProvider.followOrganization(this.organizationEndpoint, this.currentApiID, organizationID);
+        el.srcElement.innerText = 'Following';
+        el.srcElement.classList.add('following');
     }
 
     unfollow(recordID, orgID) {
@@ -190,10 +199,12 @@ export class FollowedOrganizationsPage {
                                 this.unFollowRep(result[0].id);
                                 $event.srcElement.innerHTML = "Follow";
                                 $event.srcElement.innerText = "FOLLOW";
+                                $event.srcElement.classList.remove('following');
                             } else {
                                 this.saveRepInApi(repID);
-                                $event.srcElement.innerHTML = "Unfollow";
-                                $event.srcElement.innerText = "UNFOLLOW";
+                                $event.srcElement.innerHTML = "Following";
+                                $event.srcElement.innerText = "FOLLOWING";
+                                $event.srcElement.classList.add('following');
                             }
                         },
                         err => {
@@ -231,10 +242,22 @@ export class FollowedOrganizationsPage {
             if (data && data.access) {
                 this.httpProvider.getJsonData(this.followUserEndpoint + '?follower_id=' + this.currentApiID + '&following_id=' + userID).subscribe(
                     result => {
-                        console.log("Delete User ID : " + result[0].id);
+                        if (result && result != "" && result.length) {
+                            this.unFollowFriend(result[0].id, userID);
+                            $event.srcElement.innerHTML = "Follow";
+                            $event.srcElement.innerText = "FOLLOW";
+                            $event.srcElement.classList.remove('following');
+                        } else {
+                            $event.srcElement.innerHTML = "Following";
+                            $event.srcElement.innerText = "FOLLOWING";
+                            $event.srcElement.classList.add('following');
+                        }
+
+
                         this.unFollowFriend(result[0].id, userID);
                         $event.srcElement.innerHTML = "Follow";
                         $event.srcElement.innerText = "FOLLOW";
+                        $event.srcElement.classList.remove('following');
                     },
                     err => {
                         console.error("Error : " + err);

@@ -80,7 +80,9 @@
             <p text-wrap>wants to follow you</p>
             
 
-            <main-button item-end class="blue" (click)="approveRequest(alert.id, i)" btnText="Approve"></main-button>
+            <button item-end
+                    class="small-blue-button"
+                    (click)="approveRequest(alert.id, i)">Approve</button>
                
         </ion-item>
     </ion-list>

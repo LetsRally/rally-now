@@ -146,15 +146,12 @@ export class OrganizationsListPage {
         if (actions != null) {
             var found = actions.some(el => {
                 return el.id == this.currentRallyID;
-
             });
 
             if (!found) {
                 return 'Follow';
-
             } else {
                 return 'Following';
-
             }
         }
     }
@@ -176,6 +173,7 @@ export class OrganizationsListPage {
     followOrg(organizationID, el) {
         this.httpProvider.followOrganization(this.organizationEndpoint, this.currentRallyID, organizationID);
         el.srcElement.innerText = 'Following';
+        el.srcElement.classList.add('following');
     }
 
     unFollowActionSheet(organizationID, el) {
@@ -191,7 +189,7 @@ export class OrganizationsListPage {
                         console.log('Destructive clicked');
                         this.getOrganizationFollowRecordID(organizationID);
                         el.srcElement.innerText = 'Follow';
-
+                        el.srcElement.classList.remove('following');
                     }
                 }, {
                     text: 'Cancel',

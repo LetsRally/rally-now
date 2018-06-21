@@ -36,7 +36,10 @@
                     <img [src]="organization.image_url ? organization.image_url : testPhoto" style="border:2px solid #ada8a8;">
                 </ion-avatar>
                 <h2 text-wrap (click)="goToOrganizationProfile(organization.id)">{{organization.name}}</h2>
-                <main-button clear item-end class="blue" (click)="addFollowRecordFirebase(organization.id, $event)" btnText={{findInLoop(organization.followers)}}></main-button>
+                <button item-end
+                        class="small-blue-button"
+                        [ngClass]="('Following' === findInLoop(organization.followers)) ? 'following' : ''"
+                        (click)="addFollowRecordFirebase(organization.id, $event)">{{findInLoop(organization.followers)}}</button>
             </ion-item>
         </ion-item-group>
     </ion-list>

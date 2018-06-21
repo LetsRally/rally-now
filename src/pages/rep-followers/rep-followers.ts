@@ -1,151 +1,152 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
-import { OrganizationsProvider } from '../../providers/organizations/organizations';
-import { UsersProvider } from '../../providers/users/users';
-import { PublicProfilePage } from '../public-profile/public-profile';
-import { AngularFireDatabase } from 'angularfire2/database';
+import {Component} from '@angular/core';
+import {IonicPage, NavController, NavParams, ToastController} from 'ionic-angular';
+import {OrganizationsProvider} from '../../providers/organizations/organizations';
+import {UsersProvider} from '../../providers/users/users';
+import {PublicProfilePage} from '../public-profile/public-profile';
+import {AngularFireDatabase} from 'angularfire2/database';
 import firebase from 'firebase';
-
 
 
 @IonicPage()
 @Component({
-  selector: 'page-rep-followers',
-  templateUrl: 'rep-followers.html',
+    selector: 'page-rep-followers',
+    templateUrl: 'rep-followers.html',
 })
 export class RepFollowersPage {
 
-  myRallyID:any;
-  repID:any;
-  endpoint:any = 'reps/';
-  items:any;
-  followEndpoint:string= 'following_users';
-  notificationsEndpoint:any = 'devices';
-  alertsEndpoint:any = 'ux_events';
-  public enablePlaceholder = false;
+    myRallyID: any;
+    repID: any;
+    endpoint: any = 'reps/';
+    items: any;
+    followEndpoint: string = 'following_users';
+    notificationsEndpoint: any = 'devices';
+    alertsEndpoint: any = 'ux_events';
+    public enablePlaceholder = false;
 
-  constructor(
-    public navCtrl: NavController, 
-    public navParams: NavParams, 
-    private orgProvider: OrganizationsProvider,
-    private httpProvider: UsersProvider,
-    private db: AngularFireDatabase,
-    public toastCtrl: ToastController) {
-    this.enablePlaceholder = true;
-      this.repID = navParams.get('repID');
-      this.httpProvider.returnRallyUserId().then(user => {
-        this.myRallyID = user.apiRallyID;
-        this.getFollowers();
-      });
-  }
-
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad RepFollowersPage');
-  }
-
-  getFollowers(){
-    this.orgProvider.getJsonData(this.endpoint + this.repID + '/followers/' + this.myRallyID)
-      .subscribe(result => {
-        this.enablePlaceholder = false;
-          this.items = result;
-      });
-
-  }
-
-  getText(value){
-    if (value === '0'){
-      return 'Follow';
-    }else{
-      return 'Following';
+    constructor(
+        public navCtrl: NavController,
+        public navParams: NavParams,
+        private orgProvider: OrganizationsProvider,
+        private httpProvider: UsersProvider,
+        private db: AngularFireDatabase,
+        public toastCtrl: ToastController) {
+        this.enablePlaceholder = true;
+        this.repID = navParams.get('repID');
+        this.httpProvider.returnRallyUserId().then(user => {
+            this.myRallyID = user.apiRallyID;
+            this.getFollowers();
+        });
     }
-  }
 
-  goToPublicProfile(userID){
-    this.navCtrl.push(PublicProfilePage, {
-       param1: userID,
-       profilePageName: "Representatives"
-   });
-  }
+    ionViewDidLoad() {
+        console.log('ionViewDidLoad RepFollowersPage');
+    }
 
-  addFollowRecordFirebase(friendID, $event){ 
-    let user:any = firebase.auth().currentUser;
-    let followRef = this.db.database.ref('follow/'+user['uid']+'/'+friendID);
-    followRef.once('value', snapshot=>{
-      if (snapshot.hasChildren()) {
-        console.log('You already follow this user');
-        this.getFollowRecordID(friendID);
-        $event.srcElement.innerHTML = "Follow";
-        $event.srcElement.innerText = "FOLLOW";
+    getFollowers() {
+        this.orgProvider.getJsonData(this.endpoint + this.repID + '/followers/' + this.myRallyID)
+            .subscribe(result => {
+                this.enablePlaceholder = false;
+                this.items = result;
+            });
 
-      }else{
-        this.followFriend(friendID, $event);
-        // this.getDeviceID(friendID);
-        
-      }
-    });
-   }
+    }
 
+    getText(value) {
+        if (value === '0') {
+            return 'Follow';
+        } else {
+            return 'Following';
+        }
+    }
 
-   getDeviceID(user_id){
-    //Reemplazar por parametro despues
-    this.httpProvider.getJsonData(this.notificationsEndpoint+'?user_id='+user_id)
-      .subscribe(result => {
-          this.saveNotification(user_id, result[0].id, this.myRallyID);
-          this.sendPushNotification(result[0].registration_id);
+    goToPublicProfile(userID) {
+        this.navCtrl.push(PublicProfilePage, {
+            param1: userID,
+            profilePageName: "Representatives"
+        });
+    }
 
-      }, err => {
-        console.error("Error: " +err);
-      }, () => {
-        console.log("Data Completed");
-      });
-  }
+    addFollowRecordFirebase(friendID, $event) {
+        let user: any = firebase.auth().currentUser;
+        let followRef = this.db.database.ref('follow/' + user['uid'] + '/' + friendID);
+        followRef.once('value', snapshot => {
+            if (snapshot.hasChildren()) {
+                console.log('You already follow this user');
+                this.getFollowRecordID(friendID);
+                $event.srcElement.innerHTML = "Follow";
+                $event.srcElement.innerText = "FOLLOW";
+                $event.srcElement.classList.remove('following');
 
-  saveNotification(user_id, registration_id, sender_id){
-    this.httpProvider.returnRallyUserId().then(user => {
-     this.httpProvider.saveNotification(user_id, registration_id, user.displayName + " wants to follow you",  this.alertsEndpoint, sender_id);
-    });
-    //this.httpProvider.sendNotification(registration_id, msg);
-  }
+            } else {
+                this.followFriend(friendID, $event);
+                // this.getDeviceID(friendID);
 
-  sendPushNotification(device){
-    this.httpProvider.sendPushNotification(device, 'New Follow Request')
-      .subscribe(result =>{
-        console.log("Noti", result);
-      });
-}
-
-   followFriend(friendID, $event){
-    this.httpProvider.followFriend(this.followEndpoint, this.myRallyID, friendID, true ).subscribe(data => {
-      console.log(data);
-      this.httpProvider.saveFollowRecordID(data.following_id, data.id, 'follow');
-      this.getDeviceID(friendID);
-      $event.srcElement.innerHTML = "Following";
-      $event.srcElement.innerText = "FOLLOWING";
-    }, error => {
-      console.log("Error", error);
-    });;
-   
-  }
+            }
+        });
+    }
 
 
-  getFollowRecordID(parameter){
-    this.httpProvider.getJsonData(this.followEndpoint+'?follower_id='+this.myRallyID+'&following_id='+ parameter).subscribe(
-result => {
-  console.log("Delete User ID : "+ result[0].id);
-  this.unFollowFriend(result[0].id, parameter);
-},
-err =>{
-  console.error("Error : "+err);
-} ,
-() => {
-  console.log('getData completed');
-}
+    getDeviceID(user_id) {
+        //Reemplazar por parametro despues
+        this.httpProvider.getJsonData(this.notificationsEndpoint + '?user_id=' + user_id)
+            .subscribe(result => {
+                this.saveNotification(user_id, result[0].id, this.myRallyID);
+                this.sendPushNotification(result[0].registration_id);
 
-);
-}
+            }, err => {
+                console.error("Error: " + err);
+            }, () => {
+                console.log("Data Completed");
+            });
+    }
 
-  unFollowFriend(recordID, parameter){
-    this.httpProvider.unfollowOrganization(this.followEndpoint, recordID);
-    this.httpProvider.removeFollowRecordID(parameter, 'follow');
-  }
+    saveNotification(user_id, registration_id, sender_id) {
+        this.httpProvider.returnRallyUserId().then(user => {
+            this.httpProvider.saveNotification(user_id, registration_id, user.displayName + " wants to follow you", this.alertsEndpoint, sender_id);
+        });
+        //this.httpProvider.sendNotification(registration_id, msg);
+    }
+
+    sendPushNotification(device) {
+        this.httpProvider.sendPushNotification(device, 'New Follow Request')
+            .subscribe(result => {
+                console.log("Noti", result);
+            });
+    }
+
+    followFriend(friendID, $event) {
+        this.httpProvider.followFriend(this.followEndpoint, this.myRallyID, friendID, true).subscribe(data => {
+            console.log(data);
+            this.httpProvider.saveFollowRecordID(data.following_id, data.id, 'follow');
+            this.getDeviceID(friendID);
+            $event.srcElement.innerHTML = "Following";
+            $event.srcElement.innerText = "FOLLOWING";
+            $event.srcElement.classList.add('following');
+        }, error => {
+            console.log("Error", error);
+        });
+        ;
+
+    }
+
+
+    getFollowRecordID(parameter) {
+        this.httpProvider.getJsonData(this.followEndpoint + '?follower_id=' + this.myRallyID + '&following_id=' + parameter).subscribe(
+            result => {
+                console.log("Delete User ID : " + result[0].id);
+                this.unFollowFriend(result[0].id, parameter);
+            },
+            err => {
+                console.error("Error : " + err);
+            },
+            () => {
+                console.log('getData completed');
+            }
+        );
+    }
+
+    unFollowFriend(recordID, parameter) {
+        this.httpProvider.unfollowOrganization(this.followEndpoint, recordID);
+        this.httpProvider.removeFollowRecordID(parameter, 'follow');
+    }
 }

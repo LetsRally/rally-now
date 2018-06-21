@@ -219,12 +219,18 @@
                 <div class="railled-excerpt" *ngIf="record.rallies > 0">
                     <p class="white"><strong>{{record.rallies}}</strong><br> Rallied</p>
                     <div class="btn-objectives-contact">
-                        <main-button class="red" *ngIf="record?.goals[0]?.goal_type ==='contact'"
-                                     btnText="Contact"></main-button>
-                        <main-button class="red" *ngIf="record?.goals[0]?.goal_type === 'sign'"
-                                     btnText="Sign"></main-button>
-                        <main-button class="red" *ngIf="record?.goals[0]?.goal_type === 'donate'"
-                                     btnText="Donate"></main-button>
+                        <button class="small-red-button"
+                                *ngIf="record?.goals[0]?.goal_type ==='contact'"
+                        >Contact
+                        </button>
+                        <button class="small-red-button"
+                                *ngIf="record?.goals[0]?.goal_type === 'sign'"
+                        >Sign
+                        </button>
+                        <button class="small-red-button"
+                                *ngIf="record?.goals[0]?.goal_type === 'donate'"
+                        >Donate
+                        </button>
                     </div>
                 </div>
                 <div class="bottom-excerpt">

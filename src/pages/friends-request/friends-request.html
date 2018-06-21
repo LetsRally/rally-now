@@ -70,14 +70,12 @@
             <ion-row item-end text-right *ngIf="item.hide_activity == '0' && item.searchable == '1'">
                 <ion-col col-12 style="padding: 0;">
                     <div class="button-devider">
-                        <main-button class="blue"
-                                     (click)="addFollowRecordFirebase(item.id, $event)"
-                                     btnText="Follow"></main-button>
+                        <button class="small-blue-button"
+                                     (click)="addFollowRecordFirebase(item.id, $event)">Follow</button>
                     </div>
                     <div class="button-devider">
-                        <main-button class="light-grey"
-                                     (click)="hide(item.id)"
-                                     btnText="Hide"></main-button>
+                        <button class="small-white-hide-button"
+                                     (click)="hide(item.id)">Hide</button>
                     </div>
                 </ion-col>
 
@@ -101,13 +99,14 @@
             <ion-row item-end text-right *ngIf="user.hide_activity == '0' && user.searchable == '1'">
                 <ion-col col-12 style="padding: 0;">
                     <div class="button-devider">
-                        <main-button class="blue" (click)="addFollowRecordFirebase(item.id, $event)"
-                                     btnText="Follow"></main-button>
+                        <button class="small-blue-button"
+                                (click)="addFollowRecordFirebase(item.id, $event)"
+                                     >Follow</button>
                     </div>
                     <div class="button-devider">
-                        <main-button class="light-grey"
+                        <button class="small-white-hide-button"
                                      (click)="hide(item.id)"
-                                     btnText="Hide"></main-button>
+                                     >Hide</button>
                     </div>
                 </ion-col>
 
@@ -129,13 +128,12 @@
             <ion-row item-end text-right>
                 <ion-col col-12 style="padding: 0;">
                     <div class="button-devider">
-                        <main-button class="blue btn-friend" (click)="addOrg(org[0], $event)"
-                                     btnText="Follow"></main-button>
+                        <button class="small-blue-button"
+                                (click)="addOrg(org[0], $event)">Follow</button>
                     </div>
                     <div class="button-devider">
-                        <main-button class="light-grey"
-                                     (click)="hide(org[0].id)"
-                                     btnText="Hide"></main-button>
+                        <button class="small-white-hide-button"
+                                     (click)="hide(org[0].id)">Hide</button>
                     </div>
                 </ion-col>
 

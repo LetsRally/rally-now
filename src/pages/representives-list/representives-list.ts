@@ -145,18 +145,18 @@ export class RepresentivesListPage {
         this.httpProvider.unfollowOrganization(this.followEndpoint, recordID);
     }
 
-    followRep(repID, $event) {
-        console.log($event);
+    followRep(repID, $event, name) {
         this.httpProvider.getJsonData(this.followEndpoint + '?user_id=' + this.currentRallyID + '&representative_id=' + repID)
             .subscribe(
                 result => {
 
                     if (result != "") {
-                        this.unFollowActionSheet(result[0].id, $event)
+                        this.unFollowActionSheet(result[0].id, $event, name)
                     } else {
                         this.saveRepInApi(repID);
                         $event.srcElement.innerHTML = "Following";
                         $event.srcElement.innerText = "FOLLOWING";
+                        $event.srcElement.classList.add('following');
                     }
                 },
                 err => {
@@ -169,10 +169,10 @@ export class RepresentivesListPage {
     }
 
 
-      unFollowActionSheet(representativeID, el) {
+      unFollowActionSheet(representativeID, el, name) {
         
       let actionSheet = this.actionSheetCtrl.create({
-        title: 'Unfollow this representative?' ,
+        title: 'Unfollow ${name}?' ,
         cssClass: 'title-img',      
         buttons: [
           {
@@ -183,7 +183,7 @@ export class RepresentivesListPage {
               this.unFollowRep(representativeID);
               el.srcElement.innerHTML = "Follow";
               el.srcElement.innerText = "FOLLOW";
-              
+              el.srcElement.classList.remove('following');
             }
           },{
             text: 'Cancel',

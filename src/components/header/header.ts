@@ -71,10 +71,8 @@ export class HeaderComponent {
     findInLoop(actions) {
         if (actions != null) {
             var found = actions.some(el => {
-                return el.id == this.currentRallyID;
-
+                return el == this.currentRallyID;
             });
-
             if (!found) {
                 return 'Follow';
 
@@ -148,19 +146,17 @@ export class HeaderComponent {
                 });
     }
 
-    followRep(repID, $event) {
-        console.log($event);
-
-
+    followRep(repID, $event, name) {
         this.usersProvider.getJsonData(this.followEndpoint + '?user_id=' + this.currentRallyID + '&representative_id=' + repID)
             .subscribe(
                 result => {
                     if (result != "") {
-                        this.unFollowActionSheet(result[0].id, $event)
+                        this.unFollowActionSheet(result[0].id, $event, name)
                     } else {
                         this.saveRepInApi(repID);
                         $event.srcElement.innerHTML = "Following";
                         $event.srcElement.innerText = "FOLLOWING";
+                        $event.srcElement.classList.add('following');
                     }
                 },
                 err => {
@@ -176,10 +172,10 @@ export class HeaderComponent {
         this.usersProvider.followRep(this.followEndpoint, this.currentRallyID, repID);
     }
 
-    unFollowActionSheet(representativeID, el) {
+    unFollowActionSheet(representativeID, el, name) {
 
         let actionSheet = this.actionSheetCtrl.create({
-            title: 'Unfollow this representative?',
+            title: 'Unfollow ${name}?',
             cssClass: 'title-img',
             buttons: [
                 {
@@ -190,7 +186,7 @@ export class HeaderComponent {
                         this.unFollowRep(representativeID);
                         el.srcElement.innerHTML = "Follow";
                         el.srcElement.innerText = "FOLLOW";
-
+                        el.srcElement.classList.remove('following');
                     }
                 }, {
                     text: 'Cancel',
@@ -258,7 +254,6 @@ export class HeaderComponent {
             if (snapshot.hasChildren()) {
                 console.log('You already follow this org');
                 this.unFollowOrgActionSheet(organizationID, $event);
-
             } else {
                 this.followOrg(organizationID, $event);
             }
@@ -270,12 +265,8 @@ export class HeaderComponent {
         let followRef = this.db.database.ref('follow/'+user['uid']+'/'+friend.id);
         followRef.once('value', snapshot=>{
             if (snapshot.hasChildren()) {
-                console.log('You already follow this user');
                 this.unFollowUserActionSheet(friend, $event);
-                //this.presentToast('You are not following this user anymore');
-
             }else{
-                //this.followFriend(friendID);
                 this.followFriend(friend.id, $event);
             }
         });
@@ -292,6 +283,7 @@ export class HeaderComponent {
                     handler: () => {
                         console.log('Destructive clicked');
                         el.srcElement.innerText = 'Follow';
+                        el.srcElement.classList.remove('following');
                         this.getFollowRecordID(friend);
                     }
                 },{
@@ -328,8 +320,8 @@ export class HeaderComponent {
 
     followFriend(friendID, el){
         this.usersProvider.followFriend(this.followUserEndpoint, this.currentRallyID, friendID, true).subscribe(data => {
-            console.log(data);
             el.srcElement.innerText = 'Following';
+            el.srcElement.classList.add('following');
             this.usersProvider.saveFollowRecordID(data.following_id, data.id, 'follow');
             this.getDeviceID(friendID);
         }, error => {
@@ -368,6 +360,7 @@ export class HeaderComponent {
     followOrg(organizationID, el) {
         this.usersProvider.followOrganization(this.organizationEndpoint, this.currentRallyID, organizationID);
         el.srcElement.innerText = 'Following';
+        el.srcElement.classList.add('following');
     }
 
     unFollowOrgActionSheet(organizationID, el) {
@@ -383,7 +376,7 @@ export class HeaderComponent {
                         console.log('Destructive clicked');
                         this.getOrganizationFollowRecordID(organizationID);
                         el.srcElement.innerText = 'Follow';
-
+                        el.srcElement.classList.remove('following');
                     }
                 }, {
                     text: 'Cancel',

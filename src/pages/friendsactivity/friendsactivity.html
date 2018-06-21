@@ -1,14 +1,17 @@
 <rally-name-header name="Community"></rally-name-header>
 
-<ion-segment [(ngModel)]="all" (ionChange)="segmentChanged()" class="rally-segment">
-    <ion-segment-button value="all">
-        All
-    </ion-segment-button>
-    <ion-segment-button value="friends">
-        Following
-    </ion-segment-button>
-</ion-segment>
-<ion-content>
+<ion-header class="fixed-box">
+    <ion-segment [(ngModel)]="all" (ionChange)="segmentChanged()" class="rally-segment">
+        <ion-segment-button value="all">
+            All
+        </ion-segment-button>
+        <ion-segment-button value="friends">
+            Following
+        </ion-segment-button>
+    </ion-segment>
+</ion-header>
+
+<ion-content class="without-margin-top">
     <ion-spinner *ngIf="loader"></ion-spinner>
     <div class="timeline-wrapper" *ngIf="enablePlaceholder">
         <div class="timeline-item">

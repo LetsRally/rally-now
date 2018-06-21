@@ -203,10 +203,9 @@ export class MyRepresentativesPage {
   }
 
 
-  getRepStatus(bioguide, $event){
+  getRepStatus(bioguide, $event, name){
     this.httpProvider.getJsonData(this.repsEndpoint +bioguide).subscribe( result => {
-      console.log(result);
-      this.followRep(result[0].id, $event);
+      this.followRep(result[0].id, $event, name);
   });
   }
 
@@ -218,22 +217,17 @@ export class MyRepresentativesPage {
   }
  
   
-  followRep(repID, $event){
-    console.log($event);
-    
-    
+  followRep(repID, $event, name){
     this.httpProvider.getJsonData(this.followEndpoint+'?user_id='+this.myrallyID+'&representative_id='+repID)
       .subscribe(
         result => {
-          
           if (result != ""){              
-            this.unFollowRep(result[0].id);
-            $event.srcElement.innerHTML = "Follow";
-            $event.srcElement.innerText = "FOLLOW";
+            this.unFollowRep(result[0].id, name, $event);
           } else{
             this.saveRepInApi(repID);
             $event.srcElement.innerHTML = "Following";
             $event.srcElement.innerText = "FOLLOWING";
+            $event.srcElement.classList.add('following');
           }
         },
     err =>{
@@ -250,8 +244,30 @@ export class MyRepresentativesPage {
   }
 
 
-  unFollowRep(recordID){
-    this.httpProvider.unfollowOrganization(this.followEndpoint, recordID);
+  unFollowRep(recordID, name, $event){
+      let actionSheet = this.actionSheetCtrl.create({
+          title: `Unfollow ${name}?`,
+          cssClass: 'title-img',
+          buttons: [
+              {
+                  text: 'Unfollow',
+                  role: 'destructive',
+                  handler: () => {
+                      $event.srcElement.innerHTML = "Follow";
+                      $event.srcElement.innerText = "FOLLOW";
+                      $event.srcElement.classList.remove('following');
+                      this.httpProvider.unfollowOrganization(this.followEndpoint, recordID);
+                  }
+              }, {
+                  text: 'Cancel',
+                  role: 'cancel',
+                  handler: () => {
+                      console.log('Cancel clicked');
+                  }
+              }
+          ]
+      });
+      actionSheet.present();
   }
 
   transform(value: any) {

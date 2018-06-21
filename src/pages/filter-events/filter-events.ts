@@ -25,6 +25,7 @@ export class FilterEventsPage {
     disable: boolean = true;
     public disableButton = false;
     public disableRange = true;
+    public errorEndDate = false;
 
     constructor(
         public navCtrl: NavController,
@@ -57,8 +58,8 @@ export class FilterEventsPage {
                 if (data.zipcode && data.zipcode.length >= 5) {
                     this.disable = false;
                 }
-                this.setDate();
             }
+            this.setDate();
             this.checkZipCode(true);
         });
     }
@@ -72,6 +73,14 @@ export class FilterEventsPage {
 
         if (!this.filterState.timeEnds || this.filterState.timeEnds === '') {
             this.filterState.timeEnds = date.nextYear;
+        }
+    }
+
+    checkEndDate() {
+        if(new Date(this.filterState.timeEnds).getTime() < new Date(this.filterState.timeStarts).getTime()) {
+            this.errorEndDate = true;
+        } else {
+            this.errorEndDate = false;
         }
     }
 
