@@ -5,7 +5,7 @@ import {
     NavParams,
     ActionSheetController,
     ViewController,
-    AlertController, ModalController, App
+    AlertController, ModalController
 } from 'ionic-angular';
 import {AlertsPage} from '../alerts/alerts'
 import {ProfilePage} from '../profile/profile'

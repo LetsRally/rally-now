@@ -29,6 +29,8 @@ import {Facebook} from '@ionic-native/facebook';
 import {DonateFeedBackPage} from "../donate-feed-back/donate-feed-back";
 import * as constants from "../../constants/constants";
 import {ThemeableBrowser, ThemeableBrowserObject} from "@ionic-native/themeable-browser";
+import {IssueScreenPage} from "../issue-screen/issue-screen";
+import {ThankYouPage} from "../thank-you/thank-you";
 
 
 @Component({
@@ -560,32 +562,132 @@ export class ProfilePage {
         }, {animate: true, animation: 'transition', duration: 500, direction: 'forward'});
     }
 
-    goToActionPage(objectiveID, goal_type, source, goalID, repID) {
+    goToActionPage(objectiveID, goal_type, source, goalID, repID, activity) {
+        console.log('ACTIVITY');
+        console.log(goal_type);
         if (goal_type === "contact") {
             this.navCtrl.push(OrganizationActionPage, {
                 objectiveID: objectiveID,
                 pageName: 'My Profile'
             }, {animate: true, animation: 'transition', duration: 500, direction: 'forward'});
         } else if (goal_type === 'sign') {
-            this.navCtrl.push(SignFeedBackPage, {iframeUrl: source, repID: repID, goalID: goalID}, {
+            let params = {
+                iframeUrl: source,
+                repID: repID,
+                goalID: goalID,
+                imgURI: activity.photo_url,
+                titleForShare: activity.organization,
+                title: 'sign',
+                action_type_id: '73637819-9571-4070-9162-abf41fc50c71'
+            };
+            this.sign(params);
+        } else if (goal_type === 'donate') {
+            let params = {
+                iframeUrl: source,
+                repID: repID,
+                goalID: goalID,
+                imgURI: activity.photo_url,
+                titleForShare: activity.organization,
+                title: 'donat',
+                action_type_id: '500f35fc-9338-4f1d-bdc8-13302afa33e7'
+            };
+            this.donate(params);
+        }
+    }
+
+    donate(params) {
+        let options = constants.themeAbleOptions;
+        const browser = this.themeAbleBrowser.create(params.iframeUrl, '_system', options);
+
+        setTimeout(() => {
+            let modal = this.modalCtrl.create('FeedbackModalComponent', {rows: constants.feedbackDonateRows});
+            modal.onDidDismiss((data) => {
+                switch (data.actionId) {
+                    case 1: {
+                        this.streakSignModal(params);
+                        this.addAction(params);
+                    }
+                        break;
+
+                    case 2: {
+                        this.errorSignModal();
+                    }
+                }
+            });
+            modal.present();
+        }, 2000);
+    }
+
+    sign(params) {
+        const options = constants.themeAbleOptions;
+        const browser = this.themeAbleBrowser.create(params.iframeUrl, '_blank', options);
+
+        browser.on("loadstop")
+            .subscribe(
+                (data) => {
+                    browser.executeScript({
+                        code: 'document.body.style.paddingTop = "50px"'
+                    })
+                },
+                err => {
+                    console.log("InAppBrowser Loadstop Event Error: " + err);
+                });
+        browser.on('closePressed').subscribe(data => {
+            browser.close();
+            let modal = this.modalCtrl.create('FeedbackModalComponent', {rows: constants.feedbackSignRows});
+            modal.onDidDismiss((data) => {
+                switch (data.actionId) {
+                    case 1: {
+                        this.streakSignModal(params);
+                        this.addAction(params);
+                    }
+                        break;
+
+                    case 2: {
+                        this.errorSignModal();
+                    }
+                }
+            });
+            modal.present();
+        })
+    }
+
+    errorSignModal() {
+        let modal = this.modalCtrl.create(IssueScreenPage);
+        modal.onDidDismiss((val) => {
+            let params = {
                 animate: true,
                 animation: 'transition',
                 duration: 500,
-                direction: 'forward'
-            });
-        } else if (goal_type === 'donate') {
-            this.openWebpage(source, '_system')
-                .then(() => {
-                    this.navCtrl.push(DonateFeedBackPage, {iframeUrl: source, repID: repID, goalID: goalID}, {
-                        animate: true,
-                        animation: 'transition',
-                        duration: 500,
-                        direction: 'forward'
-                    });
-                }, err => {
-                    console.log(err);
-                })
-        }
+                direction: 'back'
+            };
+            if (!val || !val.close) {
+                this.navCtrl.popTo(this.navCtrl.getByIndex(0), params);
+                this.navCtrl.parent.select(0);
+                this.navCtrl.parent.goToRoot();
+            }
+        });
+        modal.present();
+    }
+
+    addAction(params) {
+        let data = {
+            goal_id: params.goalID,
+            representative_id: params.repID,
+            action_type_id: params.action_type_id,
+            title: params.title,
+            user_id: this.currentRallyID
+        };
+        this.httpProvider.addAction('actions', data);
+    }
+
+    streakSignModal(params) {
+        let data = {
+            imgURI: params.imgURI,
+            titleForShare: params.titleForShare
+        };
+        let modal = this.modalCtrl.create(ThankYouPage, data);
+        modal.present();
     }
 
     openWebpage(url?, target?) {
