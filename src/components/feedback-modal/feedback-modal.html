@@ -1,0 +1,10 @@
+<div class="modal-window feedback-modal">
+  <div class="modal-title">
+    <h2>How did it go?</h2>
+    <p>Your feedback helps make Rally better.</p>
+  </div>
+  <ion-list class="modal-body">
+    <ion-item (click)="continueStep(row['id'])"
+              *ngFor="let row of rows">{{row['text']}}</ion-item>
+  </ion-list>
+</div>

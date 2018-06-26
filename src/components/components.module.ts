@@ -6,6 +6,7 @@ import { RallyOrangeHeaderComponent } from './rally-orange-header/rally-orange-h
 import { RallyNameHeaderComponent } from './rally-name-header/rally-name-header';
 import { ButtonComponent } from './main-button/main-button';
 import { GoogleAutocompleteComponent } from './google-autocomplete/google-autocomplete';
+
 @NgModule({
 	declarations: [
     HeaderComponent,

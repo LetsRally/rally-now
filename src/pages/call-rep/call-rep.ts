@@ -5,16 +5,18 @@ import {
     NavParams,
     ActionSheetController,
     ViewController,
-    AlertController
+    AlertController, ModalController
 } from 'ionic-angular';
 import {AlertsPage} from '../alerts/alerts'
 import {ProfilePage} from '../profile/profile'
 import {PopoverController} from 'ionic-angular';
 import {OverlayPage} from '../overlay/overlay'
 import {FeedPage} from '../feed/feed';
-import {FeedbackPage} from '../feedback/feedback';
 import {CallNumber} from '@ionic-native/call-number';
 import {UsersProvider} from '../../providers/users/users';
+import * as constants from '../../constants/constants';
+import {IssueScreenPage} from "../issue-screen/issue-screen";
+import {ThankYouPage} from "../thank-you/thank-you";
 
 
 @IonicPage()
@@ -48,6 +50,7 @@ export class CallRepPage {
         public actionSheetCtrl: ActionSheetController,
         private callNumber: CallNumber,
         private httpProvider: UsersProvider,
+        private modalCtrl: ModalController,
         public viewCtrl: ViewController,
         private alertCtrl: AlertController) {
         console.log("offices", navParams.get('offices'));
@@ -138,12 +141,95 @@ export class CallRepPage {
     }
 
     giveFeedBack() {
-        this.navCtrl.push(FeedbackPage, {}, {
+        let title = this.rep.rep_type === 'sen' ? 'senator' : 'representative';
+        let params = {
+            titleForShare: `I used Rally to call ${title} ${this.rep.name}`,
+            imgURI: this.rep.photo_url
+        };
+
+        let modal = this.modalCtrl.create('FeedbackModalComponent', {rows: constants.feedbackRows});
+        modal.onDidDismiss((data) => {
+            switch (data.actionId) {
+                case 1: {
+                    this.streakModal(params);
+                    this.addAction();
+                }
+                    break;
+
+                case 2: {
+                    this.streakModal(params);
+                    this.addAction();
+                }
+                    break;
+
+                case 3: {
+                    this.back();
+                }
+                    break;
+
+                case 4: {
+                    this.back();
+                }
+                    break;
+
+                case 5: {
+                    this.errorModal();
+                }
+                    break;
+
+                case 6: {
+                    this.back();
+                }
+                    break;
+            }
+        });
+        modal.present();
+    }
+
+    addAction() {
+        this.httpProvider.addAction('actions', this.data);
+    }
+
+    back() {
+        this.navCtrl.pop({
             animate: true,
             animation: 'transition',
             duration: 500,
-            direction: 'forward'
+            direction: 'back'
         });
+    }
+
+    streakModal(data) {
+        let modal = this.modalCtrl.create(ThankYouPage, data);
+        modal.onDidDismiss(() => {
+            this.navCtrl.pop( {
+                animate: true,
+                animation: 'transition',
+                duration: 500,
+                direction: 'back'
+            });
+        });
+        modal.present();
+    }
+
+    errorModal() {
+        let modal = this.modalCtrl.create(IssueScreenPage);
+        modal.onDidDismiss((val) => {
+            let params = {
+                animate: true,
+                animation: 'transition',
+                duration: 500,
+                direction: 'back'
+            };
+            if (!val || !val.close) {
+                this.navCtrl.popTo(this.navCtrl.getByIndex(0), params);
+                this.navCtrl.parent.select(0);
+                this.navCtrl.parent.goToRoot();
+            } else {
+                this.navCtrl.pop(params);
+            }
+        });
+        modal.present();
     }
 
     showCallAlert(phone_number) {

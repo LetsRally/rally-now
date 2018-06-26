@@ -10,19 +10,17 @@ import {
 } from 'ionic-angular';
 import {UsersProvider} from '../../providers/users/users';
 import {AngularFireDatabase} from 'angularfire2/database';
-import firebase from 'firebase';
 import {SocialShareProvider} from '../../providers/social-share/social-share';
 import {CallPage} from '../call/call';
-import {WebviewPage} from '../webview/webview';
 import {Storage} from '@ionic/storage';
 import {AdressModalPage} from '../adress-modal/adress-modal';
 import {ThankYouPage} from '../thank-you/thank-you';
-import {FaxFeedBackPage} from '../fax-feed-back/fax-feed-back';
-import {EmailFeedBackPage} from '../email-feed-back/email-feed-back';
 import {OrganizationProfilePage} from '../organization-profile/organization-profile';
 import {ThanksPage} from '../thanks/thanks';
 import {RepresentativeProfilePage} from '../representative-profile/representative-profile';
 import * as constants from '../../constants/constants';
+import {ThemeableBrowser} from "@ionic-native/themeable-browser";
+import {IssueScreenPage} from "../issue-screen/issue-screen";
 
 @IonicPage()
 @Component({
@@ -80,6 +78,9 @@ export class OrganizationActionPage {
     enableSpecificRep: boolean;
     reps_goals: any;
     objective: any;
+    private userEmail = '';
+    private userName = '';
+    private userPhone = '';
 
 
     constructor(public navCtrl: NavController,
@@ -91,6 +92,7 @@ export class OrganizationActionPage {
                 public actionSheetCtrl: ActionSheetController,
                 public viewCtrl: ViewController,
                 private storage: Storage,
+                private themeableBrowser: ThemeableBrowser,
                 public modalCtrl: ModalController) {
         this.objectiveID = navParams.get('objectiveID');
         this.pageName = navParams.get('pageName');
@@ -102,9 +104,16 @@ export class OrganizationActionPage {
                 this.data.title = 'tweet';
                 this.getdata();
                 this.getReps();
-
             });
-
+        this.storage.get('EMAIL').then((res) => {
+            this.userEmail = res;
+        });
+        this.storage.get('USER_PHONE').then((res) => {
+            this.userPhone = res || '';
+        });
+        this.storage.get('DISPLAYNAME').then((res) => {
+            this.userName = res;
+        });
     }
 
     ionViewDidLoad() {
@@ -133,15 +142,14 @@ export class OrganizationActionPage {
                 {
                     text: 'Fax',
                     handler: () => {
-                        console.log('Fax clicked');
-                        this.navCtrl.push(FaxFeedBackPage, {
+                        let params = {
                             rep: rep,
                             iframeUrl: fax,
                             repID: repID,
                             goalID: this.goal_id,
                             objectiveID: this.objectiveID
-                        });
-
+                        };
+                        this.doFax(params);
                     }
                 }
             );
@@ -152,14 +160,14 @@ export class OrganizationActionPage {
                 {
                     text: 'Email',
                     handler: () => {
-                        console.log('Email clicked');
-                        this.navCtrl.push(EmailFeedBackPage, {
+                        let params = {
                             iframeUrl: email,
                             repID: repID,
                             goalID: this.goal_id,
                             objectiveID: this.objectiveID,
                             rep: rep
-                        });
+                        };
+                        this.doEmail(params);
                     }
                 }
             )
@@ -203,6 +211,157 @@ export class OrganizationActionPage {
             buttons: buttonsArray
         });
         actionSheet.present();
+    }
+
+    doEmail(params) {
+        const options = constants.themeAbleOptions;
+        const browser = this.themeableBrowser.create(params.iframeUrl, '_blank', options);
+
+        browser.on("loadstop")
+            .subscribe(
+                () => {
+                    browser.executeScript({
+                        code: 'document.body.style.paddingTop = "50px"'
+                    })
+                },
+                err => {
+                    console.log("InAppBrowser Loadstop Event Error: " + err);
+                });
+
+        browser.on('closePressed').subscribe(data => {
+            browser.close();
+            this.emailFeedback(params);
+        })
+    }
+
+    emailFeedback(params) {
+        let modal = this.modalCtrl.create('FeedbackModalComponent', {rows: constants.feedbackEmailRows});
+        modal.onDidDismiss((data) => {
+            switch (data.actionId) {
+                case 1: {
+                    this.streakEmailModal(params);
+                    this.addEmailAction(params);
+                }
+                    break;
+
+                case 2: {
+                    this.errorModal();
+                }
+            }
+        });
+        modal.present();
+    }
+
+    streakEmailModal(params) {
+        let data = {
+            titleForShare: `I used Rally to email ${params.rep.title} ${params.rep.first_name} ${params.rep.last_name}`,
+            imgURI: params.rep.photo_url
+        };
+
+        let modal = this.modalCtrl.create(ThankYouPage, data);
+        modal.present();
+    }
+
+    addEmailAction(params) {
+        let data = {
+            representative_id: params.repID,
+            goal_id: params.goalID,
+            action_type_id: 'f9b53bc8-9847-4699-b897-521d8e1a34bb',
+            title: 'email',
+            user_id: this.myrallyID
+        };
+        this.httpProvider.addAction('actions', data);
+    }
+
+    doFax(params) {
+        const options = constants.themeAbleOptions;
+        const that = this;
+        const browser = this.themeableBrowser.create(params.iframeUrl, '_blank', options);
+
+        browser.on("loadstop")
+            .subscribe(
+                () => {
+                    browser.insertCss({
+                        code: "body, html {padding-top: 20px!important;} header .rn-ipm5af{top: 16px !important; margin-top: 0 !important;} main{overflow:hidden}"
+                    });
+
+                    if (params.iframeUrl.indexOf('https://faxzero.com/') !== -1) {
+                        browser.executeScript({
+                            code: 'document.getElementById("input-fax_s_name").value = "' + that.userName + '";' +
+                            ' document.getElementById("input-fax_s_email").value = "' + that.userEmail + '";' +
+                            ' document.getElementById("input-fax_s_phone").value = "' + that.userPhone + '";' +
+                            ' document.body.style.paddingTop = "50px"'
+                        }).then((r) => {
+                        }).catch((err) => {
+                            console.log('EXECUTE ERROR');
+                            console.log(err);
+                        })
+                    }
+                },
+                err => {
+                    console.log("InAppBrowser Loadstop Event Error: " + err);
+                });
+
+        browser.on('closePressed').subscribe(data => {
+            browser.close();
+            this.faxFeedback(params);
+        })
+    }
+
+    faxFeedback(params) {
+        let modal = this.modalCtrl.create('FeedbackModalComponent', {rows: constants.feedbackFaxRows});
+        modal.onDidDismiss((data) => {
+            switch (data.actionId) {
+                case 1: {
+                    this.streakFaxModal(params);
+                    this.addAction(params);
+                }
+                    break;
+
+                case 2: {
+                    this.errorModal();
+                }
+            }
+        });
+        modal.present();
+    }
+
+    streakFaxModal(params) {
+        let data = {
+            titleForShare: `I used Rally to fax ${params.rep.title} ${params.rep.first_name} ${params.rep.last_name}`,
+            imgURI: params.rep.photo_url
+        };
+
+        let modal = this.modalCtrl.create(ThankYouPage, data);
+        modal.present();
+    }
+
+    addAction(params) {
+        let data = {
+            representative_id: params.repID,
+            goal_id: params.goalID,
+            action_type_id: 'ad3ef19b-d809-45b7-bef2-d470c9af0d1d',
+            title: 'fax',
+            user_id: this.myrallyID
+        };
+        this.httpProvider.addAction('actions', data);
+    }
+
+    errorModal() {
+        let modal = this.modalCtrl.create(IssueScreenPage);
+        modal.onDidDismiss((val) => {
+            let params = {
+                animate: true,
+                animation: 'transition',
+                duration: 500,
+                direction: 'back'
+            };
+
+            if (!val || !val.close) {
+                this.navCtrl.pop(params);
+            }
+        });
+        modal.present();
     }
 
     streakModal(data) {

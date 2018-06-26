@@ -59,3 +59,106 @@ export const themeAbleOptions: ThemeableBrowserOptions = {
 };
 
 export const appStoreUrl = 'http://appstore.com';
+
+export const feedbackRows = [
+    {
+        id: 1,
+        text: 'Spoke with a staffer!'
+    },
+    {
+        id: 2,
+        text: 'Left message'
+    },
+    {
+        id: 3,
+        text: 'Line busy'
+    },
+    {
+        id: 4,
+        text: 'Voicemail full'
+    },
+    {
+        id: 5,
+        text: 'Wrong Number'
+    },
+    {
+        id: 6,
+        text: 'Other'
+    }
+];
+
+export const feedbackSignRows = [
+    {
+        id: 1,
+        text: 'Signed petition'
+    },
+    {
+        id: 2,
+        text: 'Page failed to load'
+    },
+    {
+        id: 3,
+        text: 'I\'ll sign later'
+    },
+    {
+        id: 4,
+        text: 'Other'
+    }
+];
+
+export const feedbackDonateRows = [
+    {
+        id: 1,
+        text: 'I donated'
+    },
+    {
+        id: 2,
+        text: 'Page failed to load'
+    },
+    {
+        id: 3,
+        text: 'I\'ll donate later'
+    },
+    {
+        id: 4,
+        text: 'Other'
+    }
+];
+
+export const feedbackFaxRows = [
+    {
+        id: 1,
+        text: 'I faxed'
+    },
+    {
+        id: 2,
+        text: 'Page failed to load'
+    },
+    {
+        id: 3,
+        text: 'I\'ll fax later'
+    },
+    {
+        id: 4,
+        text: 'Other'
+    }
+];
+
+export const feedbackEmailRows = [
+    {
+        id: 1,
+        text: 'I emailed'
+    },
+    {
+        id: 2,
+        text: 'Page failed to load'
+    },
+    {
+        id: 3,
+        text: 'I\'ll email later'
+    },
+    {
+        id: 4,
+        text: 'Other'
+    }
+];

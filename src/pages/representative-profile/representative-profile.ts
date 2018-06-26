@@ -13,9 +13,10 @@ import {RepFollowersPage} from '../rep-followers/rep-followers';
 import {ThanksPage} from '../thanks/thanks';
 import {ThemeableBrowser} from "@ionic-native/themeable-browser";
 import * as constants from '../../constants/constants';
-import {EmailFeedBackPage} from "../email-feed-back/email-feed-back";
-import {FaxFeedBackPage} from "../fax-feed-back/fax-feed-back";
 import {CallStatePage} from "../call-state/call-state";
+import {ThankYouPage} from "../thank-you/thank-you";
+import {Storage} from '@ionic/storage';
+import {IssueScreenPage} from "../issue-screen/issue-screen";
 
 
 @IonicPage()
@@ -52,6 +53,9 @@ export class RepresentativeProfilePage {
     isFollowing: boolean = false;
     private representative: any;
     private user: any;
+    private userEmail = '';
+    private userName = '';
+    private userPhone = '';
 
 
     constructor(
@@ -60,6 +64,7 @@ export class RepresentativeProfilePage {
         private httpProvider: UsersProvider,
         private shareProvider: SocialShareProvider,
         public toastCtrl: ToastController,
+        private storage: Storage,
         private themeableBrowser: ThemeableBrowser,
         public actionSheetCtrl: ActionSheetController,
         public modalCtrl: ModalController) {
@@ -70,6 +75,15 @@ export class RepresentativeProfilePage {
                 this.user = user;
                 this.data.user_id = user.apiRallyID;
             });
+        this.storage.get('EMAIL').then((res) => {
+            this.userEmail = res;
+        });
+        this.storage.get('USER_PHONE').then((res) => {
+            this.userPhone = res || '';
+        });
+        this.storage.get('DISPLAYNAME').then((res) => {
+            this.userName = res;
+        });
     }
 
 
@@ -445,14 +459,12 @@ export class RepresentativeProfilePage {
             }
         }];
 
-
         if (fax) {
             buttonsArray.push(
                 {
                     text: 'Fax',
                     handler: () => {
-                        console.log('Fax clicked');
-                        this.navCtrl.push(FaxFeedBackPage, {iframeUrl: fax, repID: repID});
+                        this.doFax();
                     }
                 }
             );
@@ -463,11 +475,7 @@ export class RepresentativeProfilePage {
                 {
                     text: 'Email',
                     handler: () => {
-                        console.log('Email clicked');
-                        // this.data.title = 'email';
-                        // this.data.action_type_id = 'f9b53bc8-9847-4699-b897-521d8e1a34bb';
-                        // this.httpProvider.addAction(this.favEndpoint, this.data);
-                        this.navCtrl.push(EmailFeedBackPage, {iframeUrl: email, repID: repID});
+                        this.doEmail();
                     }
                 }
             )
@@ -505,6 +513,162 @@ export class RepresentativeProfilePage {
             buttons: buttonsArray
         });
         actionSheet.present();
+    }
+
+    doEmail() {
+        console.log('this.representative.contact_form');
+        console.log(this.representative.contact_form);
+        const options = constants.themeAbleOptions;
+        const browser = this.themeableBrowser.create(this.representative.contact_form, '_blank', options);
+
+        browser.on("loadstop")
+            .subscribe(
+                () => {
+                    browser.executeScript({
+                        code: 'document.body.style.paddingTop = "50px"'
+                    })
+                },
+                err => {
+                    console.log("InAppBrowser Loadstop Event Error: " + err);
+                });
+
+        browser.on('closePressed').subscribe(data => {
+            browser.close();
+            this.emailFeedback();
+        })
+    }
+
+    emailFeedback() {
+        let modal = this.modalCtrl.create('FeedbackModalComponent', {rows: constants.feedbackEmailRows});
+        modal.onDidDismiss((data) => {
+            switch (data.actionId) {
+                case 1: {
+                    this.streakEmailModal();
+                    this.addEmailAction();
+                }
+                    break;
+
+                case 2: {
+                    this.errorModal();
+                }
+            }
+        });
+        modal.present();
+    }
+
+    streakEmailModal() {
+        let repTitle = this.representative.rep_type === 'sen' ? 'senator' : 'representative';
+        let data = {
+            titleForShare: `I used Rally to email ${repTitle} ${this.representative.name}`,
+            imgURI: this.representative.photo_url
+        };
+
+        let modal = this.modalCtrl.create(ThankYouPage, data);
+        modal.present();
+    }
+
+    addEmailAction() {
+        let data = {
+            representative_id: this.repID,
+            action_type_id: 'f9b53bc8-9847-4699-b897-521d8e1a34bb',
+            title: 'email',
+            user_id: this.currentRallyID
+        };
+        this.httpProvider.addAction('actions', data);
+    }
+
+    doFax() {
+        console.log('this.representative.fax_url');
+        console.log(this.representative.fax_url);
+        const options = constants.themeAbleOptions;
+        const that = this;
+        const browser = this.themeableBrowser.create(this.representative.fax_url, '_blank', options);
+
+        browser.on("loadstop")
+            .subscribe(
+                () => {
+                    browser.insertCss({
+                        code: "body, html {padding-top: 20px!important;} header .rn-ipm5af{top: 16px !important; margin-top: 0 !important;} main{overflow:hidden}"
+                    });
+
+                    if (this.representative.fax_url.indexOf('https://faxzero.com/') !== -1) {
+                        browser.executeScript({
+                            code: 'document.getElementById("input-fax_s_name").value = "' + that.userName + '";' +
+                            ' document.getElementById("input-fax_s_email").value = "' + that.userEmail + '";' +
+                            ' document.getElementById("input-fax_s_phone").value = "' + that.userPhone + '";' +
+                            ' document.body.style.paddingTop = "50px"'
+                        }).then((r) => {
+                        }).catch((err) => {
+                            console.log('EXECUTE ERROR');
+                            console.log(err);
+                        })
+                    }
+                },
+                err => {
+                    console.log("InAppBrowser Loadstop Event Error: " + err);
+                });
+
+        browser.on('closePressed').subscribe(data => {
+            browser.close();
+            this.faxFeedback();
+        })
+    }
+
+    faxFeedback() {
+        let modal = this.modalCtrl.create('FeedbackModalComponent', {rows: constants.feedbackFaxRows});
+        modal.onDidDismiss((data) => {
+            switch (data.actionId) {
+                case 1: {
+                    this.streakFaxModal();
+                    this.addAction();
+                }
+                    break;
+
+                case 2: {
+                    this.errorModal();
+                }
+            }
+        });
+        modal.present();
+    }
+
+    streakFaxModal() {
+        let repTitle = this.representative.rep_type === 'sen' ? 'senator' : 'representative';
+        let data = {
+            titleForShare: `I used Rally to fax ${repTitle} ${this.representative.name}`,
+            imgURI: this.representative.photo_url
+        };
+
+        let modal = this.modalCtrl.create(ThankYouPage, data);
+        modal.present();
+    }
+
+    addAction() {
+        let data = {
+            representative_id: this.repID,
+            action_type_id: 'ad3ef19b-d809-45b7-bef2-d470c9af0d1d',
+            title: 'fax',
+            user_id: this.currentRallyID
+        };
+        this.httpProvider.addAction('actions', data);
+    }
+
+    errorModal() {
+        let modal = this.modalCtrl.create(IssueScreenPage);
+        modal.onDidDismiss((val) => {
+            let params = {
+                animate: true,
+                animation: 'transition',
+                duration: 500,
+                direction: 'back'
+            };
+
+            if (!val || !val.close) {
+                this.navCtrl.popTo(this.navCtrl.getByIndex(0), params);
+                this.navCtrl.parent.select(0);
+            }
+        });
+        modal.present();
     }
 
 }

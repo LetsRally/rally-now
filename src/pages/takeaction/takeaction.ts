@@ -1,4 +1,4 @@
-import {Component, Sanitizer} from '@angular/core';
+import {Component} from '@angular/core';
 import {
     IonicPage,
     NavController,
@@ -19,16 +19,16 @@ import {OrganizationProfilePage} from '../organization-profile/organization-prof
 import {OrganizationActionPage} from '../organization-action/organization-action';
 import {AngularFireDatabase} from 'angularfire2/database';
 import {SocialShareProvider} from '../../providers/social-share/social-share';
-import {SignFeedBackPage} from '../sign-feed-back/sign-feed-back';
 import {ThanksPage} from '../thanks/thanks';
 import {DomSanitizer} from '@angular/platform-browser';
 import {OrganizationsProvider} from '../../providers/organizations/organizations';
-import {DonateFeedBackPage} from '../donate-feed-back/donate-feed-back';
 import {FriendsRequestPage} from '../friends-request/friends-request';
 import {Storage} from '@ionic/storage';
 import {DataProvider} from "../../providers/data/data";
 import {ThemeableBrowser, ThemeableBrowserObject} from "@ionic-native/themeable-browser";
 import * as constants from '../../constants/constants';
+import {ThankYouPage} from "../thank-you/thank-you";
+import {IssueScreenPage} from "../issue-screen/issue-screen";
 
 
 @IonicPage()
@@ -125,7 +125,7 @@ export class TakeactionPage {
     openWebpage(url?, target?) {
         return new Promise((resolve, reject) => {
             let options = constants.themeAbleOptions;
-            if(!target) {
+            if (!target) {
                 target = '_blank';
             }
             const browser: ThemeableBrowserObject = this.themeAbleBrowser.create(url, target, options);
@@ -181,11 +181,6 @@ export class TakeactionPage {
         }, 2000);
     }
 
-
-    ionViewDidLoad() {
-        console.log('ionViewDidLoad TakeactionPage');
-    }
-
     goToHome() {
         this.navCtrl.setRoot(FeedPage, {}, {
             animate: true,
@@ -226,9 +221,6 @@ export class TakeactionPage {
                 this.enablePlaceholder = false;
                 this.loader = false;
                 this.addListeners();
-                console.log("Objectives", JSON.stringify(result));
-                console.log('===============');
-                console.log(result);
             },
             err => {
                 console.error("Error : " + err);
@@ -259,34 +251,105 @@ export class TakeactionPage {
                 repID: repID,
                 goalID: goalID,
                 imgURI: imgURI,
-                titleForShare: title
+                titleForShare: title,
+                title: 'sign',
+                action_type_id: '73637819-9571-4070-9162-abf41fc50c71'
             };
-            this.navCtrl.push(SignFeedBackPage, params, {
-                animate: true,
-                animation: 'transition',
-                duration: 500,
-                direction: 'forward'
-            });
+            this.sign(params);
         } else if (goal_type === 'donate') {
             let params = {
                 iframeUrl: source,
                 repID: repID,
                 goalID: goalID,
                 imgURI: imgURI,
-                titleForShare: title
+                titleForShare: title,
+                title: 'donat',
+                action_type_id: '500f35fc-9338-4f1d-bdc8-13302afa33e7'
             };
-            this.openWebpage(source, '_system')
-                .then(() => {
-                    this.navCtrl.push(DonateFeedBackPage, params, {
-                        animate: true,
-                        animation: 'transition',
-                        duration: 500,
-                        direction: 'forward'
-                    });
-                }, err => {
-                    console.log(err);
-                })
+            this.donate(params);
         }
+    }
+
+    donate(params) {
+        let options = constants.themeAbleOptions;
+        const browser = this.themeAbleBrowser.create(params.iframeUrl, '_system', options);
+
+        setTimeout(() => {
+            let modal = this.modalCtrl.create('FeedbackModalComponent', {rows: constants.feedbackDonateRows});
+            modal.onDidDismiss((data) => {
+                switch (data.actionId) {
+                    case 1: {
+                        this.streakSignModal(params);
+                        this.addAction(params);
+                    }
+                        break;
+
+                    case 2: {
+                        this.errorSignModal();
+                    }
+                }
+            });
+            modal.present();
+        }, 2000);
+    }
+
+    sign(params) {
+        const options = constants.themeAbleOptions;
+        const browser = this.themeAbleBrowser.create(params.iframeUrl, '_blank', options);
+
+        browser.on("loadstop")
+            .subscribe(
+                (data) => {
+                    browser.executeScript({
+                        code: 'document.body.style.paddingTop = "50px"'
+                    })
+                },
+                err => {
+                    console.log("InAppBrowser Loadstop Event Error: " + err);
+                });
+        browser.on('closePressed').subscribe(data => {
+            browser.close();
+            let modal = this.modalCtrl.create('FeedbackModalComponent', {rows: constants.feedbackSignRows});
+            modal.onDidDismiss((data) => {
+                switch (data.actionId) {
+                    case 1: {
+                        this.streakSignModal(params);
+                        this.addAction(params);
+                    }
+                    break;
+
+                    case 2: {
+                        this.errorSignModal();
+                    }
+                }
+            });
+            modal.present();
+        })
+    }
+
+    errorSignModal() {
+        let modal = this.modalCtrl.create(IssueScreenPage);
+        modal.present();
+    }
+
+    addAction(params) {
+        let data = {
+            goal_id: params.goalID,
+            representative_id: params.repID,
+            action_type_id: params.action_type_id,
+            title: params.title,
+            user_id: this.myrallyID
+        };
+        this.httpProvider.addAction('actions', data);
+    }
+
+    streakSignModal(params) {
+        let data = {
+            imgURI: params.imgURI,
+            titleForShare: params.titleForShare
+        };
+        let modal = this.modalCtrl.create(ThankYouPage, data);
+        modal.present();
     }
 
 

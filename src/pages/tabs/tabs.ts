@@ -100,6 +100,8 @@ export class TabsPage {
     this.events.publish('home:scrollToTop', Date.now() );
 }
 
-  
+  swithToCTA() {
+    this.navCtrl.setRoot(TakeactionPage);
+  }
 
 }

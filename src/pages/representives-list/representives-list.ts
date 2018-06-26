@@ -172,7 +172,7 @@ export class RepresentivesListPage {
       unFollowActionSheet(representativeID, el, name) {
         
       let actionSheet = this.actionSheetCtrl.create({
-        title: 'Unfollow ${name}?' ,
+        title: `Unfollow ${name}?` ,
         cssClass: 'title-img',      
         buttons: [
           {
