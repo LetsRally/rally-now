@@ -180,8 +180,13 @@
                         <ion-avatar item-start (click)="goToEventDetail(event.id)">
                             <img src="{{event.image_url}}" style="width: 70px; height: 70px;">
                         </ion-avatar>
-                        <button (click)="goToEventDetail(event.id)" style="background: none;"><h2 text-wrap>
-                            {{event.title}}</h2></button>
+                        <button (click)="goToEventDetail(event.id)"
+                                class="event-text-box"
+                                style="background: none;">
+                            <h2 text-wrap>{{event.title}}</h2>
+                            <p class="event-title">{{event.start_date}} {{event.end_date}} • {{event.venue}}</p>
+                            <p class="event-org-name">{{event.organization.name}}</p>
+                        </button>
                     </ion-item>
                 </div>
             </div>

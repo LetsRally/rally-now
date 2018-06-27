@@ -85,7 +85,7 @@
     <!-- <div *ngIf="searching" class="spinner-container">
         <ion-spinner></ion-spinner>
     </div> -->
-    <div *ngIf="events.length < 1 && !enablePlaceholder" class="flex-center">
+    <div *ngIf="events.length < 1 && !enablePlaceholder && !loader" class="flex-center">
         <p>Sorry, no results matched your criteria</p>
     </div>
 

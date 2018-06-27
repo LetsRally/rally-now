@@ -1,9 +1,9 @@
 rally-header {
   ion-item {
-    padding-left: 0!important;
+    padding-left: 0 !important;
   }
   .item-inner {
-    padding-right: 0!important;
+    padding-right: 0 !important;
   }
 
   background: #fff !important;
@@ -36,7 +36,9 @@ rally-header {
     font-weight: 600;
     font-size: 11px;
   }
-
+  .event-text-box {
+    text-align: left;
+  }
 }
 
 .swipeable-segment {
@@ -74,7 +76,7 @@ rally-header {
 }
 
 .searchbar-input::placeholder, .searchbar-search-icon, .searchbar-ios .searchbar-search-icon {
-  color: #fff!important;
+  color: #fff !important;
 }
 
 .flex-center {
@@ -100,6 +102,6 @@ rally-header {
 }
 
 .rally-search {
-  padding-left: 10px!important;
-  padding-right: 10px!important;
+  padding-left: 10px !important;
+  padding-right: 10px !important;
 }

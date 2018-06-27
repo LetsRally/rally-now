@@ -101,7 +101,7 @@ export class EventDetailPage {
                 this.organization_id = result.organization_id;
                 this.followers = result.organization.followers;
                 this.state = result.state;
-                this.venue = result.venue;
+                this.venue = result.venue || 'Unlisted';
                 this.fbID = result.facebook_id;
                 this.end_date = result.end_date;
                 this.notify = result.organization.notify;
@@ -427,10 +427,17 @@ export class EventDetailPage {
 
         if (this.start_date != null) {
             var time = this.start_date.split("T");
-            let bothTime = time[1].split("-");
+            let bothTime;
+            if(time[1].indexOf('+') !== -1) {
+                bothTime = time[1].split("+");
+            } else {
+                bothTime = time[1].split("-");
+            }
             console.log("Hora", bothTime);
             var startTime = this.tConvert(bothTime[0]);
             this.eventTime = startTime;
+            console.log('START TIME');
+            console.log(startTime);
         } else {
             this.eventTime = 'No specific time';
         }
@@ -441,10 +448,17 @@ export class EventDetailPage {
 
         if (this.end_date != null) {
             var time = this.end_date.split("T");
-            let endDate = time[1].split("-");
+            let endDate;
+            if(time[1].indexOf('+') !== -1) {
+                endDate = time[1].split("+");
+            } else {
+                endDate = time[1].split("-");
+            }
             console.log("Hora", endDate);
             var startTime = this.tConvert(endDate[0]);
             this.eventEndTime = "- " + startTime;
+            console.log('END TIME');
+            console.log(startTime);
         }
 
     }

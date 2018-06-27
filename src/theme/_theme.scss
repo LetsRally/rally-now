@@ -291,6 +291,9 @@ ion-searchbar {
   font-size: 18px !important;
   letter-spacing: -0.43px;
   font-weight: 600;
+  color: #f2f2f2!important;
+  width: 100%;
+  max-width: 335px;
 }
 
 .transparent-button {
@@ -312,6 +315,7 @@ ion-searchbar {
   font-weight: 600;
   font-size: 18px;
   width: 100%;
+  max-width: 335px;
 }
 
 .middle-gray-button {

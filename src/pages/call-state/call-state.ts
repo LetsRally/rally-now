@@ -75,7 +75,7 @@ export class CallStatePage {
             this.data.user_id = user.apiRallyID;
             this.user = user;
         });
-        this.showCallAlert(this.rep.offices[0].phone);
+        this.showCallAlert(this.rep.phone);
 
         this.setPhonesArray(this.offices);
         this.getYourRepsAndSen();

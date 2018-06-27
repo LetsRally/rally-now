@@ -54,12 +54,12 @@
         <ion-list>
             <div class="text-wrap" padding [innerHTML]="formattedDescription"></div>
         </ion-list>
-        <button (click)="openWebpage()" class="count-me-in" ion-button full icon-left>
-            <ion-icon ios="md-thumbs-up" md="md-thumbs-up"></ion-icon>
-            RSVP on Facebook
-        </button>
-
-
+        <div class="button-container">
+            <button (click)="openWebpage()" class="large-blue-button" icon-left>
+                <ion-icon ios="md-thumbs-up" md="md-thumbs-up"></ion-icon>
+                RSVP on Facebook
+            </button>
+        </div>
     </ion-card>
     <div style="height: 60px;"></div>
 </ion-content>

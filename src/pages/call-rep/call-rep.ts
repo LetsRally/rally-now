@@ -67,7 +67,6 @@ export class CallRepPage {
         });
         this.user = navParams.get('user');
         this.isRep = this.rep.title === 'representative';
-
         this.showCallAlert(this.rep.phone);
         this.setPhonesArray(this.offices);
     }

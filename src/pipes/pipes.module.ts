@@ -1,8 +1,11 @@
 import { NgModule } from '@angular/core';
 import { CapitalizePipe } from './../pipes/capitalize/capitalize';
+import { DateTransformPipe } from './../pipes/date-transform/date-transform';
 @NgModule({
-	declarations: [CapitalizePipe],
+	declarations: [CapitalizePipe,
+    DateTransformPipe],
 	imports: [],
-	exports: [CapitalizePipe]
+	exports: [CapitalizePipe,
+    DateTransformPipe]
 })
 export class PipesModule {}
