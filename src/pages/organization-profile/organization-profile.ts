@@ -551,19 +551,24 @@ export class OrganizationProfilePage {
         this.navCtrl.push(OrganizationFollowersPage, {orgID: this.organizationID});
     }
 
-    tweetOrg(username) {
-        this.shareProvider.twitterShare(username)
-            .then((res) => {
-                console.log('twitter shared');
-                console.log(res);
-            }, err => {
-                console.log('Twitter error');
-                console.log(err);
-            })
-            .catch((err) => {
-                console.log('Twitter catch error');
-                console.log(err);
-            });
+    tweetOrg(link) {
+        const options = constants.themeAbleOptions;
+        const browser = this.themeableBrowser.create(link, '_blank', options);
+
+        browser.on("loadstop")
+            .subscribe(
+                () => {
+                    browser.executeScript({
+                        code: 'document.body.style.paddingTop = "50px"'
+                    })
+                },
+                err => {
+                    console.log("InAppBrowser Loadstop Event Error: " + err);
+                });
+
+        browser.on('closePressed').subscribe(data => {
+            browser.close();
+        })
     }
 
     getOrganizationFollowStatus(actions) {

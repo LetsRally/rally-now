@@ -3,7 +3,9 @@
 <ion-content>
     <ion-row padding style="padding-bottom: 0; background: #fff;">
         <ion-col col-5 class="profile-headshot">
-            <ion-avatar item-start class="profile-img">
+            <ion-avatar item-start
+                        (click)="showPhotoViewer(photo_url ? photo_url : 'assets/img/user.svg')"
+                        class="profile-img">
                 <img [src]="photo_url ? photo_url : 'assets/img/user.svg' ">
             </ion-avatar>
 
@@ -36,7 +38,7 @@
         <ion-col col-12 style="padding:0;">
             <p class="rep-twitter"
                *ngIf="twitter_id && twitter_id !== '' && twitter_id !== 'not available'"
-               (click)="tweetRep(twitter_id)">
+               (click)="tweetRep(twitter_link)">
                 <ion-icon style="color: #2196F3" name="logo-twitter"></ion-icon>
                 @{{twitter_id}}
             </p>

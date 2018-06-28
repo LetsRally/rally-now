@@ -10,7 +10,7 @@ import {OrganizationsProvider} from '../../providers/organizations/organizations
 import {PublicProfilePage} from '../public-profile/public-profile';
 import {OrganizationProfilePage} from '../organization-profile/organization-profile';
 import {RepresentativeProfilePage} from '../representative-profile/representative-profile';
-import {DomSanitizer} from '@angular/platform-browser';
+import { Storage } from '@ionic/storage';
 
 
 @IonicPage()
@@ -21,17 +21,17 @@ import {DomSanitizer} from '@angular/platform-browser';
 export class FollowedOrganizationsPage {
     endpoint: any = 'following/';
     currentApiID: any;
-    organizations: any;
+    organizations = [];
     items: any;
     loading: any;
-    users: any;
-    reps: any;
+    users = [];
+    reps = [];
     safeSvg: any;
-    organizationEndpoint: any = 'following_organizations';
-    followEndpoint: any = 'following_representative';
-    followUserEndpoint: string = 'following_users';
-    enablePlaceholder: boolean = true;
-    testPhoto:any = 'assets/img/event.png';
+    organizationEndpoint = 'following_organizations';
+    followEndpoint = 'following_representative';
+    followUserEndpoint = 'following_users';
+    enablePlaceholder = false;
+    testPhoto = 'assets/img/event.png';
 
 
     constructor(public navCtrl: NavController,
@@ -41,20 +41,24 @@ export class FollowedOrganizationsPage {
                 private modalCtrl: ModalController,
                 public loadingCtrl: LoadingController,
                 private orgProvider: OrganizationsProvider,
-                private sanitizer: DomSanitizer) {
+                private storage: Storage) {
 
 
     }
 
     ionViewDidEnter() {
-        this.enablePlaceholder = true;
-        this.organizations = [];
-        this.users = [];
-        this.reps = [];
+        this.storage.get('followedItemsFromProfile').then((data) => {
+            console.log('000000000');
+            console.log(data);
+            if(!data) {
+                this.getOrganizations();
+            } else {
+                this.setDataFromStorage(data);
+            }
+        });
         this.httpProvider.returnRallyUserId().then(
             user => {
                 this.currentApiID = user.apiRallyID;
-                this.getOrganizations();
             }
         );
     }
@@ -63,19 +67,33 @@ export class FollowedOrganizationsPage {
         console.log('ionViewDidLoad FollowedOrganizationsPage');
     }
 
+    setDataFromStorage(data) {
+        this.organizations = data['organizations'];
+        this.users = data['users'];
+        this.reps = data['reps'];
+    }
+
     getOrganizations() {
+        this.enablePlaceholder = true;
         this.orgProvider.getJsonData(this.endpoint + this.currentApiID)
             .subscribe(
                 result => {
-                    console.log(result);
                     this.organizations = result['organizations'];
                     this.users = result['users'];
                     this.reps = result['reps'];
-                    // this.initializeItems();
-                    //this.loading.dismiss();
                     this.enablePlaceholder = false;
+                    this.setStorage();
                 }
             );
+    }
+
+    setStorage() {
+        let data = {
+            organizations: this.organizations,
+            users: this.users,
+            reps: this.reps
+        };
+        this.storage.set('followedItemsFromProfile', data);
     }
 
     initializeItems() {

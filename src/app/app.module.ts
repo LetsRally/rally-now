@@ -116,6 +116,7 @@ import {ThemeableBrowser} from "@ionic-native/themeable-browser";
 import {GoogleAutocompleteComponent} from "../components/google-autocomplete/google-autocomplete";
 import {GooglePlus} from "@ionic-native/google-plus";
 import * as configs from "../configs/config";
+import {PipesModule} from "../pipes/pipes.module";
 
 
 //import { FCM } from '@ionic-native/fcm';
@@ -238,6 +239,7 @@ firebase.initializeApp(config);
     ],
     imports: [
         BrowserModule,
+        PipesModule,
         IonicModule.forRoot(MyApp, {
             backButtonText: 'Back',
             backButtonIcon: 'my-back-button',

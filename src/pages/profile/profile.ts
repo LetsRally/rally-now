@@ -98,9 +98,6 @@ export class ProfilePage {
         private shareProvider: SocialShareProvider,
         private facebook: Facebook
     ) {
-        this.httpProvider.returnRallyUserId().then(user => {
-            this.myRallyID = user.apiRallyID;
-        });
     }
 
 

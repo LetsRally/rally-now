@@ -79,4 +79,7 @@ page-filter-events {
     .scroll-content {
         padding-bottom: 0!important;
     }
+    .large-white-button[disabled] {
+        color: rgba(41,111,183,0.40);
+    }
 }

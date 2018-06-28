@@ -6,13 +6,15 @@
 
     <ion-row padding style="padding-bottom: 0; background: #fff;">
         <ion-col col-4 class="profile-headshot">
-            <ion-avatar item-start class="profile-img">
+            <ion-avatar item-start
+                        (click)="showPhotoViewer(data?.image_url ? data?.image_url : testPhoto)"
+                        class="profile-img">
                 <img [src]="data?.image_url ? data?.image_url : testPhoto">
             </ion-avatar>
 
         </ion-col>
         <ion-col col-8 class="profile-counts">
-            <ion-row>
+            <ion-row *ngIf="posts && +posts > 0">
                 <ion-col>
                     <h4>{{posts}}</h4>
                     <p class="small">Posts</p>
@@ -24,7 +26,7 @@
                 </ion-col>
 
             </ion-row>
-            <ion-row>
+            <ion-row *ngIf="posts && +posts > 0">
                 <button *ngIf="login" [ngClass]="!isFollowing ? 'middle-blue-button' : 'middle-blue-button following'"
                              (click)="addFollowRecordFirebase(dataID)"
                              outline>{{buttonFollowTest}}</button>
@@ -35,7 +37,7 @@
             <h4 text-wrap class="username-h4">{{name}}</h4>
         </ion-col>
         <ion-col col-6 style="padding:0;">
-            <p style="margin:0; color: gray;" *ngIf="twitter != null" (click)="tweetOrg('@' + twitter)">
+            <p style="margin:0; color: gray;" *ngIf="twitter != null" (click)="tweetOrg('https://twitter.com/' + twitter)">
                 <ion-icon style="color: #2196F3" name="logo-twitter"></ion-icon>
                 @{{twitter}}
             </p>
@@ -47,7 +49,7 @@
         <ion-col col-12>
             <p text-wrap style="margin-top: 0;">{{description}}</p>
         </ion-col>
-        <ion-col col-12>
+        <ion-col col-12  *ngIf="posts && +posts > 0">
             <p style="color: gray;">ACTIVITY FEED</p>
         </ion-col>
 

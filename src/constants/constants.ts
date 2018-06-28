@@ -90,7 +90,7 @@ export const feedbackRows = [
 export const feedbackSignRows = [
     {
         id: 1,
-        text: 'Signed petition'
+        text: 'I signed'
     },
     {
         id: 2,

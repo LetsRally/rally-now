@@ -17,6 +17,7 @@ import {CallStatePage} from "../call-state/call-state";
 import {ThankYouPage} from "../thank-you/thank-you";
 import {Storage} from '@ionic/storage';
 import {IssueScreenPage} from "../issue-screen/issue-screen";
+import {PhotoViewer} from "@ionic-native/photo-viewer";
 
 
 @IonicPage()
@@ -36,6 +37,7 @@ export class RepresentativeProfilePage {
     endpoint: any = 'reps/';
     name: any;
     twitter_id: any;
+    twitter_link: any;
     followers_count: any;
     description: any;
     photo_url: any;
@@ -65,6 +67,7 @@ export class RepresentativeProfilePage {
         private shareProvider: SocialShareProvider,
         public toastCtrl: ToastController,
         private storage: Storage,
+        private photoViewer: PhotoViewer,
         private themeableBrowser: ThemeableBrowser,
         public actionSheetCtrl: ActionSheetController,
         public modalCtrl: ModalController) {
@@ -93,6 +96,7 @@ export class RepresentativeProfilePage {
             this.representative = result;
             this.name = result.name;
             this.twitter_id = result.twitter_id;
+            this.twitter_link = result.twitter_link;
             this.followers_count = result.followers_count;
             this.description = result.description;
             this.photo_url = result.photo_url;
@@ -109,6 +113,10 @@ export class RepresentativeProfilePage {
 
             });
         });
+    }
+
+    showPhotoViewer(path) {
+        this.photoViewer.show(path);
     }
 
     getLikeStatus($event, reference_id, like_type, likes) {
@@ -166,8 +174,24 @@ export class RepresentativeProfilePage {
 
     }
 
-    tweetRep(username) {
-        this.shareProvider.twitterShare(username);
+    tweetRep(link) {
+        const options = constants.themeAbleOptions;
+        const browser = this.themeableBrowser.create(link, '_blank', options);
+
+        browser.on("loadstop")
+            .subscribe(
+                () => {
+                    browser.executeScript({
+                        code: 'document.body.style.paddingTop = "50px"'
+                    })
+                },
+                err => {
+                    console.log("InAppBrowser Loadstop Event Error: " + err);
+                });
+
+        browser.on('closePressed').subscribe(data => {
+            browser.close();
+        })
     }
 
 

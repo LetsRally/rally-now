@@ -80,7 +80,7 @@
             </div>
         </div>
 
-        <ion-list padding-horizontal>
+        <ion-list padding-horizontal class="search-list">
             <div *ngIf="currentTabName === 'all'">
                 <div class="flex-center"
                      *ngIf="!actions.length && !users.length && !organizations.length && !reps.length && !events.length && !enablePlaceholder">
@@ -184,7 +184,7 @@
                                 class="event-text-box"
                                 style="background: none;">
                             <h2 text-wrap>{{event.title}}</h2>
-                            <p class="event-title">{{event.start_date}} {{event.end_date}} • {{event.venue}}</p>
+                            <p class="event-title">{{event.start_date | dateTransform}} - {{event.end_date | dateTransform}} • {{event.venue}}</p>
                             <p class="event-org-name">{{event.organization.name}}</p>
                         </button>
                     </ion-item>

@@ -85,7 +85,7 @@
                 </ion-item>
                 <div *ngIf="secondToggleBtn">
                     <div *ngFor="let action of actions">
-                        <ion-item *ngIf="action.name !== 'Share'">{{action.name}} <span item-end>{{action.count}}</span>
+                        <ion-item *ngIf="action.name !== 'Share'">{{action.name === 'Contact' ? 'Call' : action.name}} <span item-end>{{action.count}}</span>
                         </ion-item>
                     </div>
 

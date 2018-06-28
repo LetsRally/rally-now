@@ -17,8 +17,9 @@ page-edit-profile {
         border-radius: 50%;
         overflow: hidden;
         img{
-            height: 120px;
-            width: auto;
+            height: 100%;
+            width: 100%;
+            margin: 0;
         }
     }
     ion-item.item.item-block {

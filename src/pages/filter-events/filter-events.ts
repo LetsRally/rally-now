@@ -19,13 +19,11 @@ export class FilterEventsPage {
     endpoint: any = 'events/';
     enable: boolean = false;
     text: any;
-    home: boolean = false;
-    orgs: boolean = false;
-    events: boolean = false;
     disable: boolean = true;
-    public disableButton = false;
+    public disableButton = true;
     public disableRange = true;
     public errorEndDate = false;
+    private defaultFilterState = new FilterModel();
 
     constructor(
         public navCtrl: NavController,
@@ -38,17 +36,10 @@ export class FilterEventsPage {
     ) {
         this.filterState = new FilterModel();
         this.keyboard.hideKeyboardAccessoryBar(false);
+        this.getStorage('eventsFilterState');
 
-        if (this.navParams.get('location') === 'home') {
-            this.home = true;
-            this.getStorage('homeFilterState');
-        } else if (this.navParams.get('location') === 'orgs') {
-            this.orgs = true;
-            this.getStorage('orgsFilterState');
-        } else {
-            this.events = true;
-            this.getStorage('eventsFilterState');
-        }
+        this.defaultFilterState.timeStarts = this.dataService.getCurrentDate().currentDate;
+        this.defaultFilterState.timeEnds = this.dataService.getCurrentDate().nextYear;
     }
 
     getStorage(key) {
@@ -77,11 +68,12 @@ export class FilterEventsPage {
     }
 
     checkEndDate() {
-        if(new Date(this.filterState.timeEnds).getTime() < new Date(this.filterState.timeStarts).getTime()) {
+        if (new Date(this.filterState.timeEnds).getTime() < new Date(this.filterState.timeStarts).getTime()) {
             this.errorEndDate = true;
         } else {
             this.errorEndDate = false;
         }
+        this.checkStartFilterButtonState();
     }
 
     ionViewDidLoad() {
@@ -117,13 +109,14 @@ export class FilterEventsPage {
         else {
             this.text = this.filterState.distance + ' MILES';
         }
+        this.checkStartFilterButtonState();
     }
 
     checkZipCode(firstTime?) {
-        if(this.filterState.zipcode === '') {
+        if (this.filterState.zipcode === '') {
             this.invalidZip = false;
             this.disableRange = true;
-            this.disableButton = false;
+            this.checkStartFilterButtonState();
             return;
         }
         if (constants.virginZipCodes.indexOf(this.filterState.zipcode) === -1) {
@@ -131,26 +124,32 @@ export class FilterEventsPage {
                 .then((data) => {
                     if (data) {
                         this.invalidZip = false;
-                        this.disableButton = false;
                         this.disableRange = false;
                         this.getDistance();
                     } else {
                         this.invalidZip = true;
-                        this.disableButton = true;
                         this.disableRange = true;
                     }
+                    this.checkStartFilterButtonState();
                 }, (err) => {
                     console.log(err);
                 });
             this.invalidZip = true;
-            this.disableButton = true;
             this.disableRange = true;
+            this.checkStartFilterButtonState();
         } else {
             this.invalidZip = false;
-            this.disableButton = false;
             this.disableRange = false;
             this.getDistance();
         }
+    }
+
+    checkStartFilterButtonState() {
+        console.log('(ionSelect)="checkStartFilterButtonState()"');
+        console.log(JSON.stringify(this.defaultFilterState));
+        console.log(JSON.stringify(this.filterState));
+        this.disableButton = JSON.stringify(this.defaultFilterState) === JSON.stringify(this.filterState);
+        console.log(this.disableButton);
     }
 
     resetFilter() {

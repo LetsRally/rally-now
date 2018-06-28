@@ -38,6 +38,32 @@ rally-header {
   }
   .event-text-box {
     text-align: left;
+    padding-right: 0;
+    padding-left: 0;
+    width: 100%;
+    margin-top: 0;
+    margin-bottom: 0;
+    h2 {
+      white-space: normal;
+    }
+  }
+  .label {
+    margin-right: 0;
+  }
+  .event-title {
+    white-space: normal;
+  }
+  .event-org-name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .search-list {
+    .item {
+      align-items: flex-start;
+    }
+  }
+  ion-avatar {
+    margin-top: 16px!important;
   }
 }
 
