@@ -57,6 +57,7 @@ export class OrganizationProfilePage {
     notify: any;
     followersArr: any;
     isFollowing: boolean = false;
+    public currentTabName = 'events';
 
 
     constructor(

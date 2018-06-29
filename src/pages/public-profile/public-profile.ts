@@ -54,6 +54,7 @@ export class PublicProfilePage {
     favEndpoint: any = 'actions';
     shareAction: any = '875b4997-f4e0-4014-a808-2403e0cf24f0';
     username: any;
+    description = '';
     public records: any = [];
     status: boolean;
     amifollowing: boolean;
@@ -132,6 +133,7 @@ export class PublicProfilePage {
                 this.actions_taken = result.actions_taken;
                 this.followers_count = result.followers_count;
                 this.organizations_count = result.following_count;
+                this.description = result.description;
                 this.id = result.id;
                 this.getArray(result.Objectives_Actions);
                 this.getArray(result.Direct_Actions);

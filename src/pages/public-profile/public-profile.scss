@@ -48,21 +48,12 @@ page-public-profile {
         width: 80%;
     }
     .profile-img {
-        img {
-            border-radius: 50%;
-            height: 80px;
-            width: 80px;
-        }
-    }
-    .profile-counts {
-        text-align: center;
-
-        p.small {
-            margin: 0;
-            font-size: 12px;
-        }
+        width: 115px;
+        height: 115px;
     }
     .profile-headshot {
+        padding: 0;
+        margin-bottom: 15px;
         h4 {
             margin: 5px 0;
             font-size: 18px;
@@ -70,6 +61,53 @@ page-public-profile {
         p {
             margin: 0;
             font-size: 12px;
+        }
+
+        img{
+            border-radius: 50%;
+            width: 100%;
+            height: 100%;
+        }
+    }
+    .username-h4{
+        color: #2b2b2b;
+        font-family: 'SF UI Display'!important;
+        font-size: 34px;
+        font-weight: 700;
+        line-height: 1;
+        margin-top: 0;
+    }
+    .profile-counts {
+        text-align: center;
+        padding: 0;
+        margin-bottom: 15px;
+        .col {
+            padding-top: 0;
+        }
+        p.small {
+            margin: 0;
+            color: #6d6d72;
+            font-family: "SF UI Text"!important;
+            font-size: 13px;
+            font-weight: 400;
+            line-height: 18px;
+            letter-spacing: -0.08px;
+        }
+
+        h4{
+            color: #2b2b2b;
+            font-size: 20px;
+            font-weight: 600;
+            font-family: 'SF UI Text'!important;
+            font-style: normal;
+            margin-bottom: 0;
+        }
+
+        ion-col{
+            padding-bottom: 0;
+        }
+        .middle-blue-button {
+            margin-bottom: 8px;
         }
     }
     ion-card {
@@ -131,13 +169,6 @@ page-public-profile {
         letter-spacing: 1px;
     }
 
-    .profile-counts{
-        h4{
-            font-size: 30px;
-            font-weight: 200;
-        }
-    }
-
     .follow-btn{
         background: #356fba;
         color: #f2f2f2;
@@ -158,9 +189,36 @@ page-public-profile {
         font-weight: 600;
         letter-spacing: -0.36px;
     }
+    .rep-text {
+        color: #2b2b2b;
+        font-family: "SF UI Text"!important;
+        font-size: 12px;
+        font-weight: 400;
+        line-height: 16px!important;
+        margin-top: 0;
+        margin-bottom: 15px;
+    }
+
+    .rep-twitter {
+        color: #868686;
+        font-family: "SF UI Text"!important;
+        font-size: 12px;
+        font-weight: 400;
+        line-height: 1!important;
+        margin-top: 0;
+        margin-bottom: 12px;
+    }
 
     .item-md ion-avatar img,
         .item-ios ion-avatar img {
             border: 2px solid #f66240;
         }
+    .scroll-content {
+        .row:first-of-type {
+            padding-bottom: 0;
+        }
+    }
+    .no-padding {
+        padding: 0!important;
+    }
 }

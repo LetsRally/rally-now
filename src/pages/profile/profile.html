@@ -18,16 +18,16 @@
 
 <ion-content>
     <ion-row padding style="padding-bottom: 0;">
-        <ion-col col-4 class="profile-headshot">
+        <ion-col col-5 class="profile-headshot">
             <ion-avatar item-start class="profile-img">
                 <button ion-button transparent icon-only (click)="showPhotoViewer()"
                         style="background: transparent; height: auto;">
-                    <img src="{{user.photoURL}}">
+                    <img src="{{user.photoURL ? user.photoURL : 'assets/img/avatar.png'}}">
                 </button>
             </ion-avatar>
 
         </ion-col>
-        <ion-col col-8 class="profile-counts">
+        <ion-col col-7 class="profile-counts">
             <ion-row>
                 <ion-col>
                     <h4><a href="#actions">{{user.actions_taken}}</a></h4>
@@ -43,7 +43,10 @@
                 </ion-col>
             </ion-row>
             <ion-row>
-                <main-button class="light-grey" (click)="getReps()" outline btnText="My Representatives"></main-button>
+                <button class="middle-gray-button border"
+                        (click)="getReps()">My Representatives</button>
+                <button class="middle-gray-button border"
+                        (click)="goToEditProfile()">EDIT PROFILE</button>
             </ion-row>
 
         </ion-col>
@@ -53,7 +56,7 @@
         </ion-col>
 
         <ion-col col-12>
-            <p text-wrap style="margin-top: 0;">{{user.description}}</p>
+            <p text-wrap class="rep-text">{{user.description}}</p>
         </ion-col>
 
     </ion-row>
