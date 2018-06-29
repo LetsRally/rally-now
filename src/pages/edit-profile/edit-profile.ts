@@ -121,13 +121,13 @@ export class EditProfilePage {
      }
 
      getCoordinates(address) {
-        const self = this;
-        this.nativeGeocoder.forwardGeocode(address)
-            .then((coordinates: NativeGeocoderForwardResult) => {
-                self.user.lat = coordinates.latitude;
-                self.user.lon = coordinates.longitude;
-            })
-            .catch((error: any) => console.log(error));
+        // const self = this;
+        // this.nativeGeocoder.forwardGeocode(address)
+        //     .then((coordinates: NativeGeocoderForwardResult) => {
+        //         self.user.lat = coordinates.latitude;
+        //         self.user.lon = coordinates.longitude;
+        //     })
+        //     .catch((error: any) => console.log(error));
      }
 
 

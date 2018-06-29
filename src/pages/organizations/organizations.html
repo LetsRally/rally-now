@@ -135,7 +135,7 @@
                             </button>
                         </ion-fab>
                         <ion-avatar item-start>
-                            <img [src]="record.organization['image_url'] ? record.organization['image_url'] : 'assets/img/org_icon.svg'" (click)="goToOrganizationProfile(record.organization_id)">
+                            <img [src]="record.organization['image_url'] ? record.organization['image_url'] : 'assets/img/event.png'" (click)="goToOrganizationProfile(record.organization_id)">
                         </ion-avatar>
                         <div class="item-heading" (click)="goToOrganizationProfile(record.organization_id)">
                          <h2> <small>via</small> {{record.organization['name']}}</h2>
@@ -203,7 +203,7 @@
                                 </button>
                             </ion-fab>
                             <ion-avatar item-start>
-                                <img [src]="record.organization[0].image_url ? record.organization[0].image_url  : 'assets/img/org_icon.svg'" (click)="goToOrganizationProfile(record.organization_id)">
+                                <img [src]="record.organization[0].image_url ? record.organization[0].image_url  : 'assets/img/event.png'" (click)="goToOrganizationProfile(record.organization_id)">
                             </ion-avatar>
                             <div class="item-heading" (click)="goToOrganizationProfile(record.organization_id)">
                                 <h2 text-wrap> <small>via</small> {{record.organization[0].name}}</h2>

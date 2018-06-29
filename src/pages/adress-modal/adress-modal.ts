@@ -51,15 +51,15 @@ export class AdressModalPage {
     }
 
     public getLocation() {
-        console.log('SEARCH ADDRESS');
-        let options = {};
-        this.nativeGeocoder.forwardGeocode(this.searchTerm)
-            .then((coordinates: NativeGeocoderForwardResult) => {
-
-                console.log(this.searchTerm);
-                this.saveReps(coordinates.latitude, coordinates.longitude);
-            })
-            .catch((error: any) => console.log(error));
+        // console.log('SEARCH ADDRESS');
+        // let options = {};
+        // this.nativeGeocoder.forwardGeocode(this.searchTerm)
+        //     .then((coordinates: NativeGeocoderForwardResult) => {
+		//
+        //         console.log(this.searchTerm);
+        //         this.saveReps(coordinates.latitude, coordinates.longitude);
+        //     })
+        //     .catch((error: any) => console.log(error));
     }
 
 

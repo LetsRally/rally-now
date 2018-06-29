@@ -230,9 +230,10 @@ page-organization-profile {
             font-size: 12px;
         }
 
-        img{
-            border-radius: 50%;
+        img {
             width: 100%;
+            border-radius: 50%;
+            border: 2px solid #b6b6b6;
         }
     }
     .profile-counts {

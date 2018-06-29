@@ -26,7 +26,7 @@ import * as constants from '../../constants/constants';
     templateUrl: 'organization-profile.html',
 })
 export class OrganizationProfilePage {
-    testPhoto: any = 'assets/img/event.png';
+    testPhoto: any = 'assets/img/event.svg';
     organizationID: string;
     endpoint: string = 'organization/';
     name: string;

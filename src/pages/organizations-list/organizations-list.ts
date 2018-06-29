@@ -25,7 +25,7 @@ import {Keyboard} from "@ionic-native/keyboard";
     templateUrl: 'organizations-list.html',
 })
 export class OrganizationsListPage {
-    testPhoto:any = 'assets/img/event.png';
+    testPhoto:any = 'assets/img/event.svg';
     endpoint: any = 'organizations';
     public organizations: any = [];
     public enableInfiniteScroll = true;
