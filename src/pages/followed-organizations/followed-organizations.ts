@@ -10,7 +10,7 @@ import {OrganizationsProvider} from '../../providers/organizations/organizations
 import {PublicProfilePage} from '../public-profile/public-profile';
 import {OrganizationProfilePage} from '../organization-profile/organization-profile';
 import {RepresentativeProfilePage} from '../representative-profile/representative-profile';
-import { Storage } from '@ionic/storage';
+import {Storage} from '@ionic/storage';
 
 
 @IonicPage()
@@ -40,37 +40,22 @@ export class FollowedOrganizationsPage {
                 private httpProvider: UsersProvider,
                 private modalCtrl: ModalController,
                 public loadingCtrl: LoadingController,
-                private orgProvider: OrganizationsProvider,
-                private storage: Storage) {
+                private orgProvider: OrganizationsProvider) {
 
 
     }
 
     ionViewDidEnter() {
-        this.storage.get('followedItemsFromProfile').then((data) => {
-            console.log('000000000');
-            console.log(data);
-            if(!data) {
-                this.getOrganizations();
-            } else {
-                this.setDataFromStorage(data);
-            }
-        });
         this.httpProvider.returnRallyUserId().then(
             user => {
                 this.currentApiID = user.apiRallyID;
+                this.getOrganizations();
             }
         );
     }
 
     ionViewDidLoad() {
         console.log('ionViewDidLoad FollowedOrganizationsPage');
-    }
-
-    setDataFromStorage(data) {
-        this.organizations = data['organizations'];
-        this.users = data['users'];
-        this.reps = data['reps'];
     }
 
     getOrganizations() {
@@ -82,18 +67,8 @@ export class FollowedOrganizationsPage {
                     this.users = result['users'];
                     this.reps = result['reps'];
                     this.enablePlaceholder = false;
-                    this.setStorage();
                 }
             );
-    }
-
-    setStorage() {
-        let data = {
-            organizations: this.organizations,
-            users: this.users,
-            reps: this.reps
-        };
-        this.storage.set('followedItemsFromProfile', data);
     }
 
     initializeItems() {

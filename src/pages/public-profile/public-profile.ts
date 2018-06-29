@@ -6,12 +6,11 @@ import {
     NavParams,
     ToastController,
     ActionSheetController,
-    Content
+    Content, ModalController
 } from 'ionic-angular';
 import {UsersProvider} from '../../providers/users/users';
 import {AngularFireDatabase} from 'angularfire2/database';
 import firebase from 'firebase';
-import {PhotoViewer} from '@ionic-native/photo-viewer';
 import {SocialShareProvider} from '../../providers/social-share/social-share';
 import {OrganizationProfilePage} from '../organization-profile/organization-profile';
 import {OrganizationActionPage} from '../organization-action/organization-action';
@@ -68,7 +67,7 @@ export class PublicProfilePage {
         private db: AngularFireDatabase,
         public toastCtrl: ToastController,
         public actionSheetCtrl: ActionSheetController,
-        private photoViewer: PhotoViewer,
+        private modalCtrl: ModalController,
         public viewCtrl: ViewController,
         private shareProvider: SocialShareProvider
     ) {
@@ -273,7 +272,11 @@ export class PublicProfilePage {
     }
 
     showPhotoViewer(path) {
-        this.photoViewer.show(path);
+        let modal = this.modalCtrl.create('ModalPhotoViewerComponent', {
+            src: path,
+            userName: this.name
+        });
+        modal.present();
     }
 
     findInLoop(actions) {

@@ -2,7 +2,6 @@ import {Component} from '@angular/core';
 import {NavController, ModalController, ToastController, ActionSheetController} from 'ionic-angular';
 import {SettingsPage} from '../settings/settings';
 import {FriendsRequestPage} from '../friends-request/friends-request';
-import {MyRepsPage} from '../my-reps/my-reps';
 import {StreaksHistoryPage} from '../streaks-history/streaks-history';
 import {FollowedOrganizationsPage} from '../followed-organizations/followed-organizations';
 import {FollowedCandidatesPage} from '../followed-candidates/followed-candidates';
@@ -15,23 +14,19 @@ import {UserData} from '../../providers/user-data';
 import {AngularFireDatabase} from 'angularfire2/database/database';
 import {UsersProvider} from '../../providers/users/users';
 import {MyFriendsPage} from '../my-friends/my-friends';
-import {PhotoViewer} from '@ionic-native/photo-viewer';
 import {RepresentivesListPage} from '../representives-list/representives-list';
 import {AdressModalPage} from '../adress-modal/adress-modal';
 import {MyRepresentativesPage} from '../my-representatives/my-representatives';
 import {Storage} from '@ionic/storage';
 import {SocialShareProvider} from '../../providers/social-share/social-share';
-import {SignFeedBackPage} from '../sign-feed-back/sign-feed-back';
 import {OrganizationActionPage} from '../organization-action/organization-action';
 import {OrganizationProfilePage} from '../organization-profile/organization-profile';
 import {RepresentativeProfilePage} from '../representative-profile/representative-profile';
 import {Facebook} from '@ionic-native/facebook';
-import {DonateFeedBackPage} from "../donate-feed-back/donate-feed-back";
 import * as constants from "../../constants/constants";
 import {ThemeableBrowser, ThemeableBrowserObject} from "@ionic-native/themeable-browser";
 import {IssueScreenPage} from "../issue-screen/issue-screen";
 import {ThankYouPage} from "../thank-you/thank-you";
-
 
 @Component({
     selector: 'page-profile',
@@ -90,7 +85,6 @@ export class ProfilePage {
         public af: AngularFireDatabase,
         private httpProvider: UsersProvider,
         private themeAbleBrowser: ThemeableBrowser,
-        private photoViewer: PhotoViewer,
         public modalCtrl: ModalController,
         private storage: Storage,
         public toastCtrl: ToastController,
@@ -143,6 +137,9 @@ export class ProfilePage {
                     this.getArray(result[0].Objectives_Actions);
                     this.getArray(result[0].Direct_Actions);
                     this.getArray(result[0].Contact_Actions);
+                    this.facebook.api('me?fields=picture.width(900)', ['public_profile']).then(data => {
+                        this.user.photoURL = data.picture.data.url;
+                    });
                 }
             );
     }
@@ -254,11 +251,11 @@ export class ProfilePage {
     }
 
     showPhotoViewer() {
-        this.facebook.api('me?fields=picture.width(900)', ['public_profile']).then(data => {
-            console.log(data);
-            this.photoViewer.show(data.picture.data.url);
-
+        let modal = this.modalCtrl.create('ModalPhotoViewerComponent', {
+            src: this.user.photoURL,
+            userName: this.user.displayName
         });
+        modal.present();
     }
 
 

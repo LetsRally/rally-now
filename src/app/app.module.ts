@@ -67,7 +67,6 @@ import { EventsResultPage } from '../pages/events-result/events-result';
 import { Network } from '@ionic-native/network';
 import { CellularDataUsagePage } from '../pages/cellular-data-usage/cellular-data-usage';
 import { MomentModule } from 'angular2-moment';
-import { PhotoViewer } from '@ionic-native/photo-viewer';
 import { MyFriendsPage } from '../pages/my-friends/my-friends';
 import { RallyOrangeHeaderComponent } from '../components/rally-orange-header/rally-orange-header';
 import { TabsPage } from '../pages/tabs/tabs';
@@ -351,7 +350,6 @@ firebase.initializeApp(config);
         SocialSharing,
         CallNumber,
         Network,
-        PhotoViewer,
         VideoPlayer,
         InAppBrowser,
         NativeGeocoder,

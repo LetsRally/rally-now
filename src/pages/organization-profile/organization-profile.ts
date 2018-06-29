@@ -5,7 +5,7 @@ import {
     NavController,
     NavParams,
     ToastController,
-    ActionSheetController
+    ActionSheetController, ModalController
 } from 'ionic-angular';
 import {UsersProvider} from '../../providers/users/users';
 import {AngularFireDatabase} from 'angularfire2/database';
@@ -19,8 +19,6 @@ import {EventDetailPage} from '../event-detail/event-detail';
 import {DonateFeedBackPage} from '../donate-feed-back/donate-feed-back';
 import {ThemeableBrowser} from "@ionic-native/themeable-browser";
 import * as constants from '../../constants/constants';
-import {PhotoViewer} from "@ionic-native/photo-viewer";
-
 
 @IonicPage()
 @Component({
@@ -68,7 +66,7 @@ export class OrganizationProfilePage {
         private orgProvider: OrganizationsProvider,
         public toastCtrl: ToastController,
         private db: AngularFireDatabase,
-        private photoViewer: PhotoViewer,
+        private modalCtrl: ModalController,
         public actionSheetCtrl: ActionSheetController,
         public viewCtrl: ViewController,
         private shareProvider: SocialShareProvider,
@@ -168,7 +166,11 @@ export class OrganizationProfilePage {
     }
 
     showPhotoViewer(path) {
-        this.photoViewer.show(path);
+        let modal = this.modalCtrl.create('ModalPhotoViewerComponent', {
+            src: path,
+            userName: this.name
+        });
+        modal.present();
     }
 
     addFollowRecordFirebase(organizationID) {

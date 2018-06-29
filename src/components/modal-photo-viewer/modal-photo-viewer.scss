@@ -1,0 +1,37 @@
+modal-photo-viewer {
+  .button {
+    background-color: transparent;
+    font-size: 20px;
+  }
+  .modal-box {
+    position: absolute;
+    left: 0;
+    top: 44px;
+    right: 0;
+    bottom: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .image-container {
+    margin: 0 50px 15px;
+    max-width: 280px;
+    overflow: hidden;
+    img {
+      border-radius: 50%;
+      width: 100%;
+    }
+  }
+  .user-name {
+    font-family: "SF UI Text";
+    color: #f2f2f2;
+    font-size: 34px;
+    font-weight: 700;
+    text-align: center;
+  }
+}
+.modal-wrapper {
+  modal-photo-viewer.show-page.ion-page {
+    background-color: #3e3e3e!important;
+  }
+}

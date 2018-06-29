@@ -23,7 +23,6 @@ export class FilterEventsPage {
     public disableButton = true;
     public disableRange = true;
     public errorEndDate = false;
-    private defaultFilterState = new FilterModel();
 
     constructor(
         public navCtrl: NavController,
@@ -37,9 +36,6 @@ export class FilterEventsPage {
         this.filterState = new FilterModel();
         this.keyboard.hideKeyboardAccessoryBar(false);
         this.getStorage('eventsFilterState');
-
-        this.defaultFilterState.timeStarts = this.dataService.getCurrentDate().currentDate;
-        this.defaultFilterState.timeEnds = this.dataService.getCurrentDate().nextYear;
     }
 
     getStorage(key) {
@@ -73,7 +69,6 @@ export class FilterEventsPage {
         } else {
             this.errorEndDate = false;
         }
-        this.checkStartFilterButtonState();
     }
 
     ionViewDidLoad() {
@@ -109,14 +104,13 @@ export class FilterEventsPage {
         else {
             this.text = this.filterState.distance + ' MILES';
         }
-        this.checkStartFilterButtonState();
     }
 
     checkZipCode(firstTime?) {
-        if (this.filterState.zipcode === '') {
+        if(this.filterState.zipcode === '') {
             this.invalidZip = false;
             this.disableRange = true;
-            this.checkStartFilterButtonState();
+            this.disableButton = false;
             return;
         }
         if (constants.virginZipCodes.indexOf(this.filterState.zipcode) === -1) {
@@ -124,32 +118,26 @@ export class FilterEventsPage {
                 .then((data) => {
                     if (data) {
                         this.invalidZip = false;
+                        this.disableButton = false;
                         this.disableRange = false;
                         this.getDistance();
                     } else {
                         this.invalidZip = true;
+                        this.disableButton = true;
                         this.disableRange = true;
                     }
-                    this.checkStartFilterButtonState();
                 }, (err) => {
                     console.log(err);
                 });
             this.invalidZip = true;
+            this.disableButton = true;
             this.disableRange = true;
-            this.checkStartFilterButtonState();
         } else {
             this.invalidZip = false;
+            this.disableButton = false;
             this.disableRange = false;
             this.getDistance();
         }
-    }
-
-    checkStartFilterButtonState() {
-        console.log('(ionSelect)="checkStartFilterButtonState()"');
-        console.log(JSON.stringify(this.defaultFilterState));
-        console.log(JSON.stringify(this.filterState));
-        this.disableButton = JSON.stringify(this.defaultFilterState) === JSON.stringify(this.filterState);
-        console.log(this.disableButton);
     }
 
     resetFilter() {

@@ -17,8 +17,6 @@ import {CallStatePage} from "../call-state/call-state";
 import {ThankYouPage} from "../thank-you/thank-you";
 import {Storage} from '@ionic/storage';
 import {IssueScreenPage} from "../issue-screen/issue-screen";
-import {PhotoViewer} from "@ionic-native/photo-viewer";
-
 
 @IonicPage()
 @Component({
@@ -67,7 +65,6 @@ export class RepresentativeProfilePage {
         private shareProvider: SocialShareProvider,
         public toastCtrl: ToastController,
         private storage: Storage,
-        private photoViewer: PhotoViewer,
         private themeableBrowser: ThemeableBrowser,
         public actionSheetCtrl: ActionSheetController,
         public modalCtrl: ModalController) {
@@ -116,7 +113,11 @@ export class RepresentativeProfilePage {
     }
 
     showPhotoViewer(path) {
-        this.photoViewer.show(path);
+        let modal = this.modalCtrl.create('ModalPhotoViewerComponent', {
+            src: path,
+            userName: this.name
+        });
+        modal.present();
     }
 
     getLikeStatus($event, reference_id, like_type, likes) {

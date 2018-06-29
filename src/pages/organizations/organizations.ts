@@ -17,7 +17,6 @@ import {OverlayPage} from '../overlay/overlay';
 import {OrganizationsProvider} from '../../providers/organizations/organizations';
 import {OrganizationProfilePage} from '../organization-profile/organization-profile';
 import {UsersProvider} from '../../providers/users/users';
-import {PhotoViewer} from '@ionic-native/photo-viewer';
 import {SocialShareProvider} from '../../providers/social-share/social-share';
 import {OrganizationActionPage} from '../organization-action/organization-action';
 import {EventDetailPage} from '../event-detail/event-detail';
@@ -72,7 +71,6 @@ export class OrganizationsPage {
         public actionSheetCtrl: ActionSheetController,
         private shareProvider: SocialShareProvider,
         public toastCtrl: ToastController,
-        private photoViewer: PhotoViewer,
         public modalCtrl: ModalController,
         private storage: Storage,
         public loadingCtrl: LoadingController,
@@ -283,11 +281,6 @@ export class OrganizationsPage {
         });
         this.rallyProvider.removeFollowRecordID(recordID, 'favorites');
     }
-
-    showPhotoViewer(path) {
-        this.photoViewer.show(path);
-    }
-
 
     getLikeStatus($event, reference_id, like_type) {
         this.disable = true;

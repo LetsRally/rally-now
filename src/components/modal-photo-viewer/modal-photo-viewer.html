@@ -1,0 +1,14 @@
+<div class="modal-photo-viewer">
+    <button ion-button icon-only (click)="closemodal()">
+        <ion-icon name="close"></ion-icon>
+    </button>
+    <div class="modal-box">
+        <div class="info-container">
+            <div class="image-container">
+                <img [src]="srcImage">
+            </div>
+            <h2 class="user-name">{{userName}}</h2>
+        </div>
+    </div>
+
+</div>

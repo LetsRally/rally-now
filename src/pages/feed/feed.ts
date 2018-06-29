@@ -16,7 +16,6 @@ import firebase from 'firebase';
 import { Network } from '@ionic-native/network';
 import { Storage } from '@ionic/storage';
 import { UserData } from '../../providers/user-data';
-import { PhotoViewer } from '@ionic-native/photo-viewer';
 import {EventDetailPage} from '../event-detail/event-detail';
 import { FriendsRequestPage } from '../friends-request/friends-request';
 import { FilterEventsPage } from '../filter-events/filter-events';
@@ -96,7 +95,6 @@ export class FeedPage {
     private network: Network,
     private storage: Storage,
     private storageProvider: UserData,
-    private photoViewer: PhotoViewer,
     public eventsAng: Events,
     public modalCtrl: ModalController,
     private sanitizer: DomSanitizer,
@@ -506,10 +504,6 @@ removeFav(recordID){
   });
   this.usersProv.removeFollowRecordID(recordID, 'favorites');
 
-}
-
-showPhotoViewer(path){
-  this.photoViewer.show(path);
 }
 
 goToEventDetail(eventID){
