@@ -28,7 +28,7 @@
     <ion-list padding-horizontal>
             <ion-item *ngFor="let organization of organizations">
                     <ion-avatar item-start (click)="goToOrganizationProfile(organization[0])">
-                      <img src="{{organization[2] ? organization[2] : 'assets/img/event.svg'}}"  style="border:2px solid #ada8a8;">
+                      <img src="{{organization[2] ? organization[2] : 'assets/img/event.png'}}"  style="border:2px solid #ada8a8;">
                     </ion-avatar>
                     <h2 text-wrap (click)="goToOrganizationProfile(organization[0])">{{organization[1]}}</h2>
                     <button item-end

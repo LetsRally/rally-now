@@ -70,9 +70,9 @@ page-profile {
         }
 
         img{
-            border-radius: 50%;
             width: 100%;
             height: 100%;
+            border-radius: 50%;
         }
     }
     .profile-counts {
@@ -117,20 +117,16 @@ page-profile {
     }
     .profile-img {
         img {
-            border-radius: 50%;
             height: 100%;
             width: 100%;
-            border: 2px solid #f94f1f;
+            border-radius: 50%;
         }
     }
     ion-card {
-        margin-left: 0 !important;
-        margin-right: 0 !important;
+        position: relative;
+        margin: 0 !important;
         width: 100% !important;
         box-shadow: none !important;
-        margin-top: 10px !important;
-        margin-bottom: 10px !important;
-        position: relative;
         .fab-md-light,
         .fab-ios-light {
             background: none;
@@ -157,13 +153,11 @@ page-profile {
         	margin: 0;
         }
 
-
         .blue-card {
              background-color: #f2f2f2;
         color: #bfbfbf;
             border-right: 1px solid #fff;
         }
-
         
         .button-clear-ios, .button-clear-md {
             background-color: #f2f2f2;
@@ -176,11 +170,9 @@ page-profile {
         background-position: center !important;
     }
 
-    
-
     .item-md ion-avatar img,
         .item-ios ion-avatar img {
-            border: 2px solid #f66240;
+            border: 2px solid #b6b6b6;
         }
     .username-h4{
         color: #2b2b2b;
@@ -267,5 +259,5 @@ page-profile {
 
 .profile-cards{
     background: #d8d8d8 !important;
-    padding-bottom: 5px;
+    border-top: 10px solid #d8d8d8;
 }
