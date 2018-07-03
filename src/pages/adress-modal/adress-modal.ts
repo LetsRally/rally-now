@@ -14,6 +14,7 @@ export class AdressModalPage {
     searchTerm: any;
     address: any;
     showFooter: boolean = true;
+    public disabled = true;
     public googlePlacesOptions = {};
 
     constructor(
@@ -47,7 +48,13 @@ export class AdressModalPage {
     }
 
     searchResult(e) {
+        console.log('SEARCHTERM');
+        console.log(e);
         this.searchTerm = e;
+    }
+
+    disableSubmit(e) {
+        this.disabled = e.disable;
     }
 
     public getLocation() {
@@ -61,7 +68,6 @@ export class AdressModalPage {
             })
             .catch((error: any) => console.log(error));
     }
-
 
     saveReps(lat, lng) {
         this.getHouseReps(lat, lng);
