@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {IonicPage, NavController, NavParams, ViewController} from 'ionic-angular';
-import {NativeGeocoder, NativeGeocoderForwardResult} from '@ionic-native/native-geocoder';
+import { NativeGeocoder, NativeGeocoderReverseResult, NativeGeocoderForwardResult } from '@ionic-native/native-geocoder';
 import {UsersProvider} from '../../providers/users/users';
 import {Storage} from '@ionic/storage';
 import {Keyboard} from '@ionic-native/keyboard';
@@ -14,6 +14,7 @@ export class AdressModalPage {
     searchTerm: any;
     address: any;
     showFooter: boolean = true;
+    public disabled = true;
     public googlePlacesOptions = {};
 
     constructor(
@@ -47,21 +48,26 @@ export class AdressModalPage {
     }
 
     searchResult(e) {
+        console.log('SEARCHTERM');
+        console.log(e);
         this.searchTerm = e;
     }
 
-    public getLocation() {
-        // console.log('SEARCH ADDRESS');
-        // let options = {};
-        // this.nativeGeocoder.forwardGeocode(this.searchTerm)
-        //     .then((coordinates: NativeGeocoderForwardResult) => {
-		//
-        //         console.log(this.searchTerm);
-        //         this.saveReps(coordinates.latitude, coordinates.longitude);
-        //     })
-        //     .catch((error: any) => console.log(error));
+    disableSubmit(e) {
+        this.disabled = e.disable;
     }
 
+    public getLocation() {
+        console.log('SEARCH ADDRESS');
+        let options = {};
+        this.nativeGeocoder.forwardGeocode(this.searchTerm)
+            .then((coordinates: any) => {
+
+                console.log(this.searchTerm);
+                this.saveReps(coordinates.latitude, coordinates.longitude);
+            })
+            .catch((error: any) => console.log(error));
+    }
 
     saveReps(lat, lng) {
         this.getHouseReps(lat, lng);

@@ -15,6 +15,7 @@ export class GoogleAutocompleteComponent {
     @Input('key') key: string;
     @Input() placeholderText: string;
     @Output() searchResult = new EventEmitter();
+    @Output() disableSubmit = new EventEmitter();
 
     public searchTerm = '';
     public searchTerm$: Subject<string>;
@@ -32,10 +33,9 @@ export class GoogleAutocompleteComponent {
     }
 
     onSearchInput() {
-        console.log(this.key);
-        console.log(this.placeholderText);
         const proxyurl = "https://cors-anywhere.herokuapp.com/";
         if (this.searchTerm === "") {
+            this.disableSubmit.emit({disable: true});
             this.places = [];
         } else {
             this.places = [];
@@ -70,11 +70,13 @@ export class GoogleAutocompleteComponent {
 
     selectPlace(place) {
         this.displayPlaces = false;
+        this.disableSubmit.emit({disable: false});
         this.searchTerm = place;
         this.searchResult.emit(place);
     }
 
     cancel() {
+        this.disableSubmit.emit({disable: true});
         if (this.platform.is('ios')) {
             this.keyboard.onKeyboardShow().take(1).subscribe(() => {
                 this.keyboard.close();

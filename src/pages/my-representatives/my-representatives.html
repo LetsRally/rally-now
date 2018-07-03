@@ -1,62 +1,72 @@
 <rally-name-header name="My Representatives"></rally-name-header>
 <ion-content>
-  <ion-list>
-      <ion-list-header>
-          YOUR ADDRESS
+    <ion-list>
+        <ion-list-header>
+            YOUR ADDRESS
         </ion-list-header>
-    <ion-item (click)="finReps()">
-        <ion-icon name="ios-pin-outline" item-start></ion-icon>
-          {{repAddress}}
-       <ion-icon name="md-create" item-end></ion-icon>
-    </ion-item>
+        <button ion-item
+                detail-none
+                (click)="finReps()">
+            <ion-icon name="ios-pin-outline" item-start></ion-icon>
+            {{repAddress}}
+            <ion-icon name="md-create" item-end></ion-icon>
+        </button>
 
 
-</ion-list>
+    </ion-list>
 
-<ion-list>
-    <ion-list-header>
-        FEDERAL
-      </ion-list-header>
-      <ion-item *ngFor="let rep of reps">
-        <ion-avatar item-start (click)="getID(rep.bioguide)">
-            <img src="{{rep.photo_url}}" style="border-radius: 50%;">
-        </ion-avatar>
-        <h2 text-wrap (click)="getID(rep.bioguide)">{{rep.name}}</h2>
-        <p text-wrap><small>US Representative for {{rep.state_name}} District {{rep.district}}</small></p>
-        <ion-row item-end text-right style="display: block; max-width: 120px;" >
-            <ion-col col-6 style="padding: 0;">
-                <button class="small-blue-button"
-                        *ngIf="rep.twitter_url && rep.twitter_url !== ''"
-                        (click)="getRepStatus(rep.bioguide, $event)">Follow</button>
-            </ion-col>
-            <ion-col col-6 style="padding: 0;">
-                <button class="small-white-hide-button"
-                        (click)="getRepID(rep, rep.civil_services_url ,rep.twitter_url,rep.contact_page, rep.bioguide)"
-                        >Contact</button>
-            </ion-col>
-        </ion-row> 
-    </ion-item>
-    <ion-item *ngFor="let rep of senators"> 
-        <ion-avatar item-start (click)="getID(rep.bioguide)">
-            <img src="{{rep.photo_url}}" style="border-radius: 50%;">
-        </ion-avatar>
-        <h2 text-wrap (click)="getID(rep.bioguide)">{{rep.name}}</h2>
-        <p text-wrap><small>US Senator for {{rep.state_name}}</small></p>
-        <ion-row item-end text-right style="display: block; max-width: 120px;" >
-            <ion-col col-6 style="padding: 0;">
-                <button class="small-blue-button"
-                        *ngIf="rep.twitter_url && rep.twitter_url !== ''"
-                        (click)="getRepStatus(rep.bioguide, $event, rep.name)" >Follow</button>
-            </ion-col>
-            <ion-col col-6 style="padding: 0;">
-                <button class="small-white-hide-button"
-                        (click)="getRepID(rep, rep.civil_services_url ,rep.twitter_url,rep.contact_page, rep.bioguide)"
-                        >Contact</button>
-            </ion-col>
-        </ion-row>
-    </ion-item>
-    
-</ion-list>
+    <ion-list>
+        <ion-list-header>
+            FEDERAL
+        </ion-list-header>
+        <ion-item *ngFor="let rep of reps">
+            <ion-avatar item-start (click)="getID(rep.bioguide)">
+                <img src="{{rep.photo_url}}" style="border-radius: 50%;">
+            </ion-avatar>
+            <h2 text-wrap (click)="getID(rep.bioguide)">{{rep.name}}</h2>
+            <p text-wrap>
+                <small>US Representative for {{rep.state_name}} District {{rep.district}}</small>
+            </p>
+            <ion-row item-end text-right style="display: block; max-width: 120px;">
+                <ion-col col-6 style="padding: 0;">
+                    <button class="small-blue-button"
+                            *ngIf="rep.twitter_url && rep.twitter_url !== ''"
+                            (click)="getRepStatus(rep.bioguide, $event)">Follow
+                    </button>
+                </ion-col>
+                <ion-col col-6 style="padding: 0;">
+                    <button class="small-white-hide-button"
+                            (click)="getRepID(rep, rep.civil_services_url ,rep.twitter_url,rep.contact_page, rep.bioguide)"
+                    >Contact
+                    </button>
+                </ion-col>
+            </ion-row>
+        </ion-item>
+        <ion-item *ngFor="let rep of senators">
+            <ion-avatar item-start (click)="getID(rep.bioguide)">
+                <img src="{{rep.photo_url}}" style="border-radius: 50%;">
+            </ion-avatar>
+            <h2 text-wrap (click)="getID(rep.bioguide)">{{rep.name}}</h2>
+            <p text-wrap>
+                <small>US Senator for {{rep.state_name}}</small>
+            </p>
+            <ion-row item-end text-right style="display: block; max-width: 120px;">
+                <ion-col col-6 style="padding: 0;">
+                    <button class="small-blue-button"
+                            *ngIf="rep.twitter_url && rep.twitter_url !== ''"
+                            (click)="getRepStatus(rep.bioguide, $event, rep.name)">Follow
+                    </button>
+                </ion-col>
+                <ion-col col-6 style="padding: 0;">
+                    <button class="small-white-hide-button"
+                            (click)="getRepID(rep, rep.civil_services_url ,rep.twitter_url,rep.contact_page, rep.bioguide)"
+                    >Contact
+                    </button>
+                </ion-col>
+            </ion-row>
+        </ion-item>
 
-<div style="height:60px;"></div> 
+    </ion-list>
+
+    <div style="height:60px;"></div>
 </ion-content>

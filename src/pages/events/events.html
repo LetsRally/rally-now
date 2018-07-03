@@ -105,7 +105,9 @@
                 <img [src]="event.organization.image_url ? event.organization.image_url : testPhoto"
                      (click)="goToOrganizationProfile(event.organization_id)">
             </ion-avatar>
-            <h2 text-wrap style="text-align: left; ">
+            <h2 text-wrap
+                (click)="goToOrganizationProfile(event.organization_id)"
+                style="text-align: left; ">
                 <small>via</small>
                 {{event.organization.name}}
             </h2>
