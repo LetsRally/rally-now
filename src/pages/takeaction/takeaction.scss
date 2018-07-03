@@ -1,7 +1,8 @@
 page-takeaction {
-     ion-content{
-    top: 0;
-    margin-bottom: 60px;
+
+    ion-content{
+        top: 0;
+        margin-bottom: 60px;
     }
 
     .rally-segment{
@@ -11,6 +12,7 @@ page-takeaction {
         top: 45px;
         left: 0;
         z-index: 9999;
+
         .segment-button{
             background: #fff;
         }
@@ -23,14 +25,11 @@ page-takeaction {
             width: 50px;
             filter: brightness(0) invert(1);
             vertical-align: middle;
-
         }
+
         .toolbar-background {
             background: #f4512c !important;
             border: none !important;
-    
-    
-            //max-height: 50px !important;
         }
     }
 
@@ -42,12 +41,12 @@ page-takeaction {
         height: 100%;
         margin: 0 auto;
     }
-    
 
     .toolbar-background {
         background-color: #4a90e2;
         color: #fff;
     }
+
     ion-content {
         background-color: #f2f2f2 !important;
         top: 40px;
@@ -64,6 +63,7 @@ page-takeaction {
         color: #fff;
         height: 30px;
     }
+
     .action-btn {
         height: auto;
         padding: 5px 10px;
@@ -73,21 +73,27 @@ page-takeaction {
         font-size: 12px;
         text-transform: uppercase;
     }
+
     .simple-card {
         position: relative;
+
         .button {
             border-radius: 0;
             height: 29px;
             font-size: 13px;
         }
+
         ion-col {
             padding: 5px 0 !important;
         }
+
         ion-card-content {
+
             h3 {
                 font-weight: 600 !important;
                 font-size: 1.3em !important;
             }
+
             p,
             strong {
                 font-size: 11px !important;
@@ -96,18 +102,20 @@ page-takeaction {
     }
 
     ion-card {
-        margin-right: 0 !important;
-        margin-left: 0 !important;
         width: 100% !important;
+        margin: 10px 0 0 !important;
         box-shadow: none !important;
+
         small {
             color: #868686;
             font-weight: normal;
         }
+
         .item-md ion-avatar img,
         .item-ios ion-avatar img {
             border: 2px solid #b6b6b6;
         }
+
         .organization-bg {
             height: 195px;
             position: relative;

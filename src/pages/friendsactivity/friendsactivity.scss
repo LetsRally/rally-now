@@ -46,13 +46,10 @@ page-friendsactivity {
 
     
     ion-card {
-        margin-left: 0 !important;
-        margin-right: 0 !important;
+        position: relative;
         width: 100% !important;
         box-shadow: none !important;
-        margin-top: 10px !important;
-        margin-bottom: 10px !important;
-        position: relative;
+        margin: 10px 0 0 !important;
         .fab-md-light,
         .fab-ios-light {
             background: none;

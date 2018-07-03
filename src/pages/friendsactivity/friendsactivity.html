@@ -111,13 +111,13 @@
                             (click)="goToActionPage(activity.objective_id, activity.goal_type, activity.goal_source_link, activity.goal_id, activity.rep_id, activity)">"{{activity.objective}}"</strong>.
                     </p>
                     <p class="obj-info" *ngIf="activity.action === 'donat'">
-                        {{transform(activity.action)}}ed <strong
+                        {{transform(activity.action)}}ed to <strong
                             (click)="goToOrganizationProfile(activity.objective_organization_id)">{{activity.organization}}</strong>'s
                         campaign <strong
                             (click)="goToActionPage(activity.objective_id, activity.goal_type, activity.goal_source_link, activity.goal_id, activity.rep_id, activity)">"{{activity.objective}}"</strong>.
                     </p>
                     <p class="obj-info" *ngIf="activity.action === 'sign'">
-                        {{transform(activity.action)}}ed to <strong
+                        {{transform(activity.action)}}ed <strong
                             (click)="goToOrganizationProfile(activity.objective_organization_id)">{{activity.organization}}</strong>'s
                         petition <strong
                             (click)="goToActionPage(activity.objective_id, activity.goal_type, activity.goal_source_link, activity.goal_id, activity.rep_id, activity)">"{{activity.objective}}"</strong>.
@@ -255,7 +255,7 @@
                             (click)="goToActionPage(activity.objective_id, activity.goal_type, activity.goal_source_link, activity.goal_id, activity.rep_id, activity)">"{{activity.objective}}"</strong>.
                     </p>
                     <p class="obj-info" *ngIf="activity.action === 'donat'">
-                        {{transform(activity.action)}}ed <strong
+                        {{transform(activity.action)}}ed to <strong
                             (click)="goToOrganizationProfile(activity.objective_organization_id)">{{activity.organization}}</strong>'s
                         campaign <strong
                             (click)="goToActionPage(activity.objective_id, activity.goal_type, activity.goal_source_link, activity.goal_id, activity.rep_id, activity)">"{{activity.objective}}"</strong>.

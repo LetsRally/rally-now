@@ -312,23 +312,24 @@ page-organization-profile {
         color: #2196F3;
     }
 
-    .events-card{
-        position:relative;
-        margin-right: 0 !important;
-        margin-left: 0 !important;
+    .events-card {
+        margin-top: 0;
+        position: relative;
         width: 100% !important;
         box-shadow: none !important;
         border-top: 10px solid #d8d8d8;
+
         small {
             color: #868686;
             font-weight: normal;
         }
+
         .item-md ion-avatar img,
         .item-ios ion-avatar img {
             border: 2px solid #b6b6b6;
         }
 
-        .event-description{
+        .event-description {
             color: #868686;
         }
 
@@ -404,9 +405,9 @@ page-organization-profile {
             color: #bfbfbf;
         }
         .item-md ion-avatar img,
-    .item-ios ion-avatar img {
-        border: 2px solid #b6b6b6;
-    }
+        .item-ios ion-avatar img {
+            border: 2px solid #b6b6b6;
+        }
         .fab-md-light,
         .fab-ios-light {
             background: none;

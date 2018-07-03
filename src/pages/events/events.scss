@@ -13,56 +13,58 @@ page-events {
     }
 
     .rally-search{
-    .searchbar-input{
-        padding: 2px 55px !important;
-        color: #fff !important;
-    }
+        .searchbar-input{
+            padding: 2px 55px !important;
+            color: #fff !important;
+        }
    
-}
+    }
 
-ion-header{
-    text-align: center;
-}
-
+    ion-header{
+        text-align: center;
+    }
 
     .rally-header-logo {
         width: 50px;
         filter: brightness(0) invert(1);
         vertical-align: middle;
     }
+
     .toolbar-background {
         background: #f4512c !important;
         //max-height: 50px !important;
     }
 
-ion-content{
-            background: #d8d8d8 !important;
+    ion-content{
+        background: #d8d8d8 !important;
+    }
 
-}
-
-.spinner-container {
+    .spinner-container {
         width: 100%;
         text-align: center;
         padding: 10px;
     }
+
     .toolbar-background {
         background-color: #4a90e2;
         color: #fff;
     }
+
     ion-title {
         color: #fff;
     }
+
     p.white {
         color: #fff;
         margin: 0;
     }
    
-    .events-card{
-        position:relative;
-         margin-right: 0 !important;
-        margin-left: 0 !important;
+    .events-card {
+        position: relative;
         width: 100% !important;
+        margin: 10px 0 0 !important;
         box-shadow: none !important;
+
         small {
             color: #868686;
             font-weight: normal;
@@ -74,7 +76,6 @@ ion-content{
 
         .event-description{
             color: #868686;
-            //font-weight: 200;
         }
 
         ion-card-title{

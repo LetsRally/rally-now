@@ -12,7 +12,7 @@
                 </button>
             </ion-fab>
             <ion-avatar item-start (click)="goToOrganizationProfile(organizationID)">
-                <img src="{{orgPhoto}}">
+                <img src="{{orgPhoto ? orgPhoto : 'assets/img/event.png'}}">
             </ion-avatar>
             <h2 (click)="goToOrganizationProfile(organizationID)">
                 <small>via</small>

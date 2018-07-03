@@ -53,7 +53,7 @@
   font-family: 'SF UI Text' !important;
   letter-spacing: -0.41px;
   font-weight: 600;
-  margin: 3px 0 1px;
+  margin: 4px 0 0;
   white-space: normal !important;
   text-align: left;
 }
@@ -284,16 +284,20 @@ ion-searchbar {
 }
 
 .large-blue-button {
-  border-radius: 6px !important;
-  height: 50px !important;
-  background-color: #296fb7 !important;
-  font-family: 'SF UI Text' !important;
-  font-size: 18px !important;
-  letter-spacing: -0.43px;
-  font-weight: 600;
-  color: #f2f2f2!important;
+  font: {
+    weight: 600;
+    size: 18px;
+    family: 'SF UI Text' !important;
+  };
   width: 100%;
+  display: block;
+  margin: 0 auto;
   max-width: 335px;
+  height: 50px !important;
+  color: #f2f2f2!important;
+  letter-spacing: -0.43px;
+  border-radius: 6px !important;
+  background-color: #296fb7 !important;
 }
 
 .transparent-button {
@@ -316,6 +320,8 @@ ion-searchbar {
   font-size: 18px;
   width: 100%;
   max-width: 335px;
+  display: block;
+  margin: 0 auto;
 }
 
 .middle-gray-button {
